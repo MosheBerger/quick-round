@@ -1,13 +1,11 @@
-import {Button} from '@mui/material'
+import { } from 'react-router-dom'
 
 function App() {
-  return (
-    <div className="App">
+  return (<>
 
-      <Button />
-      
-    </div>
-  );
+    hello world
+
+  </>);
 }
 
 export default App;
