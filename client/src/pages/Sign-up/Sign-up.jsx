@@ -1,24 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AvatarSelector from '../../components/avatarSelector/AvatarSelector'
+import useInputs from '../../hooks/useInputs'
+import Input from '../../components/forms/Input'
 
 const defaultInputsValue = { username: '', password: '', country: '', email: '' }
+
 function SignUp() {
-    const [inputs, setInputs] = useState(defaultInputsValue)
+    const [inputs, setInputs] = useInputs(defaultInputsValue)
+    const { username, country, email, password } = inputs
+
     return (<>
         <h1> Sign Up </h1>
 
         <form className='inputs'>
-            <input type="text" placeholder='username' />
-            <input type="text" placeholder='password' />
+            <Input name={'username'} value={username} setInput={setInputs} />
+            <Input name={'password'} value={password} setInput={setInputs} />
             <br />
 
-            <input type="text" placeholder='country' />
-            <input type="text" placeholder='email' />
+            <Input name={'country'} value={country} setInput={setInputs} />
+            <Input name={'email'} value={email} setInput={setInputs} />
             <br />
 
             <button type="submit">Enter</button>
 
-            <AvatarSelector name={username} />
+            <AvatarSelector  name={username} />
         </form>
     </>)
 }
