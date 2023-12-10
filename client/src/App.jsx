@@ -7,16 +7,17 @@ import Lobby from './pages/Lobby/Lobby'
 
 function App() {
   return (<>
-    <main className='container'>
+    <main className='container' >
 
-      <Routes>
-         
-        <Route path='/' element={<Home />} />
-        <Route path='/sign-up/' element={<SignUp />} />
-        <Route path='/log-in/' element={<LogIn />} />
-        <Route path='/lobby/' element={<Lobby />} />
+        <Routes>
 
-      </Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/sign-up/' element={<SignUp />} />
+          <Route path='/log-in/' element={<LogIn />} />
+          <Route path='/lobby/' element={<Lobby />} />
+
+        </Routes>
+
     </main>
   </>);
 }
