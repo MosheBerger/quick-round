@@ -15,6 +15,7 @@ function App() {
           <Route path='/sign-up/' element={<SignUp />} />
           <Route path='/log-in/' element={<LogIn />} />
           <Route path='/lobby/' element={<Lobby />} />
+          <Route path='/game/single-player/' element={<Lobby />} />
 
         </Routes>
 
