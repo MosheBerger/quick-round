@@ -2,12 +2,14 @@ import React from 'react'
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 
-const defaultInputsValue = { username: '', password: '' }
+const INITIAL_STATE = { username: '', password: '' }
 
 function LogIn() {
 
-    const [inputs, setInputs] = useInputs(defaultInputsValue)
+    const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const { username, password } = inputs
+
+    // const handleSubmit
 
     return (<>
         <h1> Log In </h1>

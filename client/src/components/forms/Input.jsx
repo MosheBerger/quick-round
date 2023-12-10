@@ -1,10 +1,21 @@
 import React from 'react'
 
-function Input({ name, setInput, value }) {
+function Input({ insertTo, type, name, setInput, value, label, min, max }) {
 
-    return (
-        <input type={isValidInputType(name) ? name : 'text'} name={name} placeholder={name} value={value} onChange={setInput} />
-    )
+
+    return (<>
+        {(label || value !== '') && <label for={name}>{name}</label>}
+        <input
+            type={type ? type : isValidInputType(name) ? name : 'text'}
+            id={name}
+            name={insertTo || name}
+            placeholder={!label && name}
+            value={value}
+            onChange={setInput}
+            min={min}
+            max={max}
+        />
+    </>)
 }
 
 function isValidInputType(type) {

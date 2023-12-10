@@ -38,26 +38,30 @@ function AvatarSelector({ name, setAvatar }) {
 
     return (<>
         <div>AvatarSelector</div>
-        {seeds.map(s => (
-            <Avatar
-                onClick={() => chooseImage(s)}
-                key={s} seed={s} seedName={name + s}
-                color={bkColors[colorIndex]}
-                imageSeed={imageSeed}
-            />
-        ))}
 
-        <button onClick={(e) => updateSeeds(e, 1)}>next avatars</button>
-        <button onClick={(e) => updateSeeds(e, -1)}>last avatars</button>
-        <br />
+        <article>
+            <a href='/#' role='button' onClick={(e) => updateSeeds(e, -1)}>last avatars</a>
+            {seeds.map(s => (
+                <Avatar
+                    onClick={() => chooseImage(s)}
+                    key={s} seed={s} seedName={name + s}
+                    color={bkColors[colorIndex]}
+                    imageSeed={imageSeed}
+                />
+            ))}
+            <a href='/#' role='button' onClick={(e) => updateSeeds(e, 1)}>next avatars</a>
+        </article>
 
-        {bkColors.map((color, index) => {
-            return <button
-                onClick={(e) => { e.preventDefault(); setColorIndex(index) }}
-                key={color} style={{ background: color, width: 50, height: 50, outline: index === colorIndex ? '4px black solid' : '1px black solid'}}
-            />
-        })}
-        <button type="submit" onClick={handleSubmit}>choose this avatar</button>
+
+        <div>
+            {bkColors.map((color, index) => {
+                return <a href='/#' role='button'
+                    onClick={(e) => { e.preventDefault(); setColorIndex(index) }}
+                    key={color} style={{ background: color, width: 50, height: 50, outline: index === colorIndex ? '4px black solid' : '1px black solid' }}
+                >{''}</a>
+            })}
+            <button type="submit" onClick={handleSubmit}>choose this avatar</button>
+        </div>
     </>)
 }
 

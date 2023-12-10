@@ -15,17 +15,17 @@ function Home() {
       </p>
 
       <div>
-        <Link to='/log-in ' > log-in </Link>
-          <Link to='sign-up'> sign-up </Link>
-          <button> join without user </button>
-        </div>
+        <Link role='button' className='outline' to='/log-in ' > log-in </Link>
+        <Link role='button' className='outline secondary' to='sign-up'> sign-up </Link>
+        <Link role='button' to='lobby' > join without user </Link>
+      </div>
 
-        </main>
+    </main>
 
-        <footer>
-          do we really need this?
-        </footer>
-      </>)
+    <footer>
+      do we really need this?
+    </footer>
+  </>)
 }
 
-      export default Home
+export default Home
