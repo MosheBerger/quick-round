@@ -3,6 +3,7 @@ import kaboom from "kaboom"
 import * as React from "react"
 import drag from "./GameObjComps/draggable"
 import addDraggable from "./addObjectFuncs/addDraggable"
+import startDragSystem from "./middleWares/playDragSystem"
 
 
 function GameScreen() {
@@ -24,33 +25,7 @@ const Game = () => {
 			height: 320
 		})
 
-
-		const dragObject = { current: null }
-
-
-
-		// Check if someone is picked
-		k.onMousePress(() => {
-			if (dragObject.current) {
-				return
-			}
-			// Loop all "bean"s in reverse, so we pick the topmost one
-			for (const obj of k.get("drag").reverse()) {
-				// If mouse is pressed and mouse position is inside, we pick
-				if (obj.isHovering()) {
-					obj.pick()
-					break
-				}
-			}
-		})
-
-		// Drop whatever is dragged on mouse release
-		k.onMouseRelease(() => {
-			if (dragObject.current) {
-				dragObject.current.trigger("dragEnd")
-				dragObject.current = null
-			}
-		})
+		const dragObject = startDragSystem(k)
 
 		// Reset cursor to default at frame start for easier cursor management
 		k.onUpdate(() => k.setCursor("default"))
@@ -73,7 +48,7 @@ const Game = () => {
 	}, [])
 
 	return <div className="container-fluid">
-		<canvas ref={canvasRef}></canvas>
+		<canvas ref={canvasRef} style={{border:'2px solid black'}}></canvas>
 	</div>
 
 }
