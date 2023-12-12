@@ -3,17 +3,19 @@ import drag from "../GameObjComps/draggable"
 
 function addDraggable(k = kaboom(), dragManager = { current: {} }, sprite = '', pos, scale) {
 
-    pos = pos || (k.rand(k.width()), k.rand(k.height()))
+    pos = pos || k.rand(k.vec2(k.width(), k.height()))
     scale = scale || 1
 
     const gameObject = k.add([
+        'draggable',
+        sprite,
         k.sprite(sprite),
         k.pos(pos),
-        k.area({ cursor: "pointer" }),
+        k.area({ cursor: "grab" }),
         k.anchor("center"),
         drag(k, dragManager),
+        k.outline(3,k.RED),
         k.scale(scale),
-        sprite,
     ])
     gameObject.spriteTag = sprite
 

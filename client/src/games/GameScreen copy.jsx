@@ -27,7 +27,7 @@ const Game = () => {
 		const dragObject = startDragSystem(k)
 
 		// Reset cursor to default at frame start for easier cursor management
-		k.onUpdate(() => k.setCursor("default"))
+		// k.onUpdate(() => k.setCursor("default"))
 
 		k.loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
 		k.loadSprite('fish', 'http://localhost:8080/objects/fish.png')
