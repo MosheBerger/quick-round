@@ -31,23 +31,30 @@ const Game = () => {
 
 		k.loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
 		k.loadSprite('fish', 'http://localhost:8080/objects/fish.png')
+		k.loadSprite('challah', 'http://localhost:8080/objects/challah.png')
 
-		// Add dragable objects
-		for (let i = 0; i < 5; i++) {
-			addDraggable(k, dragObject, 'kaboom', undefined)
-	
-		}
-		const some = addDraggable(k, dragObject, 'fish', undefined,0.2)
+		addDraggable(k, dragObject, 'kaboom', undefined)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k, dragObject, 'fish', undefined, 0.2)
+		addDraggable(k,dragObject,'challah',undefined,0.2)
+		addDraggable(k,dragObject,'challah',undefined,0.2)
+		addDraggable(k,dragObject,'challah',undefined,0.2)
+		addDraggable(k,dragObject,'challah',undefined,0.2)
+		addDraggable(k,dragObject,'challah',undefined,0.2)
 		// k.wait(3,() => {k.get('kaboom')[0].destroy()})
-		some.onCollide('kaboom', (kaboom) => {
-			kaboom.destroy()
-		})
+		// some.onCollide('kaboom', (kaboom) => {
+		// 	kaboom.destroy()
+		// })
 
 		k.debug.inspect = true
 	}, [])
 
 	return <div className="container-fluid">
-		<canvas ref={canvasRef} style={{border:'2px solid black'}}></canvas>
+		<canvas ref={canvasRef} style={{ border: '2px solid black' }}></canvas>
 	</div>
 
 }
