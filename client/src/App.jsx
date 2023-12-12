@@ -12,6 +12,7 @@ function App() {
 
         <Routes>
 
+          <Route path='/' element={<SinglePlayer />} />
           <Route path='/' element={<Home />} />
           <Route path='/sign-up/' element={<SignUp />} />
           <Route path='/log-in/' element={<LogIn />} />

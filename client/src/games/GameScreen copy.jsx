@@ -1,7 +1,6 @@
 
 import kaboom from "kaboom"
 import * as React from "react"
-import drag from "./GameObjComps/draggable"
 import addDraggable from "./addObjectFuncs/addDraggable"
 import startDragSystem from "./middleWares/playDragSystem"
 
@@ -31,20 +30,20 @@ const Game = () => {
 		k.onUpdate(() => k.setCursor("default"))
 
 		k.loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
-		k.loadSprite('amongUs', 'https://static.wikia.nocookie.net/coralisland/images/8/8a/Any_fish.png/revision/latest?cb=20230602002133')
+		k.loadSprite('fish', 'http://localhost:8080/objects/fish.png')
 
 		// Add dragable objects
 		for (let i = 0; i < 5; i++) {
 			addDraggable(k, dragObject, 'kaboom', undefined)
 	
 		}
-		const some = addDraggable(k, dragObject, 'amongUs', undefined)
+		const some = addDraggable(k, dragObject, 'fish', undefined,0.2)
 		// k.wait(3,() => {k.get('kaboom')[0].destroy()})
 		some.onCollide('kaboom', (kaboom) => {
 			kaboom.destroy()
 		})
 
-
+		k.debug.inspect = true
 	}, [])
 
 	return <div className="container-fluid">
