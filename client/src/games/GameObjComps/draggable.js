@@ -1,7 +1,7 @@
 import kaboom from "kaboom"
 
 // A custom component for handling drag & drop behavior
-function drag(k=kaboom(), curDragging) {
+function drag(k = kaboom(), curDragging) {
 
     // The displacement between object pos and mouse pos
     let offset = k.vec2(0)
@@ -20,9 +20,14 @@ function drag(k=kaboom(), curDragging) {
         // "update" is a lifecycle method gets called every frame the obj is in scene
         update() {
             if (curDragging.current === this) {
-
+                k.setCursor("grabbing")
                 this.pos = k.mousePos().sub(offset)
                 this.trigger("dragUpdate")
+
+            } else {
+                if (this.isHovering()){
+                    k.setCursor('grab')
+                }
             }
         },
         onDrag(action) {
