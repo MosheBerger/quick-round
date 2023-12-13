@@ -1,60 +1,65 @@
 import kaboom from "kaboom"
 import drag from "../GameObjComps/draggable"
 
-function addDraggable(k = kaboom(), dragManager = { current: {} }, sprite = '', pos, scale) {
+function addDraggable(k = kaboom(), dragManager = { current: {} }, props = { sprite: '', pos: undefined, scale:undefined }) {
 
-    pos = pos || k.rand(k.vec2(k.width(), k.height()))
-    scale = scale || 1
+    const {
+        add, pos, sprite, area, anchor, outline, scale,
+        RED, BLACK, rand, vec2, width, height,
+        color, opacity, readd, setCursor, onUpdate
+    } = k;
 
-    const gameObject = k.add([
+    props.pos = props.pos || rand(vec2(width(), height()))
+    props.scale = props.scale || 1
+
+    const gameObject = add([
         'draggable',
-        sprite,
-        k.sprite(sprite),
-        k.pos(pos),
-        k.area({ cursor: "grab" }),
-        k.anchor("center"),
+        props.sprite,
+        sprite(props.sprite),
+        pos(props.pos),
+        area({ cursor: "grab" }),
+        anchor("center"),
         drag(k, dragManager),
-        k.outline(3,k.RED),
-        k.scale(scale),
+        outline(3, RED),
+        scale(props.scale),
     ])
-    gameObject.spriteTag = sprite
+    gameObject.spriteTag = props.sprite
 
-    console.log(gameObject);
 
     gameObject.onDrag(() => {
-        gameObject.scale = k.vec2(scale*1.2)
-        const shadow = k.add([
+        gameObject.scale = vec2(props.scale * 1.2)
+        const shadow = add([
             'shadow',
-            // k.rect(gameObject.height, gameObject.width),
-            k.color(k.BLACK),
-            k.opacity(0.3),
-            k.pos(gameObject.pos.x+100, gameObject.pos.y+100),
-            k.anchor('center'),
-            k.sprite(gameObject.spriteTag),
-            k.scale(scale*1.3)
+            // rect(gameObject.height, gameObject.width),
+            color(BLACK),
+            opacity(0.3),
+            pos(gameObject.pos.x + 100, gameObject.pos.y + 100),
+            anchor('center'),
+            sprite(gameObject.spriteTag),
+            scale(props.scale * 1.3)
         ])
         gameObject.shadow = shadow
-        k.readd(gameObject)
+        readd(gameObject)
         // Remove the object and re-add it, so it'll be drawn on top
     })
 
     gameObject.onDragUpdate(() => {
-        gameObject.shadow.pos = k.vec2(gameObject.pos.x+20, gameObject.pos.y+20)
-        k.setCursor("move")
+        gameObject.shadow.pos = vec2(gameObject.pos.x + 20, gameObject.pos.y + 20)
+        setCursor("move")
 
-   
+
     })
-    k.onUpdate(() => {
-        if (!gameObject.exists()){
+    onUpdate(() => {
+        if (!gameObject.exists()) {
             gameObject.shadow?.destroy()
-        }     
+        }
     })
 
     gameObject.onDragEnd(() => {
-        gameObject.scale = k.vec2(scale)
+        gameObject.scale = vec2(props.scale)
         gameObject.shadow.destroy()
     })
-    
+
     return gameObject
 }
 
