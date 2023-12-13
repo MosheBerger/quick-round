@@ -1,5 +1,5 @@
 import React from 'react'
-import GameScreen from '../../games/GameScreen copy'
+import GameScreen from '../../games/GameScreen.jsx'
 
 function SinglePlayer() {
   return (
