@@ -28,7 +28,7 @@ function addDraggable(k = kaboom(), dragManager = { current: {} }, props = { spr
 
 
     gameObject.onDrag(() => {
-        gameObject.scale = vec2(props.scale * 1.2)
+        gameObject.scale = vec2(props.scale * 1.1)
         const shadow = add([
             'shadow',
             // rect(gameObject.height, gameObject.width),
@@ -37,7 +37,7 @@ function addDraggable(k = kaboom(), dragManager = { current: {} }, props = { spr
             pos(gameObject.pos.x + 100, gameObject.pos.y + 100),
             anchor('center'),
             sprite(gameObject.spriteTag),
-            scale(props.scale * 1.3)
+            scale(props.scale * 1.1)
         ])
         gameObject.shadow = shadow
         readd(gameObject)
