@@ -5,8 +5,8 @@ import Trivia from '../../games/TheGames/Trivia/Trivia.jsx'
 function SinglePlayer() {
   return (
     <div className='middle'>
-      {/* <TestGame /> */}
-      <Trivia />
+      <TestGame />
+      {/* <Trivia /> */}
     </div>
   )
 }

@@ -34,6 +34,7 @@ function GameScreen({ funcGame }) {
 	}, [])
 
 	return <div>
+		<br />
 		<canvas ref={canvasRef} style={{ border: '2px solid black' }}></canvas>
 	</div>
 

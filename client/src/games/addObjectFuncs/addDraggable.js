@@ -1,15 +1,21 @@
 import kaboom from "kaboom"
-import drag from "../GameObjComps/draggable"
+import drag from "../components/draggable"
 
-function addDraggable(k = kaboom(), dragManager = { current: {} }, props = { sprite: '', pos: undefined, scale: undefined }) {
+function addDraggable(k = kaboom(),
+    props = {
+        sprite: '',
+        pos: undefined,
+        scale: undefined,
+    }
+) {
 
     const {
-        add, pos, sprite, area, anchor, outline, scale,
+        add, pos, sprite, area, anchor, scale,
         RED, BLACK, rand, vec2, width, height,
         color, opacity, readd, onUpdate
     } = k;
 
-// todo spriteTag disable
+    // todo spriteTag disable
 
     props.pos = props.pos || rand(vec2(width(), height()))
     props.scale = props.scale || 1
@@ -21,7 +27,7 @@ function addDraggable(k = kaboom(), dragManager = { current: {} }, props = { spr
         pos(props.pos),
         area({ cursor: "grab" }),
         anchor("center"),
-        drag(k, dragManager),
+        drag(k),
         scale(props.scale),
     ])
     gameObject.spriteTag = props.sprite

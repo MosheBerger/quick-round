@@ -4,7 +4,9 @@ import kaboom from "kaboom";
 function addButton(
     k = kaboom(),
     props = {
-        innerText: '', onclick: () => { }, color: undefined
+        innerText: '',
+        color: undefined,
+        onclick: () => { },
     }
 ) {
 
@@ -19,7 +21,7 @@ function addButton(
     const btn = add([
         'button',
         pos(get('*').length * 100, center().y),
-        rect(60, 40, { radius: 10 }),
+        rect(60, 40, { radius: 8 }),
         area(),
         color(props.color || rgb()),
         scale(1),

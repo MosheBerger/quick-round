@@ -2,12 +2,12 @@ import kaboom from "kaboom"
 
 function startDragSystem(k = kaboom()) {
 
-    const dragObject = { current: null }
+    k.curDragging =  null 
 
 
     // Check if someone is picked
     k.onMousePress(() => {
-        if (dragObject.current) {
+        if (k.curDragging) {
             return
         }
         // Loop all "bean"s in reverse, so we pick the topmost one
@@ -22,14 +22,12 @@ function startDragSystem(k = kaboom()) {
 
     // Drop whatever is dragged on mouse release
     k.onMouseRelease(() => {
-        if (dragObject.current) {
-            dragObject.current.trigger("dragEnd")
-            dragObject.current = null
+        if (k.curDragging) {
+            k.curDragging.trigger("dragEnd")
+            k.curDragging = null
         }
     })
 
-
-    return dragObject
 }
 
 export default startDragSystem

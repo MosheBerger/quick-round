@@ -14,7 +14,7 @@ function TestGame() {
 function theGame(k = kaboom()) {
     const { loadSprite, setBackground, vec2 } = k
 
-    const dragObject = startDragSystem(k)
+    startDragSystem(k)
 
     setBackground(233, 233, 233)
 
@@ -25,8 +25,9 @@ function theGame(k = kaboom()) {
     loadSprite('shelf', 'http://192.168.199.216:8080/objects/shelf (Phone).png')
     loadSprite('refrigerator', 'http://192.168.199.216:8080/objects/refrigerator (phone).png')
 
-    addDraggable(k, dragObject, { sprite: 'refrigerator', pos:   vec2(120,170), scale: 0.6 })
-    addDraggable(k, dragObject, { sprite: 'shelf', pos:   vec2(340,170), scale: 0.6 })
+    addDraggable(k, { sprite: 'refrigerator', pos:   vec2(120,170), scale: 0.6 })
+    addDraggable(k, { sprite: 'shelf', pos:   vec2(340,170), scale: 0.6 })
+    addDraggable(k, { sprite: 'shopping-cart', pos:   vec2(530,245), scale: 0.5 })
 
     // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
     // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
@@ -41,7 +42,6 @@ function theGame(k = kaboom()) {
     // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
     // addDraggable(k, dragObject, { sprite: 'kaboom', pos:   center() })
 
-    addDraggable(k, dragObject, { sprite: 'shopping-cart', pos:   vec2(530,245), scale: 0.5 })
 
     //   wait(3,() => {  destroyAll('*')})
     // some.onCollide('kaboom', (kaboom) => {
