@@ -6,7 +6,7 @@ import './game-screen.css'
 
 
 
-function GameScreen({ funcGame }) {
+function GameScreen({ funcGame, settings, setResult }) {
 
 	const canvasRef = React.useRef(null)
 
@@ -22,7 +22,7 @@ function GameScreen({ funcGame }) {
 		// Reset cursor to default at frame start for easier cursor management
 		k.onUpdate(() => k.setCursor("default"))
 
-		funcGame(k)
+		funcGame(k,settings,setResult)
 
 		debugToggle(k)
 
@@ -30,8 +30,7 @@ function GameScreen({ funcGame }) {
 			k.destroyAll('*')
 		})
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [funcGame, setResult, settings])
 
 	return <div>
 		<br />

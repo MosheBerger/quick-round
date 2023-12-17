@@ -1,25 +1,24 @@
-import React from 'react'
-import GameScreen from '../../GameScreen';
+// import React, { useState } from 'react'
+// import GameScreen from '../../GameScreen';
 import kaboom from 'kaboom';
 import addButton from '../../addObjectFuncs/addButton';
 
-function Trivia() {
+// function TriviaGame(props) {
+//     const [status, setStatus] = useState('playing')
 
-    return (
-        <GameScreen funcGame={theGame} />
-    )
-}
 
-const settings = {
-    question: 'when WarioWare, Inc.: Mega Microgame$! released',
-    answerA: '2000',
-    answerB: '2003',
-    answerC: '2012',
-    answerD: '1956',
-    trueAnswer: 'answerB'
-}
+//     return (<div>
+//         {status === 'playing' &&
+//             <GameScreen funcGame={theGame} {...props} />
+//         }
+//         <h1>{status}</h1>
+//         <button onClick={() => setStatus('playing')}>reset</button>
+//     </div>)
+// }
 
-function theGame(k = kaboom()) {
+
+
+function TriviaGame(k = kaboom(), settings = {}, setResult) {
 
     const {
         loadSprite, setBackground, vec2, get, center,
@@ -36,21 +35,24 @@ function theGame(k = kaboom()) {
     //     k.wait(1.5, () => { obj.text = obj.originalText })
     // }
     const func = (obj) => {
-        if (obj.text === settings[trueAnswer]){
-            alert('YOU WIN!')
-        } 
-        else{
-            alert('oi vey..')
+        if (obj.text === settings[trueAnswer]) {
+            setResult('winner')
+        }
+        else {
+            setResult('lose')
         }
     }
+    k.onMouseMove((p,d) => {
+        console.log('how many:',p);
+        console.log('delta:',d);
+    })
 
     const width = screenWidth()
     const height = screenHeight()
 
 
-    const{answerA,answerB,answerC,answerD,question: questionText,trueAnswer} = settings
+    const { answerA, answerB, answerC, answerD, question: questionText, trueAnswer } = settings
 
-    let texto = 'QUESTION'
     const question = add([
         rect(width * 0.9, height / 3, { radius: 4 }),
         pos(width / 2, height / 4),
@@ -106,4 +108,4 @@ function theGame(k = kaboom()) {
 
 
 
-export default Trivia
+export default TriviaGame
