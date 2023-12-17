@@ -29,6 +29,7 @@ function GameScreen({ funcGame, settings, setResult }) {
 		return (() => {
 			k.destroyAll('*')
 		})
+		
 
 	}, [funcGame, setResult, settings])
 
