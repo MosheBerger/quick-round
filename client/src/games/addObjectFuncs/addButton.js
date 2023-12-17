@@ -4,9 +4,11 @@ import kaboom from "kaboom";
 function addButton(
     k = kaboom(),
     props = {
-        innerText: '',
+        pos: k.vec2(k.center()),
         color: undefined,
+        text: '',
         onclick: () => { },
+        size: {}
     }
 ) {
 
@@ -15,36 +17,45 @@ function addButton(
         area, color, rgb, scale, text, BLACK,
     } = k
 
-    const { onclick, innerText } = props
+    const { onclick, text: thisText, size, color: thisColor, pos: thisPos } = props
 
 
     const btn = add([
         'button',
-        pos(get('*').length * 100, center().y),
-        rect(60, 40, { radius: 8 }),
+        rect(size.w, size.h, { radius: 8 }),
+        pos(thisPos),
+        color(thisColor || rgb()),
         area(),
-        color(props.color || rgb()),
         scale(1),
         outline(2),
         anchor('center')
     ])
 
-    btn.text = btn.add([ // todo rename text
+    btn.text = btn.add([ 
         anchor('center'),
-        text(innerText, {
+        { originalText: thisText },
+        text(thisText, {
             size: 18,
         }),
-        color(BLACK)
+        color('#ffffff')
 
     ])
 
     btn.onHover(() => {
-        btn.scale = vec2(1.2)
+        btn.scale = vec2(1.1)
     })
 
     btn.onHoverEnd(() => {
         btn.scale = vec2(1)
     })
+    // TODO TOUCH SCALE
+    // btn.onTouchStart((p,t)=>{
+    //     btn.text.text = t.target
+    //     btn.scale = vec2(1.1)
+    // })
+    // btn.onTouchEnd(() => {
+    //     btn.scale = vec2(1)
+    // })
 
     btn.onClick(() => {
         onclick(btn.text)
