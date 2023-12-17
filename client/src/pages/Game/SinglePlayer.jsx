@@ -7,24 +7,24 @@ function SinglePlayer() {
 
   const [status, setStatus] = useState('playing1')
 
-  const settings = {
+  const settings2 = {
     question: 'when WarioWare, Inc.: Mega Microgame$! released',
     answerA: '2000',
     answerB: '2003',
     answerC: '2012',
     answerD: '1956',
-    trueAnswer: 'answerB'
+    trueAnswer: 'answerB',
   }
-  const settings2 = {
-    question: 'well done',
+  const settings = {
+    question: 'כל הכבוד!',
     answerA: '2000',
     answerB: '2003',
     answerC: '2012',
     answerD: '1956',
-    trueAnswer: 'answerB'
+    trueAnswer: 'answerB',
   }
 
-  if (status === 'winner') {setStatus('playing2')}
+  if (status === 'winner') { setStatus('playing2') }
 
   return (<div>
 
@@ -39,7 +39,7 @@ function SinglePlayer() {
       </div>
     }
 
-    <h1 style={{textAlign:'center'}}>{status}</h1>
+    <h1 style={{ textAlign: 'center' }}>{status}</h1>
     <button onClick={() => setStatus('playing1')}>reset</button>
 
   </div>)
