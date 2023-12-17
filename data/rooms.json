@@ -1,0 +1,32 @@
+[
+    {
+        "manager":122,
+        "name":"Leon's room",
+        "numOfPlayers":1,
+        "numOfRounds":1
+    },
+    {
+        "manager":122,
+        "name":"Herbert's room",
+        "numOfPlayers":1,
+        "numOfRounds":1
+    },
+    {
+        "manager":122,
+        "name":"Mittie's room",
+        "numOfPlayers":1,
+        "numOfRounds":1
+    },
+    {
+        "manager":122,
+        "name":"Joshua's room",
+        "numOfPlayers":1,
+        "numOfRounds":1
+    },
+    {
+        "manager":122,
+        "name":"Jay's room",
+        "numOfPlayers":1,
+        "numOfRounds":1
+    }   
+]

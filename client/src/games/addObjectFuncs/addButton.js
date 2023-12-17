@@ -13,8 +13,8 @@ function addButton(
 ) {
 
     const {
-        add, center, pos, rect, outline, anchor, vec2, get,
-        area, color, rgb, scale, text, BLACK,
+        add, pos, rect, outline, anchor, vec2, 
+        area, color, rgb, scale, text,
     } = k
 
     const { onclick, text: thisText, size, color: thisColor, pos: thisPos } = props

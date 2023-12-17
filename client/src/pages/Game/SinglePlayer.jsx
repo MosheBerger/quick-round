@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
+// import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
 import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
 import GameScreen from '../../games/GameScreen.jsx'
 
@@ -38,6 +38,7 @@ function SinglePlayer() {
         <GameScreen funcGame={TriviaGame} settings={settings2} setResult={setStatus} />
       </div>
     }
+    {/* <GameScreen funcGame={TestGame} /> */}
 
     <h1 style={{ textAlign: 'center' }}>{status}</h1>
     <button onClick={() => setStatus('playing1')}>reset</button>

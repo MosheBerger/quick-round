@@ -14,7 +14,7 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
     } = settings
 
     const {
-        loadSprite, setBackground, vec2, get, center,
+        setBackground, vec2,
         width: screenWidth, height: screenHeight, add,
         pos, rect, outline, anchor, color, text
 

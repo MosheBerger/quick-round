@@ -19,11 +19,11 @@ function theGame(k = kaboom()) {
     setBackground(233, 233, 233)
 
     loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
-    loadSprite('fish', 'http://192.168.199.216:8080/objects/fish.png')
-    loadSprite('challah', 'http://192.168.199.216:8080/objects/challah.png')
-    loadSprite('shopping-cart', 'http://192.168.199.216:8080/objects/shopping-cart (phone).png')
-    loadSprite('shelf', 'http://192.168.199.216:8080/objects/shelf (Phone).png')
-    loadSprite('refrigerator', 'http://192.168.199.216:8080/objects/refrigerator (phone).png')
+    loadSprite('fish', 'http://localhost:8080/assets/objects/fish.png')
+    loadSprite('challah', 'http://localhost:8080/assets/objects/challah.png')
+    loadSprite('shopping-cart', 'http://localhost:8080/assets/objects/shopping-cart (phone).png')
+    loadSprite('shelf', 'http://localhost:8080/assets/objects/shelf (Phone).png')
+    loadSprite('refrigerator', 'http://localhost:8080/assets/objects/refrigerator (phone).png')
 
     addDraggable(k, { sprite: 'refrigerator', pos:   vec2(120,170), scale: 0.6 })
     addDraggable(k, { sprite: 'shelf', pos:   vec2(340,170), scale: 0.6 })

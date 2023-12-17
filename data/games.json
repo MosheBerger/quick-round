@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Trivia Question",
+        "description": "answer quickly on one question",
+        "settings": {
+            "question": "",
+            "answerA": "",
+            "answerB": "",
+            "answerC": "",
+            "answerD": "",
+            "trueAnswer": ["answerA","answerB","answerC","answerD"]
+        },
+        "imageURL": "http://wesnidoke.sz/zivalzuk",
+        "genre": "breathing"
+    },
+    {
+        "name": "slide",
+        "description": "told policeman political health carbon",
+        "settings": {},
+        "imageURL": "http://iwo.pf/naczivvir",
+        "genre": "earth"
+    },
+    {
+        "name": "stomach",
+        "description": "he enjoy biggest straight specific",
+        "settings": {},
+        "imageURL": "http://jilajwuz.my/lus",
+        "genre": "toy"
+    },
+    {
+        "name": "rising",
+        "description": "saw organization top twice evening",
+        "settings": {},
+        "imageURL": "http://dez.pl/rug",
+        "genre": "said"
+    },
+    {
+        "name": "behavior",
+        "description": "nation feet active boat die",
+        "settings": {},
+        "imageURL": "http://duh.ki/onvobo",
+        "genre": "agree"
+    },
+    {
+        "name": "passage",
+        "description": "rear age society baseball vertical",
+        "settings": {},
+        "imageURL": "http://bak.ca/las",
+        "genre": "table"
+    },
+    {
+        "name": "ready",
+        "description": "science angry speak within increase",
+        "settings": {},
+        "imageURL": "http://beozi.hr/jetkajomu",
+        "genre": "instead"
+    },
+    {
+        "name": "relationship",
+        "description": "is noise agree decide able",
+        "settings": {},
+        "imageURL": "http://uz.uk/cu",
+        "genre": "took"
+    },
+    {
+        "name": "where",
+        "description": "directly huge strong it fight",
+        "settings": {},
+        "imageURL": "http://je.lk/fawum",
+        "genre": "brave"
+    },
+    {
+        "name": "possibly",
+        "description": "wash green meant press soap",
+        "settings": {},
+        "imageURL": "http://mecso.gh/wubasot",
+        "genre": "of"
+    }
+]
