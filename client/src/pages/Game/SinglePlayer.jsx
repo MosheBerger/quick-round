@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
+import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
 import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
 import GameScreen from '../../games/GameScreen.jsx'
 
@@ -15,6 +15,7 @@ function SinglePlayer() {
     answerD: '1956',
     trueAnswer: 'answerB',
   }
+
   const settings = {
     question: 'כל הכבוד!',
     answerA: '2000',

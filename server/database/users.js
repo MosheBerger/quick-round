@@ -18,13 +18,22 @@ async function addUser(username, password, email, avatar) {
             values: [username, password, email, avatar]
         }
 
-        const result = await pool.query(query)
-        // return result
+        await pool.query(query)
+
+        return await getUser(username, password)
+
 
     } catch (error) {
-        if (error.code === 23505)
-        return { errorCode: error.code, detail: `the username ${username} already exist`}
-        console.log(error.detail);
+
+        if (error.code === '23505') {
+
+            return {
+                errorCode: error.code,
+                detail: `the username '${username}' already exist`
+            }
+        }
+        return error
+
     }
 }
 
@@ -51,7 +60,7 @@ module.exports = users
 
 
 async function tests() {
-    const result = await addUser('moishy', '12345678', 'mebybeerger@gmail.com', 'moishy1')
+    const result = await addUser('moishy2', '12345678', 'mebybeerger@gmail.com', 'moishy1')
 
     console.log(result);
 }

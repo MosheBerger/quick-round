@@ -4,14 +4,14 @@ const cors = require('cors')
 const pathMake = require('path')
 
 const assetsPath = pathMake.join(__dirname, 'assets')
-const buildPath = pathMake.join(__dirname, 'build')
+// const buildPath = pathMake.join(__dirname, 'build')
 
 const port = process.env.PORT || 8080
 
 app.use(cors())
-// app.get('/assets',express.static(assetsPath))
+app.use(express.static(assetsPath))
 
-app.use('/',express.static(buildPath))
+// app.use(express.static(buildPath))
 
 app.get('/', (req, res) => {
     res.send('hello world')
