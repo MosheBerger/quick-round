@@ -4,12 +4,12 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import Avatar from '../../components/avatar/Avatar.jsx'
 
-const INITIAL_STATE = { username: '', password: '', country: '', email: '' }
+const INITIAL_STATE = { username: '', password: '', email: '' }
 
 function SignUp() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const [avatar, setAvatar] = useState({seedName:'',color:''})
-    const { username, country, email, password } = inputs
+    const { username, email, password } = inputs
 
     return (<>
         <h1> Sign Up </h1>
@@ -19,7 +19,6 @@ function SignUp() {
             <Input name={'password'} value={password} setInput={setInputs} />
             <br />
 
-            <Input name={'country'} value={country} setInput={setInputs} />
             <Input name={'email'} value={email} setInput={setInputs} />
             <br />
 
