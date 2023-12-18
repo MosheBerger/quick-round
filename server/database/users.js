@@ -1,7 +1,7 @@
 const pool = require('./pool')
 
 async function showAll() {
-    const result = await pool.query('SELECT username, avatar FROM users')
+    const result = await pool.query('SELECT id, username, avatar FROM users')
     return result.rows;
 
 }
@@ -35,6 +35,7 @@ async function showProfile(userId) {
     const query = {
         text: `
             SELECT 
+                id,
                 username,
                 avatar
             FROM users
