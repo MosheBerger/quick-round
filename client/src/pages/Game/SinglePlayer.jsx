@@ -17,12 +17,12 @@ function SinglePlayer() {
   }
 
   const settings = {
-    question: 'כל הכבוד!',
-    answerA: '2000',
-    answerB: '2003',
-    answerC: '2012',
-    answerD: '1956',
-    trueAnswer: 'answerB',
+    question: 'למה ללמה קוראים למה?',
+    answerA: 'למה לא?',
+    answerB: 'למה כן?',
+    answerC: 'ככה',
+    answerD: 'מה זה בכלל',
+    trueAnswer: 'answerA',
   }
 
   if (status === 'winner') { setStatus('playing2') }

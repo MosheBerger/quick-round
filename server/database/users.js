@@ -1,25 +1,26 @@
 const pool = require('./pool')
 
-async function showAllUsers() {
-    const result = await pool.query('SELECT * FROM users')
-    console.table(result.rows);
+async function showAll() {
+    const result = await pool.query('SELECT username, avatar FROM users')
+    return result.rows;
 
 }
 
-async function addUser(username, password, email, avatar) {
+async function create(username, password, email, avatar) {
     try {
 
         const query = {
             text: `
-            INSERT INTO users(username, password, email, avatar)
-            VALUES($1,$2,$3,$4)    
+                INSERT INTO users(username, password, email, avatar)
+                VALUES($1,$2,$3,$4)
+                RETURNING *  
             `,
-            values: [username, password, email, avatar]
+            values: [username, password, email, avatar],
         }
 
-        await pool.query(query)
+        const res = await pool.query(query)
 
-        return await getUser(username, password)
+        return await res.rows[0]
 
 
     } catch (error) {
@@ -27,11 +28,28 @@ async function addUser(username, password, email, avatar) {
             errorCode: error.code,
             detail: error.detail
         }
-
     }
 }
 
-async function getUser(username, password) {
+async function showProfile(userId) {
+    const query = {
+        text: `
+            SELECT 
+                username,
+                avatar
+            FROM users
+            WHERE id = $1 
+        `,
+        values: [userId]
+    }
+
+    const res = await pool.query(query)
+
+    pool.end()
+    return res.rows[0]
+}
+
+async function logIn(username, password) {
     const query = {
         text: `
             SELECT * FROM users
@@ -78,7 +96,7 @@ async function updateAvatar(username, password, avatar) {
 
         const res = await pool.query(query)
 
-        return await getUser(username, password)
+        return await logIn(username, password)
 
 
     } catch (error) {
@@ -92,8 +110,10 @@ async function updateAvatar(username, password, avatar) {
 
 
 const users = {
-    addUser,
-    getUser,
+    create,
+    logIn,
+    showProfile,
+    showAll,
     checkIfExist,
     updateAvatar,
 }
@@ -104,12 +124,12 @@ module.exports = users
 
 async function tests() {
     console.log('---TEST---');
-    // const result = await addUser('moishy3', '12345678', 'mebyberger@gmail.com', 'moishy1')
+    // const result = await addUser('moishy6', '12345678', 'mebyberger@gmail.com', 'moishy1')
     // const result = await checkIfExist('moishy3')
     // const result = await getUser('moishy3','12345678')
 
-    // showAllUsers()
+    const result = await showAll()
 
-    console.log(result);
+    console.table(result);
 }
 tests()
