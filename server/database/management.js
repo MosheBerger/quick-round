@@ -83,13 +83,14 @@ async function showAll() {
 
 
     // for some table data 
-    // const [results, players, rounds, rooms, games, users,] = res
-    // console.log(users.rows);
+    const tableNames = ['results', 'players', 'rounds', 'rooms', 'games', 'users',]
+    console.log(res);
 
 
     // for all tables data
-    res.forEach((table) => {
-        console.log(table.fields.map(field => field.name))
+    res.forEach((table,i) => {
+        console.log(tableNames[i]);
+        // console.log(table.fields.map(field => field.name))
         console.table(table.rows);
     });
 

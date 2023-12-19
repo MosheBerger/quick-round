@@ -126,10 +126,10 @@ module.exports = users
 async function tests() {
     console.log('---TEST---');
     // const result = await addUser('moishy6', '12345678', 'mebyberger@gmail.com', 'moishy1')
-    // const result = await checkIfExist('moishy3')
+    const result = await checkIfExist('moishy3')
     // const result = await getUser('moishy3','12345678')
 
-    const result = await showAll()
+    // const result = await showAll()
 
     console.table(result);
 }

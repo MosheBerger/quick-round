@@ -65,7 +65,7 @@ module.exports = rooms
 
 
 const test = async () => {
-    // console.log(await rooms.create('החדר של מוישי', 4, 2, 1));
-    console.log(await rooms.join(1, 1));
+    console.log(await rooms.create('החדר של אבי', 4, 2, 1));
+    // console.log(await rooms.join(1, 1));
 }
 test()
