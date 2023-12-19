@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import RoomList from './RoomList'
 import CreateRoom from './CreateRoom'
+import { useLocation } from 'react-router-dom'
 
 function Room() {
     const [tab, setTab] = useState('join')
 
+    const user = useLocation().state
+    console.log(user);
     return (<>
         <h1>Lobby</h1>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
+import { useNavigate } from 'react-router-dom'
 
 const INITIAL_STATE = { username: '', password: '' }
 
@@ -9,6 +10,8 @@ function LogIn() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const { username, password } = inputs
 
+    const navigate = useNavigate()
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         const {username, password} = inputs
@@ -22,8 +25,12 @@ function LogIn() {
                 }
             })
             const data = await res.json()
-            console.log(data);
+            // console.log(data);
             
+            navigate('/lobby',{
+                state:data
+            })
+
         } catch (error) {
             console.log(error);
             console.log('whyyyy!');
