@@ -4,7 +4,7 @@ function Input({ insertTo, type, name, setInput, value, label, min, max }) {
 
 
     return (<>
-        {(label || value !== '') && <label for={name}>{name}</label>}
+        {(label || value !== '') && <label htmlFor={name}>{name}</label>}
         <input
             type={type ? type : isValidInputType(name) ? name : 'text'}
             id={name}

@@ -9,16 +9,35 @@ function LogIn() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const { username, password } = inputs
 
-    // const handleSubmit
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const {username, password} = inputs
+        try {
+            
+            const res = await fetch(`http://localhost:8080/api/login/${username}`,{
+                method:'POST',
+                body:JSON.stringify({password}),
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            const data = await res.json()
+            console.log(data);
+            
+        } catch (error) {
+            console.log(error);
+            console.log('whyyyy!');
+        }
+    }
 
     return (<>
         <h1> Log In </h1>
 
         <div className='inputs'>
             <Input name={'username'} value={username} setInput={setInputs} />
-            <Input name={'password'} value={password} setInput={setInputs} type={'password'}/>
+            <Input name={'password'} value={password} setInput={setInputs} type={'password'} />
             <br />
-            <button type="submit">Enter</button>
+            <button type="submit" onClick={handleSubmit}>Enter</button>
         </div>
     </>)
 }
