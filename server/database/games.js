@@ -1,6 +1,5 @@
-const pool = require('./pool.js')
 
-async function createGame(name, description, settings, imageURL, genre) {
+async function createGame(client, name, description, settings, imageURL, genre) {
     try {
         const query = {
             text: `
@@ -11,7 +10,7 @@ async function createGame(name, description, settings, imageURL, genre) {
             values: [name, description, settings, imageURL, genre]
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
 
     } catch (error) {
@@ -19,12 +18,10 @@ async function createGame(name, description, settings, imageURL, genre) {
             errorCode: error.code,
             detail: error.detail
         }
-    } finally {
-        pool.end()
-    }
+    } 
 }
 
-async function showGame(gameId) {
+async function showGame(client, gameId) {
     try {
         const query = {
             text: `
@@ -34,7 +31,7 @@ async function showGame(gameId) {
             values: [gameId]
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows[0]
 
@@ -43,13 +40,13 @@ async function showGame(gameId) {
     }
 }
 
-async function showAll() {
+async function showAll(client) {
     try {
         const query = `
     SELECT * FROM games
     ;`
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows
 
@@ -58,7 +55,7 @@ async function showAll() {
     }
 }
 
-async function test() {
+async function test( ) {
     // const res = await createGame('טריוויה','שאלת טריוויה מהירה בהתאמה אישית',`{
     //     "question": "שאלה",
     //     "answerA": "תשובה 1",

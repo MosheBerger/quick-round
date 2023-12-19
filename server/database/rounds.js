@@ -1,7 +1,6 @@
-const pool = require('./pool.js')
 
 
-async function create(roomId, roundNum, gameId, settings) {
+async function create(client, roomId, roundNum, gameId, settings) {
     try {
         const query = {
             text: `
@@ -11,7 +10,7 @@ async function create(roomId, roundNum, gameId, settings) {
             ;`,
             values: [roomId, roundNum, gameId, settings]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
 
     } catch (error) {
@@ -19,14 +18,14 @@ async function create(roomId, roundNum, gameId, settings) {
     }
 }
 
-async function createMany(roundsArr = []) {
+async function createMany(client, roundsArr = []) {
     try {
 
         const results = []
 
         for (let i = 0; i < roundsArr.length; i++) {
             const { roomId, roundNum, gameId, settings } = roundsArr[i]
-            results.push(await create(roomId, roundNum, gameId, settings))
+            results.push(await create(client, roomId, roundNum, gameId, settings))
         }
 
         return results
@@ -36,7 +35,7 @@ async function createMany(roundsArr = []) {
     }
 }
 
-async function remove(roundId) {
+async function remove(client, roundId) {
     try {
 
         const query = {
@@ -47,7 +46,7 @@ async function remove(roundId) {
             ;`,
             values: [roundId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return {
             operation: res.command,
             success: (res.rowCount > 0),
@@ -58,7 +57,7 @@ async function remove(roundId) {
     }
 }
 
-async function show(roundId) {
+async function show(client, roundId) {
     try {
 
         const query = {
@@ -68,7 +67,7 @@ async function show(roundId) {
             ;`,
             values: [roundId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows[0]
         
@@ -77,7 +76,7 @@ async function show(roundId) {
     }
 }
 
-async function showByRoom(roomId) {
+async function showByRoom(client, roomId) {
     try {
 
         const query = {
@@ -87,7 +86,7 @@ async function showByRoom(roomId) {
             ;`,
             values: [roomId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows
 

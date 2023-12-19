@@ -1,7 +1,6 @@
-const pool = require('./pool.js')
 
 
-async function create(roundId, userId, success, finishTime) {
+async function create(client, roundId, userId, success, finishTime) {
     try {
         const query = {
             text: `
@@ -11,7 +10,7 @@ async function create(roundId, userId, success, finishTime) {
             ;`,
             values: [roundId, userId, success, finishTime]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
 
     } catch (error) {
@@ -20,7 +19,7 @@ async function create(roundId, userId, success, finishTime) {
 }
 
 
-async function showByRound(roundId) {
+async function showByRound(client, roundId) {
     try {
 
         const query = {
@@ -30,7 +29,7 @@ async function showByRound(roundId) {
             ;`,
             values: [roundId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows
         
@@ -56,6 +55,6 @@ const test = async () => {
     // console.log( await create(2,3,true,6738));
     // console.log( await create(1,4,true,20000));
 
-    console.log( await showByRound(2));
+    // console.log( await showByRound(2));
 }
 // test()

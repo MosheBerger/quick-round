@@ -1,12 +1,11 @@
-const pool = require('./pool')
 
-async function showAll() {
-    const result = await pool.query('SELECT id, username, avatar FROM users')
+async function showAll(client) {
+    const result = await client.query('SELECT id, username, avatar FROM users')
     return result.rows;
 
 }
 
-async function create(username, password, email, avatar) {
+async function create(client, username, password, email, avatar) {
     try {
         const query = {
             text: `
@@ -17,7 +16,7 @@ async function create(username, password, email, avatar) {
             values: [username, password, email, avatar],
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return await res.rows[0]
 
@@ -30,7 +29,7 @@ async function create(username, password, email, avatar) {
     }
 }
 
-async function showProfile(userId) {
+async function showProfile(client, userId) {
     try {
         const query = {
             text: `
@@ -44,9 +43,8 @@ async function showProfile(userId) {
             values: [userId]
         }
 
-        const res = await pool.query(query)
-
-        pool.end()
+        const res = await client.query(query)
+    
         return res.rows[0]
 
     } catch (error) {
@@ -54,7 +52,7 @@ async function showProfile(userId) {
     }
 }
 
-async function logIn(username, password) {
+async function logIn(client, username, password) {
     try {
         const query = {
             text: `
@@ -65,9 +63,8 @@ async function logIn(username, password) {
             values: [username, password]
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
-        pool.end()
         return res.rows[0]
 
     } catch (error) {
@@ -75,7 +72,7 @@ async function logIn(username, password) {
     }
 }
 
-async function checkIfExist(username) {
+async function checkIfExist(client, username) {
     try {
         const query = {
             text: `
@@ -85,9 +82,8 @@ async function checkIfExist(username) {
             values: [username]
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
-        pool.end()
 
         return (res.rowCount === 1)
 
@@ -96,7 +92,7 @@ async function checkIfExist(username) {
     }
 }
 
-async function updateAvatar(username, password, avatar) {
+async function updateAvatar(client, username, password, avatar) {
     try {
         const query = {
             text: `
@@ -109,7 +105,7 @@ async function updateAvatar(username, password, avatar) {
             values: [username, password, avatar]
         }
 
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return res.rows[0]
 

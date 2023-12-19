@@ -1,10 +1,10 @@
-const pool = require('./pool.js')
 
 const players = require('./players.js')
+const pool = require('./pool.js')
 const rounds = require('./rounds.js')
 const users = require('./users.js')
 
-async function create(name, numOfPlayers, numOfRounds, manager) {
+async function create(client, name, numOfPlayers, numOfRounds, manager) {
     try {
 
         const query = {
@@ -15,14 +15,14 @@ async function create(name, numOfPlayers, numOfRounds, manager) {
         `,
             values: [name, numOfPlayers, numOfRounds, manager]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
     } catch (error) {
         console.log(error);
     }
 }
 
-async function showAll() {
+async function showAll(client) {
     try {
         const query = {
             text: `
@@ -40,13 +40,13 @@ async function showAll() {
             //     ON p.user_id = u.id 
             // values: []
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows
     } catch (error) {
         console.log(error);
     }
 }
-async function showOne(roomId) {
+async function showOne(client, roomId) {
     try {
         const query = {
             text: `
@@ -57,7 +57,7 @@ async function showOne(roomId) {
             `,
             values:[roomId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
 
     } catch (error) {
@@ -65,12 +65,12 @@ async function showOne(roomId) {
     }
 }
 
-async function showAllDataPerRoom(roomId) {
+async function showAllDataPerRoom(client, roomId) {
     try {
-        const room = await showOne(roomId)
-        room.manager = await users.showProfile(room.manager)
-        room.playersInRoom = await players.countInRoom(roomId)
-        room.rounds = await rounds.showByRoom(roomId)
+        const room = await showOne(client, roomId)
+        room.manager = await users.showProfile(client, room.manager)
+        room.playersInRoom = await players.countInRoom(client, roomId)
+        room.rounds = await rounds.showByRoom(client, roomId)
 
         return room
     } catch (error) {
@@ -97,6 +97,8 @@ const test = async () => {
     // console.log(await rooms.join(2, 1));
     // console.log(await rooms.leave(5, 5));
     // console.table(await rooms.showAll());
-    console.log(await rooms.showAllDataPerRoom(1));
+    const client = await pool.connect()
+    console.log(await rooms.showAllDataPerRoom(client,1));
+    client.release()
 }
-test()
+// test()

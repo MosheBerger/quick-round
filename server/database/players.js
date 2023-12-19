@@ -1,7 +1,6 @@
-const pool = require('./pool.js')
 
 
-async function joinRoom(roomId, userId) {
+async function joinRoom(client, roomId, userId) {
     try {
 
         const query = {
@@ -11,7 +10,7 @@ async function joinRoom(roomId, userId) {
         `,
             values: [roomId, userId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
 
         return (res.rowCount === 1)
     } catch (error) {
@@ -19,7 +18,7 @@ async function joinRoom(roomId, userId) {
     }
 }
 
-async function leaveRoom(roomId, userId) {
+async function leaveRoom(client, roomId, userId) {
     try {
         const query = {
             text: `
@@ -29,14 +28,14 @@ async function leaveRoom(roomId, userId) {
         `,
             values: [roomId, userId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return (res.rowCount === 1)
     } catch (error) {
         console.log(error);
     }
 }
 
-async function showAllInRoom(roomId) {
+async function showAllInRoom(client, roomId) {
     try {
         const query = {
             text: `
@@ -54,13 +53,13 @@ async function showAllInRoom(roomId) {
         `,
             values: [roomId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows
     } catch (error) {
         console.log(error);
     }
 }
-async function countInRoom(roomId) {
+async function countInRoom(client, roomId) {
     try {
         const query = {
             text: `
@@ -72,7 +71,7 @@ async function countInRoom(roomId) {
         `,
             values: [roomId]
         }
-        const res = await pool.query(query)
+        const res = await client.query(query)
         return res.rows[0]
         
     } catch (error) {
@@ -91,9 +90,10 @@ const players = {
 module.exports = players
 
 
-
 const test = async () => {
+    // const client = await pool.connect()
     // console.log( await players.showAllInRoom(2));
-    // console.log( await players.countInRoom(2));
+    // console.log( await players.countInRoom(client, 2));
+    // client.release(true)
 }
 // test()
