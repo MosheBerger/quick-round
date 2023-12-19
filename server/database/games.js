@@ -2,7 +2,6 @@ const pool = require('./pool.js')
 
 async function createGame(name, description, settings, imageURL, genre) {
     try {
-
         const query = {
             text: `
             INSERT INTO games(name, description, settings, imageURL, genre)
@@ -26,29 +25,37 @@ async function createGame(name, description, settings, imageURL, genre) {
 }
 
 async function showGame(gameId) {
-
-    const query = {
-        text: `
+    try {
+        const query = {
+            text: `
             SELECT * FROM games
             WHERE id = $1
         ;`,
-        values: [gameId]
+            values: [gameId]
+        }
+
+        const res = await pool.query(query)
+
+        return res.rows[0]
+
+    } catch (error) {
+        console.log(error);
     }
-
-    const res = await pool.query(query)
-
-    return res.rows[0]
 }
 
 async function showAll() {
+    try {
+        const query = `
+    SELECT * FROM games
+    ;`
 
-    const query = `
-            SELECT * FROM games
-        ;`
+        const res = await pool.query(query)
 
-    const res = await pool.query(query)
+        return res.rows
 
-    return res.rows
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function test() {
@@ -66,12 +73,12 @@ async function test() {
     //     ]
     // }`,'/covers/trivia.png','חידה')
 
-    
+
     // const res = await showGame(4)
-    const res = await showAll()
-    console.table(res);
+    // const res = await showAll()
+    // console.table(res);
 }
-test()
+// test()
 
 const games = {
     createGame,

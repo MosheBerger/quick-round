@@ -1,63 +1,88 @@
 const pool = require('./pool.js')
 
+const players = require('./players.js')
+const rounds = require('./rounds.js')
+const users = require('./users.js')
 
 async function create(name, numOfPlayers, numOfRounds, manager) {
-    const query = {
-        text: `
+    try {
+
+        const query = {
+            text: `0
             INSERT INTO rooms(name, numOfPlayers, numOfRounds, manager)
             VALUES($1,$2,$3,$4)
             RETURNING *
         `,
-        values: [name, numOfPlayers, numOfRounds, manager]
+            values: [name, numOfPlayers, numOfRounds, manager]
+        }
+        const res = await pool.query(query)
+        return res.rows[0]
+    } catch (error) {
+        console.log(error);
     }
-    const res = await pool.query(query)
-    return res.rows[0]
 }
 
-async function join(roomId, userId) {
-    const query = {
-        text: `
-            INSERT INTO players(room_id, user_id)
-            VALUES($1,$2)
-        `,
-        values: [roomId, userId]
+async function showAll() {
+    try {
+        const query = {
+            text: `
+            SELECT
+                rooms.*,
+                m.username manager_name,
+                m.avatar manager_avatar
+            FROM rooms
+            LEFT JOIN users m
+                ON rooms.manager = m.id
+                `,
+            // LEFT JOIN players p
+            //     ON rooms.id = p.room_id
+            // LEFT JOIN users u
+            //     ON p.user_id = u.id 
+            // values: []
+        }
+        const res = await pool.query(query)
+        return res.rows
+    } catch (error) {
+        console.log(error);
     }
-    const res = await pool.query(query)
+}
+async function showOne(roomId) {
+    try {
+        const query = {
+            text: `
+                SELECT
+                    *
+                FROM rooms
+                WHERE id = $1
+            `,
+            values:[roomId]
+        }
+        const res = await pool.query(query)
+        return res.rows[0]
 
-    return (res.rowCount === 1)
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-async function leave(roomId, userId) {
-    const query = {
-        text: `
-            DELETE FROM players
-            WHERE room_id = $1
-                AND user_id = $2
-        `,
-        values: [roomId, userId]
+async function showAllDataPerRoom(roomId) {
+    try {
+        const room = await showOne(roomId)
+        room.manager = await users.showProfile(room.manager)
+        room.playersInRoom = await players.countInRoom(roomId)
+        room.rounds = await rounds.showByRoom(roomId)
+
+        return room
+    } catch (error) {
+        console.log(error);
     }
-    const res = await pool.query(query)
-    return
 }
-
-async function show() {
-    const query = {
-        text: `
-        
-        `,
-        values: []
-    }
-    const res = await pool.query(query)
-    return
-}
-
-
 
 const rooms = {
     create,
-    join,
-    leave,
-    show
+    showAll,
+    showOne,
+    showAllDataPerRoom,
 }
 
 module.exports = rooms
@@ -65,7 +90,13 @@ module.exports = rooms
 
 
 const test = async () => {
-    console.log(await rooms.create('החדר של אבי', 4, 2, 1));
+    // console.log(await rooms.create('החדר של אבי', 4, 2, 1));
     // console.log(await rooms.join(1, 1));
+    // console.log(await rooms.join(1, 2));
+    // console.log(await rooms.join(1, 4));
+    // console.log(await rooms.join(2, 1));
+    // console.log(await rooms.leave(5, 5));
+    // console.table(await rooms.showAll());
+    console.log(await rooms.showAllDataPerRoom(1));
 }
 test()

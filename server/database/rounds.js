@@ -77,6 +77,25 @@ async function show(roundId) {
     }
 }
 
+async function showByRoom(roomId) {
+    try {
+
+        const query = {
+            text: `
+            SELECT * FROM rounds
+            WHERE room_id = $1
+            ;`,
+            values: [roomId]
+        }
+        const res = await pool.query(query)
+
+        return res.rows
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 const rounds = {
@@ -84,6 +103,7 @@ const rounds = {
     createMany,
     remove,
     show,
+    showByRoom,
 }
 
 module.exports = rounds
@@ -101,6 +121,6 @@ const test = async () => {
     // ]));
     // console.log(await rounds.show(2));
     // console.log(await rounds.remove(4));
-
+    console.log( await rounds.showByRoom(1));
 }
-test()
+// test()
