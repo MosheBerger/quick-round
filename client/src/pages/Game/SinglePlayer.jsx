@@ -5,7 +5,7 @@ import GameScreen from '../../games/GameScreen.jsx'
 
 function SinglePlayer() {
 
-  const [status, setStatus] = useState('playing1')
+  const [status, setStatus] = useState('playing')
 
   const settings2 = {
     question: 'when WarioWare, Inc.: Mega Microgame$! released',
@@ -25,11 +25,12 @@ function SinglePlayer() {
     trueAnswer: 'answerA',
   }
 
-  if (status === 'winner') { setStatus('playing2') }
+  const playing = status === 'playing'
+  // if (status === 'winner') { setStatus('playing2') }
 
   return (<div>
 
-    {status === 'playing1' &&
+    {/* {status === 'playing1' &&
       <div className='middle'>
         <GameScreen funcGame={TriviaGame} settings={settings} setResult={setStatus} />
       </div>
@@ -38,11 +39,11 @@ function SinglePlayer() {
       <div className='middle'>
         <GameScreen funcGame={TriviaGame} settings={settings2} setResult={setStatus} />
       </div>
-    }
-    {/* <GameScreen funcGame={TestGame} /> */}
+    } */}
+    {playing && <GameScreen funcGame={TestGame} setResult={setStatus} />}
 
     <h1 style={{ textAlign: 'center' }}>{status}</h1>
-    <button onClick={() => setStatus('playing1')}>reset</button>
+    <button onClick={() => setStatus('playing')}>reset</button>
 
   </div>)
 

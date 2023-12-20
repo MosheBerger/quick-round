@@ -3,39 +3,125 @@ import GameScreen from '../../GameScreen';
 import startDragSystem from '../../middleWares/playDragSystem';
 import addDraggable from '../../addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
+import BASE_URL from '../../../baseURL';
 
-
-function TestGame(k = kaboom()) {
-    const { loadSprite, setBackground, vec2 } = k
+function TestGame(k = kaboom(), settings, setResult) {
+    const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, text, loadSound, outline, onUpdate, } = k
 
     startDragSystem(k)
 
-    setBackground(233, 233, 233)
+    //---- BACKGROUND
+    setBackground('#8ee575')
+    add([
+        rect(width() + 100, 200),
+        pos(0, 240),
+        color('#6eb25a'),
+        rotate(5)
+    ])
+    //---------------
+
+    // loadSound('sadViolin',`${BASE_URL}/assets/sfx/19011_ViolinComedy_CTE09_98.2.mp3`)
+    // const violin = k.play('sadViolin',{paused:true})
+
+    loadSound('chale', `${BASE_URL}/assets/sfx/chale!.mpeg`)
+
+    // k.onMouseDown(() => {
+    //     violin.play()
+    // })
 
     loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
-    loadSprite('fish', 'http://localhost:8080/objects/fish.png')
-    loadSprite('challah', 'http://localhost:8080/objects/challah.png')
-    loadSprite('shopping-cart', 'http://localhost:8080/objects/shopping-cart (phone).png')
-    loadSprite('shelf', 'http://localhost:8080/objects/shelf (Phone).png')
-    loadSprite('refrigerator', 'http://localhost:8080/objects/refrigerator (phone).png')
+    loadSprite('fish', `${BASE_URL}/assets/objects/fish.png`)
+    loadSprite('challah', `${BASE_URL}/assets/objects/challah.png`)
+    loadSprite('shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`)
+    loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
+    loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
 
-    addDraggable(k, { sprite: 'kaboom', pos:   vec2(120,170), scale: 0.6 })
-    addDraggable(k, { sprite: 'refrigerator', pos:   vec2(120,170), scale: 0.6 })
-    addDraggable(k, { sprite: 'shelf', pos:   vec2(340,170), scale: 0.6 })
-    addDraggable(k, { sprite: 'shopping-cart', pos:   vec2(530,245), scale: 0.5 })
+    settings = settings || {
+        fish: k.randi(1, 5),
+        challah: k.randi(1, 5)
+    }
 
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'fish', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'challah', scale: 0.1 })
-    // addDraggable(k, dragObject, { sprite: 'kaboom', pos:   center() })
+    const giveMe = add([
+        rect(170, 100, { radius: 20 }),
+        color('#f2f2f2'),
+        anchor('topright'),
+        outline(5, '#111111'),
+        pos(width() - 20, 30)
+
+    ])
+    for (let i = 0; i < settings.fish; i++) {
+        giveMe.add([
+            scale(0.09),
+            pos(i * -30, 5),
+            sprite('fish'),
+            anchor('topright'),
+        ])
+    }
+    for (let i = 0; i < settings.challah; i++) {
+        giveMe.add([
+            scale(0.09),
+            pos(i * -30, 45),
+            sprite('challah'),
+            anchor('topright'),
+        ])
+    }
+
+    // addDraggable(k, { sprite: 'refrigerator', pos: vec2(120, 170), scale: 0.6 })
+    // addDraggable(k, { sprite: 'shelf', pos: vec2(340, 170), scale: 0.6 })
+    // addDraggable(k, { sprite: 'shopping-cart', pos: vec2(530, 245), scale: 0.5 })
+
+    add([
+        sprite('refrigerator'),
+        pos(120, 170),
+        scale(0.6),
+        anchor('center'),
+        area(),
+
+    ])
+    add([
+        sprite('shelf'),
+        pos(340, 170),
+        scale(0.6),
+        anchor('center'),
+        area(),
+
+    ])
+    const shoppingCart = createShoppingCart(k)
+
+    for (let i = 0, y = 90; i < 4; i++, y += 50) {
+
+        for (let j = 0, x = 50; j < 4; j++, x += 45) {
+
+            addDraggable(k, { sprite: 'fish', scale: 0.08, pos: vec2(x, y) })
+
+        }
+    }
+
+    for (let i = 0, y = 90; i < 4; i++, y += 55) {
+
+        for (let j = 0, x = 280; j < 4; j++, x += 40) {
+
+            addDraggable(k, { sprite: 'challah', scale: 0.08, pos: vec2(x, y) })
+
+        }
+    }
+
+    onUpdate(() => {
+        if (
+            shoppingCart.items.fish === settings.fish
+            && shoppingCart.items.challah === settings.challah
+        ) {
+            setResult('winner')
+        }
+
+        if (
+            shoppingCart.items.challah > settings.challah
+            || shoppingCart.items.fish > settings.fish
+        ) {
+            setResult('you lose..')
+        }
+    })
+
 
 
     //   wait(3,() => {  destroyAll('*')})
@@ -45,5 +131,72 @@ function TestGame(k = kaboom()) {
 }
 
 
+function createShoppingCart(k = kaboom()) {
+
+    const { vec2, add, sprite, area, scale, pos, anchor, wait, color } = k
+
+    const shoppingCart = add([
+        sprite('shopping-cart'),
+        pos(530, 245),
+        scale(0.6),
+        anchor('center'),
+        area(),
+        {
+            id: "הלוכת",
+            items: {
+                challah: 0,
+                fish: 0
+            },
+            inspect() {
+                return `${this.items.fish} :םיגד , ${this.items.challah} :תולח `
+            }
+        },
+    ])
+
+
+    const fishText = shoppingCart.add([
+        k.text(`${shoppingCart.items.fish}:םיגד `),
+        anchor('center'),
+        color('#000000'),
+        pos(0, -100),
+
+    ])
+    shoppingCart.fishText = fishText
+
+
+    const challahText = shoppingCart.add([
+        k.text(`${shoppingCart.items.challah}:תולח `),
+        anchor('center'),
+        color('#000000'),
+        pos(0, -150),
+
+    ])
+    shoppingCart.challahText = challahText
+
+
+    shoppingCart.onCollide((obj) => {
+        if (!(obj.is('fish') || obj.is('challah'))) return
+
+
+        const current = shoppingCart.scale
+        const scaleUp = current.add(vec2(0.05, 0.05))
+
+        shoppingCart.scaleTo(scaleUp)
+
+        if (obj.is('fish')) {
+            shoppingCart.items.fish++
+            shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
+
+        } else {
+            k.play('chale', { volume: 0.01 })
+            shoppingCart.items.challah++
+            shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
+        }
+        obj.destroy()
+
+        wait(0.15, () => shoppingCart.scaleTo(current))
+    })
+    return shoppingCart
+}
 
 export default TestGame

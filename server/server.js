@@ -10,12 +10,14 @@ const assetsPath = pathMake.join(__dirname, 'assets')
 const port = process.env.PORT || 8080
 
 app.use(cors())
+app.use('/assets',cors())
 app.use(express.json())
 
-// app.use('assets',express.static(assetsPath))
+
+app.use('/assets',express.static(assetsPath))
 app.use(express.static(assetsPath))
 
-// app.use(express.static(buildPath))
+// app.use('/',express.static(buildPath))
 
 app.get('/', (req, res) => {
     res.send('hello world')
