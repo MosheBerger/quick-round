@@ -1,10 +1,11 @@
 import React from 'react'
+import './input.module.css'
 
 function Input({ insertTo, type, name, setInput, value, label, min, max }) {
 
-
+    const show = (label || value !== '')
     return (<>
-        {(label || value !== '') && <label htmlFor={name}>{name}</label>}
+        <label hidden={!show} htmlFor={name}>{name}</label>
         <input
             type={type ? type : isValidInputType(name) ? name : 'text'}
             id={name}

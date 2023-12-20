@@ -1,12 +1,10 @@
-import React from 'react'
-import GameScreen from '../../GameScreen';
 import startDragSystem from '../../middleWares/playDragSystem';
 import addDraggable from '../../addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../baseURL';
 
 function TestGame(k = kaboom(), settings, setResult) {
-    const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, text, loadSound, outline, onUpdate, } = k
+    const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
 
     startDragSystem(k)
 
@@ -133,7 +131,7 @@ function TestGame(k = kaboom(), settings, setResult) {
 
 function createShoppingCart(k = kaboom()) {
 
-    const { vec2, add, sprite, area, scale, pos, anchor, wait, color } = k
+    const { vec2, add, sprite, area, scale, pos, anchor, wait } = k
 
     const shoppingCart = add([
         sprite('shopping-cart'),
@@ -154,24 +152,24 @@ function createShoppingCart(k = kaboom()) {
     ])
 
 
-    const fishText = shoppingCart.add([
-        k.text(`${shoppingCart.items.fish}:םיגד `),
-        anchor('center'),
-        color('#000000'),
-        pos(0, -100),
+    // const fishText = shoppingCart.add([
+    //     k.text(`${shoppingCart.items.fish}:םיגד `),
+    //     anchor('center'),
+    //     color('#000000'),
+    //     pos(0, -100),
 
-    ])
-    shoppingCart.fishText = fishText
+    // ])
+    // shoppingCart.fishText = fishText
 
 
-    const challahText = shoppingCart.add([
-        k.text(`${shoppingCart.items.challah}:תולח `),
-        anchor('center'),
-        color('#000000'),
-        pos(0, -150),
+    // const challahText = shoppingCart.add([
+    //     k.text(`${shoppingCart.items.challah}:תולח `),
+    //     anchor('center'),
+    //     color('#000000'),
+    //     pos(0, -150),
 
-    ])
-    shoppingCart.challahText = challahText
+    // ])
+    // shoppingCart.challahText = challahText
 
 
     shoppingCart.onCollide((obj) => {
@@ -185,12 +183,12 @@ function createShoppingCart(k = kaboom()) {
 
         if (obj.is('fish')) {
             shoppingCart.items.fish++
-            shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
+            // shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
 
         } else {
             k.play('chale', { volume: 0.01 })
             shoppingCart.items.challah++
-            shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
+            // shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
         }
         obj.destroy()
 

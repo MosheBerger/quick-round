@@ -20,8 +20,8 @@ function LogIn() {
         const { username, password } = inputs
         //todo format validation
         setLoading(true)
+        
         try {
-
             const res = await fetch(`${BASE_URL}/api/login/${username}`, {
                 method: 'POST',
                 body: JSON.stringify({ password }),

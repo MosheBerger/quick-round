@@ -1,49 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import BASE_URL from '../../baseURL'
+import useFetch from '../../hooks/useFetch'
 
 const rooms = [
-    { id: '8629177', name: `Minerva's room`, settings: { playersNum: 6, roundsNum: 5 }, status: 'waiting' },
-    { id: '5526980', name: `Lora's room`, settings: { playersNum: 2, roundsNum: 5 }, status: 'waiting' },
-    { id: '3200907', name: `Gussie's room`, settings: { playersNum: 7, roundsNum: 13 }, status: 'waiting' },
-    { id: '618777', name: `Laura's room`, settings: { playersNum: 2, roundsNum: 7 }, status: 'waiting' },
+    { id: '8629177', name: `Minerva's room`, numofplayers: 6, numofrounds: 5, status: 'waiting' },
+    { id: '5526980', name: `Lora's room`, numofplayers: 2, numofrounds: 5, status: 'waiting' },
+    { id: '3200907', name: `Gussie's room`, numofplayers: 7, numofrounds: 13, status: 'waiting' },
+    { id: '618777', name: `Laura's room`, numofplayers: 2, numofrounds: 7, status: 'waiting' },
 
 ]
 
 function RoomList() {
 
-    const [roomList, setRoomsList] = useState(rooms)
+    const [roomList, setRoomsList] = useState([])
+
+    useFetch(`${BASE_URL}/api/rooms`, setRoomsList)
+
+
+    const handleJoin = async () => {
+        console.log('lets a go');
+    }
+
+    const empty = (roomList.length === 0)
 
     return (<>
         <article>
-            <h4>RoomList</h4>
+            <h4 aria-busy={empty}> רשימת חדרים </h4>
 
-            <div>
-                tabs
-            </div>
-
-            <table>
+            <table hidden={empty}>
                 <thead>
                     <tr>
-                        <th>name</th>
-                        <th>players</th>
-                        <th>round</th>
-                        <th>status</th>
-                        <th>join</th>
+                        <th> שם </th>
+                        <th> 👥 </th>
+                        <th> ➰ </th>
+                        {/* <th> מצב </th> */}
+                        <th> הצטרפות </th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody >
                     {roomList.map((room) => {
-                        const { id, name, status, settings: { playersNum, roundsNum } } = room;
+                        const { id, name, status, numofplayers, numofrounds } = room;
 
                         return (
                             <tr key={id}>
                                 <td>{name}</td>
-                                <td>{playersNum}</td>
-                                <td>{roundsNum}</td>
-                                <td>{status}</td>
+                                <td><b>{numofplayers}</b></td>
+                                <td><b>{numofrounds}</b></td>
+                                {/* <td>{status}</td> */}
                                 <td>
-                                    <button onClick={() => /* todo */ console.log(`you are joined room ${id}`)}>
-                                        {status !== 'playing' && 'join'}
+                                    <button onClick={handleJoin}>
+                                        {status !== 'באמצע משחק' && 'הצטרף'}
                                     </button>
                                 </td>
                             </tr>

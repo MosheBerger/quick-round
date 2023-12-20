@@ -13,6 +13,7 @@ function GameScreen({ funcGame, settings, setResult }) {
 	React.useEffect(() => {
 
 		const k = kaboom({
+			stretch:true,
 			global: false,
 			canvas: canvasRef.current,
 			width: 640,
