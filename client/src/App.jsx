@@ -8,7 +8,7 @@ import './app.css'
 
 function App() {
   return (<>
-    <main className='container' >
+    <main className='container' dir='rtl'>
 
         <Routes>
 
