@@ -1,6 +1,7 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import BASE_URL from '../../baseURL'
 import useFetch from '../../hooks/useFetch'
+import { useNavigate } from 'react-router-dom'
 
 // const rooms = [
 //     { id: '8629177', name: `Minerva's room`, numofplayers: 6, numofrounds: 5, status: 'waiting' },
@@ -10,15 +11,26 @@ import useFetch from '../../hooks/useFetch'
 
 // ]
 
-function RoomList() {
+function RoomList({user}) {
 
     const [roomList, setRoomsList] = useState([])
-
     useFetch(`${BASE_URL}/api/rooms`, setRoomsList)
+    
+    const navigate = useNavigate()
 
 
-    const handleJoin = async () => {
-        console.log('lets a go');
+    const handleJoin = async (roomId) => {
+        try {
+            const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
+            const operation = await res.json()
+
+            console.log(operation);
+            if (operation.result) {
+                navigate('/game/single-player',{state:{roomId,user}})
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const empty = (roomList.length === 0)
@@ -40,7 +52,7 @@ function RoomList() {
 
                 <tbody >
                     {roomList.map((room) => {
-                        const { id, name, status, numofplayers,playersInRoom, numofrounds } = room;
+                        const { id, name, status, numofplayers, playersInRoom, numofrounds } = room;
 
                         return (
                             <tr key={id}>
@@ -49,7 +61,7 @@ function RoomList() {
                                 <td><b>{numofrounds}</b></td>
                                 {/* <td>{status}</td> */}
                                 <td>
-                                    <button onClick={handleJoin}>
+                                    <button onClick={() => {handleJoin(id)}}>
                                         {status !== 'באמצע משחק' && 'הצטרף'}
                                     </button>
                                 </td>
