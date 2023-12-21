@@ -1,7 +1,8 @@
 import startDragSystem from '../../middleWares/playDragSystem';
 import addDraggable from '../../addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
-import BASE_URL from '../../../baseURL';
+// import BASE_URL from '../../../baseURL';
+const BASE_URL =''
 
 function TestGame(k = kaboom(), settings, setResult) {
     const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
@@ -186,7 +187,7 @@ function createShoppingCart(k = kaboom()) {
             // shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
 
         } else {
-            k.play('chale', { volume: 0.01 })
+            k.play('chale', { volume: 0.1 })
             shoppingCart.items.challah++
             // shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
         }

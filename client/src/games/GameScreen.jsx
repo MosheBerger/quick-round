@@ -6,7 +6,7 @@ import './game-screen.css'
 
 
 
-function GameScreen({ funcGame, settings, setResult }) {
+function GameScreen({ funcGame, settings, setResult, promise }) {
 
 	const canvasRef = React.useRef(null)
 
@@ -16,10 +16,13 @@ function GameScreen({ funcGame, settings, setResult }) {
 			stretch:true,
 			global: false,
 			canvas: canvasRef.current,
+			// width: 1280,
 			width: 640,
-			height: 360
+			height: 360,
+			// height: 720,
+			// maxFPS:30,
 		})
-
+		k.load(promise)
 		// Reset cursor to default at frame start for easier cursor management
 		k.onUpdate(() => k.setCursor("default"))
 
