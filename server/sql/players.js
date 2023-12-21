@@ -72,7 +72,7 @@ async function countInRoom(client, roomId) {
             values: [roomId]
         }
         const res = await client.query(query)
-        return res.rows[0]
+        return res.rows[0].count
         
     } catch (error) {
         console.log(error);

@@ -12,10 +12,33 @@ router.get('/', (req, res) => {
     res.send('helllllllllllo my friend!!!!')
 })
 
+router.get('/rooms/:roomId/join/:userId', async (req, res) => {
+    const { userId, roomId } = req.params
+
+    const client = await pool.connect()
+    try {
+        const result = await DB.players.joinRoom(client,roomId,userId)
+        console.log('result',result);
+
+        res.json({result:result})
+    } catch (error) {
+        console.log(error);
+
+    } finally {
+        client.release()
+    }
+})
+
 router.get('/rooms', async (req, res) => {
     const client = await pool.connect()
     try {
         const rooms = await DB.rooms.showAll(client)
+
+        for (let i = 0; i < rooms.length; i++) {
+            const roomId = rooms[i].id
+            rooms[i].playersInRoom = await DB.players.countInRoom(client, roomId)
+        }
+
         console.log(rooms);
         res.json(rooms)
     } catch (error) {
@@ -40,7 +63,7 @@ router.post('/login/:username', async (req, res, next) => {
 
 
         const user = await DB.users.logIn(client, username, password)
-        console.log(user);
+        // console.log(user);
         // if (user === undefined)
         //     throw { code: 404, message: `the user ${username} doesn't exist` }
 

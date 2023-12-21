@@ -32,8 +32,8 @@ function Room() {
             </div>
 
         </header>
-        {join && <RoomList />}
-        {create && <CreateRoom />}
+        {join && <RoomList user={user} />}
+        {create && <CreateRoom  user={user} />}
 
     </>)
 }
