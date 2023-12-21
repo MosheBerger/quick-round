@@ -6,6 +6,8 @@ const DB = require('../DB')
 
 const router = express.Router()
 
+//todo connect clientManager middleware
+
 router.get('/', (req, res) => {
     res.send('helllllllllllo my friend!!!!')
 })
