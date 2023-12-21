@@ -50,6 +50,7 @@ function RoomList({ user }) {
 
     const join = (id) => { return (e) => handleJoin(e, id) }
     const leave = (id) => { return (e) => handleLeave(e, id) }
+    
     const empty = (roomList.length === 0)
 
     return (<>
