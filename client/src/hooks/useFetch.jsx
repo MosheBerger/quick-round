@@ -15,7 +15,7 @@ async function useFetch(URL,setState){
             }
         }
         fetchData()
-    }, [setState])
+    }, [URL,setState])
 }
 
 export default useFetch
