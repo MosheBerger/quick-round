@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BASE_URL from '../../baseURL'
-import useFetch from '../../hooks/useFetch'
 import { useNavigate } from 'react-router-dom'
+import fetcher from '../../hooks/useFetch'
 
 // const rooms = [
 //     { id: '8629177', name: `Minerva's room`, numofplayers: 6, numofrounds: 5, status: 'waiting' },
@@ -11,28 +11,45 @@ import { useNavigate } from 'react-router-dom'
 
 // ]
 
-function RoomList({user}) {
+function RoomList({ user }) {
 
     const [roomList, setRoomsList] = useState([])
-    useFetch(`${BASE_URL}/api/rooms`, setRoomsList)
-    
+    fetcher.useInEffect(`${BASE_URL}/api/rooms`, setRoomsList)
+
     const navigate = useNavigate()
 
 
-    const handleJoin = async (roomId) => {
+    const handleJoin = async (e, roomId) => {
+        e.preventDefault()
         try {
             const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
             const operation = await res.json()
 
             console.log(operation);
             if (operation.result) {
-                navigate('/game/single-player',{state:{roomId,user}})
+                navigate('/game/single-player', { state: { roomId, user } })
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const handleLeave = async (e, roomId) => {
+        e.preventDefault()
+        try {
+            const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`)
+            const operation = await res.json()
+
+            console.log(operation);
+            if (operation.result) {
+                navigate('/game/single-player', { state: { roomId, user } })
             }
         } catch (error) {
             console.log(error);
         }
     }
 
+    const join = (id) => { return (e) => handleJoin(e, id) }
+    const leave = (id) => { return (e) => handleLeave(e, id) }
     const empty = (roomList.length === 0)
 
     return (<>
@@ -61,9 +78,12 @@ function RoomList({user}) {
                                 <td><b>{numofrounds}</b></td>
                                 {/* <td>{status}</td> */}
                                 <td>
-                                    <button onClick={() => {handleJoin(id)}}>
+                                    <a href='#b' role='button' onClick={join(id)}>
                                         {status !== 'באמצע משחק' && 'הצטרף'}
-                                    </button>
+                                    </a>
+                                    <a href='#a' className='outline' role='button' onClick={leave(id)}>
+                                        {status !== 'באמצע משחק' && 'עזוב'}
+                                    </a >
                                 </td>
                             </tr>
                         )

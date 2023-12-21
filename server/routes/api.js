@@ -17,10 +17,37 @@ router.get('/rooms/:roomId/join/:userId', async (req, res) => {
 
     const client = await pool.connect()
     try {
-        const result = await DB.players.joinRoom(client,roomId,userId)
-        console.log('result',result);
+        const room = await DB.rooms.showOne(client, roomId)
+        // const result = await DB.players.leaveRoom(client, roomId, userId)
+        const playersInRoom = await DB.players.showAllInRoom(client, roomId)
 
-        res.json({result:result})
+        if (
+            playersInRoom.length >= room.numofplayers
+            || playersInRoom.some((p) => p.id == userId)
+        ) {
+            throw new Error('the room is full')
+        }
+
+        const result = await DB.players.joinRoom(client, roomId, userId)
+        console.log('result', result);
+        res.json({ result: result })
+
+    } catch (error) {
+        console.log(error);
+
+    } finally {
+        client.release()
+    }
+})
+router.get('/rooms/:roomId/leave/:userId', async (req, res) => {
+    const { userId, roomId } = req.params
+
+    const client = await pool.connect()
+    try {
+        const result = await DB.players.leaveRoom(client, roomId, userId)
+        console.log('result', result);
+        res.json({ result: result })
+
     } catch (error) {
         console.log(error);
 

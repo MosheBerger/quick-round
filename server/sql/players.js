@@ -40,7 +40,7 @@ async function showAllInRoom(client, roomId) {
         const query = {
             text: `
             SELECT
-                u.id user_id,
+                u.id,
                 u.username,
                 u.avatar
 

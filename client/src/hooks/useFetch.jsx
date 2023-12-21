@@ -1,7 +1,7 @@
 const { useEffect } = require("react");
 
 
-async function useFetch(URL,setState){
+async function useInEffect(URL,setState){
     useEffect(() => {
 
         async function fetchData() {
@@ -18,4 +18,8 @@ async function useFetch(URL,setState){
     }, [URL,setState])
 }
 
-export default useFetch
+const fetcher={
+    useInEffect
+}
+
+export default fetcher
