@@ -31,7 +31,7 @@ function TestGame(k = kaboom(), settings, setResult) {
 
     loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
     loadSprite('fish', `${BASE_URL}/assets/objects/fish.png`)
-    loadSprite('challah', `${BASE_URL}/assets/objects/challah.png`)
+    loadSprite('challah', `pr${BASE_URL}/assets/objects/challah.png`)
     loadSprite('shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`)
     loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
     loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
