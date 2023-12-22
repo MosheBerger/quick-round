@@ -1,6 +1,7 @@
 // import React, { useState } from 'react'
 // import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
 // import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
+import { useState } from 'react';
 import gameList from '../../games'
 import GameScreen from '../../games/GameScreen.jsx'
 // import useFetch from '../../hooks/useFetch.jsx'
@@ -8,26 +9,34 @@ import { useParams } from 'react-router-dom'
 
 function SinglePlayer() {
 
-const state = useParams()
-console.log(state);
+  const state = useParams()
+  console.log(state);
 
-  
+
   // const [rounds, setRounds] = useState([])
   // useFetch('',setRounds)
   // const [status, setStatus] = useState('playing')
+  const [game, setGame] = useState(1)
 
+  const handle = () => {
+    if (game === 2) {
+      setGame(prev => prev - 1)
+    } else {
 
+      setGame(prev => prev + 1)
+    }
+  }
 
   // const playing = status === 'playing'
   // if (status === 'winner') { setStatus('playing2') }
 
   return (<div  /* className='middle' */ >
-
+    <button onClick={handle}></button>
     {/* <div>
       <GameScreen funcGame={gameList[1]}/>
     </div> */}
     <div>
-      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,0)})}/>
+      <GameScreen funcGame={gameList[game]} promise={new Promise((res) => { setTimeout(res, 0) })} />
     </div>
     {/* <div>
       <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,4000)})}/>

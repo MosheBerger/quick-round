@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import { useNavigate } from 'react-router-dom'
-import BASE_URL from '../../baseURL'
+import BASE_URL from '../../BASE URL'
 
 const INITIAL_STATE = { username: '', password: '' }
 

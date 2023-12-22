@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BASE_URL from '../../baseURL'
+import BASE_URL from '../../BASE URL'
 import { useNavigate } from 'react-router-dom'
 import fetcher from '../../hooks/useFetch'
 
