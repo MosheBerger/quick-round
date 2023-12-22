@@ -20,7 +20,7 @@ function GameScreen({ funcGame, settings, setResult, promise }) {
 			width: 640,
 			height: 360,
 			// height: 720,
-			// maxFPS:30,
+			maxFPS:40,
 		})
 		k.load(promise)
 		// Reset cursor to default at frame start for easier cursor management
@@ -35,7 +35,7 @@ function GameScreen({ funcGame, settings, setResult, promise }) {
 		})
 		
 
-	}, [funcGame, setResult, settings])
+	}, [funcGame, setResult, settings,promise])
 
 	return <div>
 		<br />

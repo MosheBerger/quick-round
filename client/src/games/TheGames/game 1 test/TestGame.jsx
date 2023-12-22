@@ -52,7 +52,7 @@ function TestGame(k = kaboom(), settings, setResult) {
         giveMe.add([
             scale(0.09),
             pos(i * -30, 5),
-            sprite('fish'),
+            sprite('fish',{flipX:true}),
             anchor('topright'),
         ])
     }
@@ -60,7 +60,7 @@ function TestGame(k = kaboom(), settings, setResult) {
         giveMe.add([
             scale(0.09),
             pos(i * -30, 45),
-            sprite('challah'),
+            sprite('challah',{flipX:true}),
             anchor('topright'),
         ])
     }

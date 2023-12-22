@@ -27,7 +27,7 @@ console.log(state);
       <GameScreen funcGame={gameList[1]}/>
     </div> */}
     <div>
-      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,0)})}/>
+      <GameScreen funcGame={gameList[1]} promise={new Promise((res)=>{setTimeout(res,0)})}/>
     </div>
     {/* <div>
       <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,4000)})}/>
