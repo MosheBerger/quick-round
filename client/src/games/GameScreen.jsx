@@ -16,14 +16,15 @@ function GameScreen({ funcGame, settings, setResult, promise }) {
 			stretch:true,
 			global: false,
 			canvas: canvasRef.current,
-			// width: 1280,
-			width: 640,
-			height: 360,
-			// height: 720,
-			maxFPS:40,
+			width: 960,
+			// width: 640,
+			// height: 360,
+			height: 540,
+			// maxFPS:40,
+			// crisp:true
 		})
-		k.load(promise)
-		// Reset cursor to default at frame start for easier cursor management
+		// k.load(promise)
+
 		k.onUpdate(() => k.setCursor("default"))
 
 		funcGame(k,settings,setResult)
@@ -37,10 +38,9 @@ function GameScreen({ funcGame, settings, setResult, promise }) {
 
 	}, [funcGame, setResult, settings,promise])
 
-	return <div>
-		<br />
-		<canvas ref={canvasRef} style={{ border: '2px solid black' }}></canvas>
-	</div>
+	return <>
+		<canvas ref={canvasRef} ></canvas>
+	</>
 
 }
 

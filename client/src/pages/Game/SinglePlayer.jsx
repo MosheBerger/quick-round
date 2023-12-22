@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 // import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
 // import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
 import gameList from '../../games'
@@ -21,13 +21,13 @@ console.log(state);
   // const playing = status === 'playing'
   // if (status === 'winner') { setStatus('playing2') }
 
-  return (<div  className='middle' >
+  return (<div  /* className='middle' */ >
 
     {/* <div>
       <GameScreen funcGame={gameList[1]}/>
     </div> */}
     <div>
-      <GameScreen funcGame={gameList[1]} promise={new Promise((res)=>{setTimeout(res,0)})}/>
+      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,0)})}/>
     </div>
     {/* <div>
       <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,4000)})}/>

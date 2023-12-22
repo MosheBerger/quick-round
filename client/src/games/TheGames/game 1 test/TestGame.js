@@ -2,18 +2,19 @@ import startDragSystem from '../../middleWares/playDragSystem';
 import addDraggable from '../../addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 // import BASE_URL from '../../../baseURL';
-const BASE_URL =''
+const BASE_URL = ''
 
 function TestGame(k = kaboom(), settings, setResult) {
     const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
 
+    const mulitple = 1.5
     startDragSystem(k)
 
     //---- BACKGROUND
     setBackground('#8ee575')
     add([
         rect(width() + 100, 200),
-        pos(0, 240),
+        pos(0, k.height() - 200),
         color('#6eb25a'),
         rotate(5)
     ])
@@ -41,7 +42,7 @@ function TestGame(k = kaboom(), settings, setResult) {
     }
 
     const giveMe = add([
-        rect(170, 100, { radius: 20 }),
+        rect(170 * mulitple, 100 * mulitple, { radius: 20 * mulitple }),
         color('#f2f2f2'),
         anchor('topright'),
         outline(5, '#111111'),
@@ -50,17 +51,17 @@ function TestGame(k = kaboom(), settings, setResult) {
     ])
     for (let i = 0; i < settings.fish; i++) {
         giveMe.add([
-            scale(0.09),
-            pos(i * -30, 5),
-            sprite('fish',{flipX:true}),
+            scale(0.12),
+            pos(i * -30*mulitple, 5.5*mulitple),
+            sprite('fish', { flipX: true }),
             anchor('topright'),
         ])
     }
     for (let i = 0; i < settings.challah; i++) {
         giveMe.add([
-            scale(0.09),
-            pos(i * -30, 45),
-            sprite('challah',{flipX:true}),
+            scale(0.12),
+            pos(i * -31*mulitple, 45.5*mulitple),
+            sprite('challah', { flipX: true }),
             anchor('topright'),
         ])
     }
@@ -71,36 +72,36 @@ function TestGame(k = kaboom(), settings, setResult) {
 
     add([
         sprite('refrigerator'),
-        pos(120, 170),
-        scale(0.6),
+        pos(120 * mulitple, 170 * mulitple),
+        scale(0.9),
         anchor('center'),
         area(),
 
     ])
     add([
         sprite('shelf'),
-        pos(340, 170),
-        scale(0.6),
+        pos(340 * mulitple, 170 * mulitple),
+        scale(0.9),
         anchor('center'),
         area(),
 
     ])
     const shoppingCart = createShoppingCart(k)
 
-    for (let i = 0, y = 90; i < 4; i++, y += 50) {
+    for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
 
-        for (let j = 0, x = 50; j < 4; j++, x += 45) {
+        for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
 
-            addDraggable(k, { sprite: 'fish', scale: 0.08, pos: vec2(x, y) })
+            addDraggable(k, { sprite: 'fish', scale: 0.12, pos: vec2(x, y) })
 
         }
     }
 
-    for (let i = 0, y = 90; i < 4; i++, y += 55) {
+    for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
 
-        for (let j = 0, x = 280; j < 4; j++, x += 40) {
+        for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
 
-            addDraggable(k, { sprite: 'challah', scale: 0.08, pos: vec2(x, y) })
+            addDraggable(k, { sprite: 'challah', scale: 0.12, pos: vec2(x, y) })
 
         }
     }
@@ -131,13 +132,14 @@ function TestGame(k = kaboom(), settings, setResult) {
 
 
 function createShoppingCart(k = kaboom()) {
+    const mulitple = 1.5
 
     const { vec2, add, sprite, area, scale, pos, anchor, wait } = k
 
     const shoppingCart = add([
         sprite('shopping-cart'),
-        pos(530, 245),
-        scale(0.6),
+        pos(530 * mulitple, 245 * mulitple),
+        scale(0.8),
         anchor('center'),
         area(),
         {

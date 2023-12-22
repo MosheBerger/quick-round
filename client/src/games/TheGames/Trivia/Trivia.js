@@ -57,7 +57,7 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
         'question',
         anchor('center'),
         text(fixHeb(questionText), {
-            size: 20,
+            size: 20*2,
             width: width * 0.8,
             align: 'center'
         }),
