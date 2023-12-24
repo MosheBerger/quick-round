@@ -27,12 +27,10 @@ router.post('/login/:username', async (req, res, next) => {
         //     throw { code: 404, message: `the user ${username} doesn't exist` }
 
         res.json(user)
-
+        next()
+        
     } catch (error) {
         next(error)
-
-    } finally {
-        client.release()
     }
 })
 

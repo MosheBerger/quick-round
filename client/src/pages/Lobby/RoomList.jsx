@@ -25,6 +25,7 @@ function RoomList({ user }) {
             const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
             const operation = await res.json()
 
+
             console.log(operation);
             if (operation.result) {
                 navigate('/game/single-player', { state: { roomId, user } })
@@ -33,6 +34,7 @@ function RoomList({ user }) {
             console.log(error);
         }
     }
+
     const handleLeave = async (e, roomId) => {
         e.preventDefault()
         try {
@@ -40,9 +42,9 @@ function RoomList({ user }) {
             const operation = await res.json()
 
             console.log(operation);
-            if (operation.result) {
-                navigate('/game/single-player', { state: { roomId, user } })
-            }
+
+            fetcher.useNow(`${BASE_URL}/api/rooms`, setRoomsList)
+
         } catch (error) {
             console.log(error);
         }
@@ -50,7 +52,7 @@ function RoomList({ user }) {
 
     const join = (id) => { return (e) => handleJoin(e, id) }
     const leave = (id) => { return (e) => handleLeave(e, id) }
-    
+
     const empty = (roomList.length === 0)
 
     return (<>

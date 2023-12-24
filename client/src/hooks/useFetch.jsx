@@ -1,7 +1,7 @@
 const { useEffect } = require("react");
 
 
-async function useInEffect(URL,setState){
+async function useInEffect(URL, setState) {
     useEffect(() => {
 
         async function fetchData() {
@@ -15,11 +15,23 @@ async function useInEffect(URL,setState){
             }
         }
         fetchData()
-    }, [URL,setState])
+    }, [URL, setState])
+}
+async function useNow(URL, setState) {
+    try {
+        const res = await fetch(URL)
+        const data = await res.json()
+        setState(data)
+
+    } catch (error) {
+        return error
+    }
+
 }
 
-const fetcher={
-    useInEffect
+const fetcher = {
+    useInEffect,
+    useNow,
 }
 
 export default fetcher

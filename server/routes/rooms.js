@@ -4,6 +4,7 @@ const DB = require('../DB')
 
 const router = express.Router()
 
+
 //GET ALL
 router.get('/', async (req, res, next) => {
 
@@ -20,12 +21,10 @@ router.get('/', async (req, res, next) => {
         res.json(rooms)
 
     } catch (error) {
-        console.log(error);
-
-    } finally {
-        next()
+        next(error)
     }
 })
+
 
 //JOIN
 router.get('/:roomId/join/:userId', async (req, res, next) => {
@@ -38,14 +37,15 @@ router.get('/:roomId/join/:userId', async (req, res, next) => {
         const playersInRoom = await DB.players.showAllInRoom(client, roomId)
 
         if (playersInRoom.length >= room.numofplayers) {
-            throw new Error('the room is full')
+            throw { statusCode: 403, message: 'the room is full' }
         }
         if (playersInRoom.some((p) => p.id == userId)) {
-            throw new Error('you already here!')
+            throw { statusCode: 409, message: 'you already here!' }
         }
 
         const result = await DB.players.joinRoom(client, roomId, userId)
         console.log('result', result);
+
         res.json({ result: result })
         next()
 
@@ -55,6 +55,7 @@ router.get('/:roomId/join/:userId', async (req, res, next) => {
 })
 
 
+//LEAVE
 router.get('/:roomId/leave/:userId', async (req, res, next) => {
 
     const client = req.client
@@ -64,12 +65,10 @@ router.get('/:roomId/leave/:userId', async (req, res, next) => {
         const result = await DB.players.leaveRoom(client, roomId, userId)
         console.log('result', result);
         res.json({ result: result })
-
-    } catch (error) {
-        console.log(error);
         
-    } finally {
-        client.release()
+        next()
+    } catch (error) {
+        next(error)
     }
 })
 
