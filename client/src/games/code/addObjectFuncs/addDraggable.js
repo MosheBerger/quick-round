@@ -11,7 +11,7 @@ function addDraggable(k = kaboom(),
 
     const {
         add, pos, sprite, area, anchor, scale,
-        RED, BLACK, rand, vec2, width, height,
+        BLACK, rand, vec2, width, height,
         color, opacity, readd, onUpdate
     } = k;
 

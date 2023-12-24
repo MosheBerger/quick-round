@@ -1,7 +1,7 @@
 
 import kaboom from 'kaboom';
-import addButton from '../../addObjectFuncs/addButton';
-import fixHeb from '../../utils/fixHebrew';
+import addButton from '../../code/addObjectFuncs/addButton';
+import fixHeb from '../../code/utils/fixHebrew';
 
 
 function TriviaGame(k = kaboom(), settings = {}, setResult) {

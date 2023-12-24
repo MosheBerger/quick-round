@@ -1,5 +1,5 @@
-import startDragSystem from '../../middleWares/playDragSystem';
-import addDraggable from '../../addObjectFuncs/addDraggable';
+import startDragSystem from '../../code/middleWares/playDragSystem';
+import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 // import BASE_URL from '../../../baseURL';
 const BASE_URL = ''

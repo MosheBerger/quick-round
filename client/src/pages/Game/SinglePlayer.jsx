@@ -3,7 +3,7 @@
 // import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
 import { useState } from 'react';
 import gameList from '../../games'
-import GameScreen from '../../games/GameScreen.jsx'
+import GameScreen from '../../games/code/GameScreen.jsx'
 // import useFetch from '../../hooks/useFetch.jsx'
 import { useParams } from 'react-router-dom'
 
