@@ -22,7 +22,7 @@ function LogIn() {
         setLoading(true)
         
         try {
-            const res = await fetch(`${BASE_URL}/api/login/${username}`, {
+            const res = await fetch(`${BASE_URL}/api/users/login/${username}`, {
                 method: 'POST',
                 body: JSON.stringify({ password }),
                 headers: {

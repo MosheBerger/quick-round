@@ -1,5 +1,5 @@
 import TriviaGame from "./TheGames/Trivia/Trivia"
-import TestGame from "./TheGames/game 1 test/TestGame"
+import TestGame from "./TheGames/shopping/shopping"
 
 const gameList = {
     "1":TriviaGame,

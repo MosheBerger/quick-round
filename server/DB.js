@@ -8,9 +8,6 @@ const rounds = require("./sql/rounds");
 
 
 
-
-
-
 const DB = {
     users,
     games,
@@ -19,12 +16,6 @@ const DB = {
     results,
     rooms,
     rounds,
-    open: () => {
-        return this
-    },
-    close: () => {
-        return this
-    }
 }
 
 module.exports = DB

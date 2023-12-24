@@ -1,8 +1,7 @@
 import startDragSystem from '../../code/middleWares/playDragSystem';
 import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
-// import BASE_URL from '../../../baseURL';
-const BASE_URL = ''
+import BASE_URL from '../../../BASE URL';
 
 function TestGame(k = kaboom(), settings, setResult) {
     const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
@@ -31,7 +30,7 @@ function TestGame(k = kaboom(), settings, setResult) {
 
     loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
     loadSprite('fish', `${BASE_URL}/assets/objects/fish.png`)
-    loadSprite('challah', `pr${BASE_URL}/assets/objects/challah.png`)
+    loadSprite('challah', `${BASE_URL}/assets/objects/challah.png`)
     loadSprite('shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`)
     loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
     loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
