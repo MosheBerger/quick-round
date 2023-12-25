@@ -23,5 +23,5 @@ app.use('/*', express.static(buildPath))
 
 
 app.listen(port, () => {
-  console.log(`🚀 we are on http://localhost:${port}`);
+  console.log('🚀 ',`we are on http://localhost:${port}`);
 })
