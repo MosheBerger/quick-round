@@ -5,52 +5,35 @@ import fixHeb from '../../code/utils/fixHebrew';
 import GameScreen from '../../code/GameScreen';
 
 
-function Trivia({settings, setResult}){
-    
-    return<>   
-        <GameScreen funcGame={TriviaGame} setResult={setResult} settings={settings} />
+function Trivia(props) {
+
+    return <>
+        <GameScreen funcGame={TriviaGame} {...props}  />
     </>
 }
 
-function TriviaGame(k = kaboom(), settings = {}, setResult) {
+function TriviaGame(k = kaboom()) {
 
+    
+    const {
+        setBackground, vec2,
+        width: screenWidth, height: screenHeight, add,
+        pos, rect, outline, anchor, color, text, settings
+        
+    } = k
 
     const {
         answerA, answerB, answerC, answerD,
         question: questionText, trueAnswer
 
     } = settings
-
-    const {
-        setBackground, vec2,
-        width: screenWidth, height: screenHeight, add,
-        pos, rect, outline, anchor, color, text
-
-    } = k
-
+    
     setBackground(233, 233, 233)
 
 
-    // const text = () => k.get('*').length
-
-    // const func = (obj) => {
-    //     obj.text = 'aya!'
-    //     k.wait(1.5, () => { obj.text = obj.originalText })
-    // }
-    const func = (obj) => {
-        if (obj.text === settings[trueAnswer]) {
-            setResult({success:true,time:1})
-            k.quit()
-        }
-        else {
-            setResult({success:false,time:1})
-            k.quit()
-        }
+    const setFinish = (obj) => {
+        k.finish(obj.text === settings[trueAnswer])
     }
-    // k.onMouseMove((p, d) => {
-    //     console.log('how many:', p);
-    //     console.log('delta:', d);
-    // })
 
     const width = screenWidth()
     const height = screenHeight()
@@ -67,7 +50,7 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
         'question',
         anchor('center'),
         text(fixHeb(questionText), {
-            size: 20*2,
+            size: 20 * 2,
             width: width * 0.8,
             align: 'center'
         }),
@@ -84,14 +67,14 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
         pos: vec2(width / 4, height * 0.6),
         size: { w: width / 2.5, h: height / 6 },
         color: '#da193b',
-        onclick: func
+        onclick: setFinish
     })
     addButton(k, {
         text: fixHeb(answerB),
         pos: vec2(width * 0.75, height * 0.6),
         size: { w: width / 2.5, h: height / 6 },
         color: '#d79c02',
-        onclick: func,
+        onclick: setFinish,
     })
 
     addButton(k, {
@@ -99,14 +82,14 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
         pos: vec2(width / 4, height * 0.85),
         size: { w: width / 2.5, h: height / 6 },
         color: '#1363cb',
-        onclick: func,
+        onclick: setFinish,
     })
     addButton(k, {
         text: fixHeb(answerD),
         pos: vec2(width * 0.75, height * 0.85),
         size: { w: width / 2.5, h: height / 6 },
         color: '#2a8b0f',
-        onclick: func,
+        onclick: setFinish,
     })
 }
 

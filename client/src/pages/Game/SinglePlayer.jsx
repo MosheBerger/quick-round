@@ -1,11 +1,9 @@
 
 import { useState } from 'react';
 import gameList from '../../games'
-import GameScreen from '../../games/code/GameScreen.jsx'
-import { useParams } from 'react-router-dom'
-import Trivia from '../../games/TheGames/Trivia/Trivia';
+// import { useParams } from 'react-router-dom'
 
-const triviaSettings ={
+const triviaSettings = {
   question: 'when WarioWare, Inc.: Mega Microgame$! released',
   answerA: '2000',
   answerB: '2003',
@@ -14,41 +12,44 @@ const triviaSettings ={
   trueAnswer: 'answerB',
 }
 
-const INITIAL_RESULT={ success: false, time: 0 }
+const rounds = [1, 2, 2, 1]
+
+const INITIAL_RESULT = { success: false, time: 0 }
 function SinglePlayer() {
 
-  const state = useParams()
-  console.log(state);
+  // const state = useParams()
+  // console.log(state);
 
   const [result, setResult] = useState(INITIAL_RESULT)
-  const [game, setGame] = useState(2)
+  const [curRound, setCurRound] = useState(0)
 
-  const handle = () => {
-    setResult(INITIAL_RESULT)
-    if (game === 2) {
-      setGame(prev => prev - 1)
+
+
+  const moveToNextGame = () => {
+
+    if (curRound + 1 !== rounds.length) {
+      setCurRound(prev => prev + 1)
+
     } else {
-
-      setGame(prev => prev + 1)
+      setCurRound(0)
     }
   }
 
-  const Game = gameList[game]
 
-  return (<div  /* className='middle' */ >
-    <button onClick={handle}>change game</button>
+  const Game = gameList[rounds[curRound]]
 
-    {/* {result.time === 0 && <> */}
-      {/* <GameScreen funcGame={gameList[game]} setResult={setResult} settings={triviaSettings} /> */}
-    {/* </>}   */}
+  return (<>
+    <div  /* className='middle' */ >
+      <button onClick={moveToNextGame}>change game</button>
 
-  {/* <Trivia settings={triviaSettings}  setResult={setResult} /> */}
-  <Game settings={triviaSettings}  setResult={setResult} />
-    
-    <span>success: {result.success ? 'true': 'false'}</span>
-    <p>time: {result.time}</p>
+      <Game key={curRound} settings={triviaSettings} setResult={setResult} moveToNextGame={moveToNextGame} />
 
-  </div >)
+      <h4>round {curRound}</h4>
+      <span>success: {result.success ? 'true' : 'false'}</span>
+      <p>time: {result.time}</p>
+
+    </div >
+  </>)
 
 
 }

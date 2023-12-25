@@ -6,7 +6,7 @@ import './game-screen.css'
 
 
 
-function GameScreen({ funcGame, settings, setResult }) {
+function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 
 	const canvasRef = React.useRef(null)
 
@@ -17,24 +17,30 @@ function GameScreen({ funcGame, settings, setResult }) {
 			global: false,
 			canvas: canvasRef.current,
 			width: 960,
-			// width: 640,
-			// height: 360,
 			height: 540,
-			// maxFPS:40,
-			// crisp:true
 		})
-		// k.load(promise)
+		let startTime
+		k.onLoad(() => startTime = Date.now())
 
 		k.onUpdate(() => k.setCursor("default"))
 
-		funcGame(k, settings, setResult)
+		k.settings = settings
+
+		k.finish = (success = false) => {
+			const time = Date.now() - startTime
+			console.log('time', time);
+			setResult({ success, time })
+			k.quit()
+
+			moveToNextGame?.()
+		}
+
+		funcGame(k)
 
 		debugToggle(k)
 
 		return (() => {
-			console.log('kabooom');
 			k.destroyAll()
-			// k.quit()
 		})
 
 

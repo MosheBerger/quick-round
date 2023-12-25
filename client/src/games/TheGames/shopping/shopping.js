@@ -4,16 +4,20 @@ import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
 import GameScreen from '../../code/GameScreen';
 
-function Shopping({settings, setResult}){
-    
-    return<>   
-        <GameScreen funcGame={ShoppingGame} setResult={setResult} settings={settings} />
+function Shopping(props) {
+
+    return <>
+        <GameScreen funcGame={ShoppingGame} {...props} />
     </>
 }
 
 
-function ShoppingGame(k = kaboom(), settings, setResult) {
-    const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
+function ShoppingGame(k = kaboom()) {
+    const {
+        loadSprite, setBackground, vec2, add, finish,
+        sprite, area, scale, pos, anchor, rect, width,
+        color, rotate, loadSound, outline,/* settings, */ onUpdate,
+    } = k
 
     const mulitple = 1.5
     startDragSystem(k)
@@ -44,8 +48,8 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
     loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
     loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
 
-    //! RELEASE COMMENT
-    settings = /* settings || */ {
+    //! RELEASE COMMENT todo
+    const settings = /* settings || */ {
         fish: k.randi(1, 5),
         challah: k.randi(1, 5)
     }
@@ -120,16 +124,14 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
             shoppingCart.items.fish === settings.fish
             && shoppingCart.items.challah === settings.challah
         ) {
-            setResult({ success: true, time: 1 })
-            k.quit()
+            finish(true)
         }
 
         if (
             shoppingCart.items.challah > settings.challah
             || shoppingCart.items.fish > settings.fish
         ) {
-            setResult({ success: false, time: 1 })
-            k.quit()
+            finish()
         }
     })
 
