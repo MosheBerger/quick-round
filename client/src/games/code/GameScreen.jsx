@@ -6,14 +6,14 @@ import './game-screen.css'
 
 
 
-function GameScreen({ funcGame, settings, setResult, promise }) {
+function GameScreen({ funcGame, settings, setResult }) {
 
 	const canvasRef = React.useRef(null)
 
 	React.useEffect(() => {
 
 		const k = kaboom({
-			stretch:true,
+			stretch: true,
 			global: false,
 			canvas: canvasRef.current,
 			width: 960,
@@ -27,16 +27,18 @@ function GameScreen({ funcGame, settings, setResult, promise }) {
 
 		k.onUpdate(() => k.setCursor("default"))
 
-		funcGame(k,settings,setResult)
+		funcGame(k, settings, setResult)
 
 		debugToggle(k)
 
 		return (() => {
-			k.destroyAll('*')
+			console.log('kabooom');
+			k.destroyAll()
+			// k.quit()
 		})
-		
 
-	}, [funcGame, setResult, settings,promise])
+
+	}, [funcGame, setResult, settings])
 
 	return <>
 		<canvas ref={canvasRef} ></canvas>
