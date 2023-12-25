@@ -15,7 +15,7 @@ function RoomList({ user }) {
 
     const handleJoin = async (e, roomId) => {
         e.preventDefault()
-        console.log('join');
+        // console.log('join');
         try {
             const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
             const operation = await res.json()

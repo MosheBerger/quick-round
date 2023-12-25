@@ -8,13 +8,13 @@ router.use('/*',clientManager.connect)
 
 const usersRouter = require('./users')
 const roomsRouter = require('./rooms')
-// const roomRouter = require('./games')
-// const roomRouter = require('./rounds')
+// const gameRouter = require('./games')
+const roundRouter = require('./rounds.js')
 
 router.use('/users/',usersRouter)
 router.use('/rooms/',roomsRouter)
-// router.use('/games/',)
-// router.use('/rounds/',)
+// router.use('/games/',gameRouter)
+router.use('/rounds/',roundRouter)
 
 
 router.use(errorHandler)
