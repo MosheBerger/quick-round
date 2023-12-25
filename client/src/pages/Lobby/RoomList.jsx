@@ -1,15 +1,9 @@
+
 import React, { useState } from 'react'
 import BASE_URL from '../../BASE URL'
 import { useNavigate } from 'react-router-dom'
 import fetcher from '../../hooks/useFetch'
 
-// const rooms = [
-//     { id: '8629177', name: `Minerva's room`, numofplayers: 6, numofrounds: 5, status: 'waiting' },
-//     { id: '5526980', name: `Lora's room`, numofplayers: 2, numofrounds: 5, status: 'waiting' },
-//     { id: '3200907', name: `Gussie's room`, numofplayers: 7, numofrounds: 13, status: 'waiting' },
-//     { id: '618777', name: `Laura's room`, numofplayers: 2, numofrounds: 7, status: 'waiting' },
-
-// ]
 
 function RoomList({ user }) {
 
@@ -21,6 +15,7 @@ function RoomList({ user }) {
 
     const handleJoin = async (e, roomId) => {
         e.preventDefault()
+        console.log('join');
         try {
             const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
             const operation = await res.json()
@@ -82,10 +77,10 @@ function RoomList({ user }) {
                                 {/* <td>{status}</td> */}
                                 <td>
                                     <a href='#b' role='button' onClick={join(id)}>
-                                        {status !== 'באמצע משחק' && 'הצטרף'}
+                                        הצטרף
                                     </a>
                                     <a href='#a' className='outline' role='button' onClick={leave(id)}>
-                                        {status !== 'באמצע משחק' && 'עזוב'}
+                                        עזוב
                                     </a >
                                 </td>
                             </tr>

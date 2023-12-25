@@ -23,10 +23,10 @@ function Room() {
             <h1> לובי </h1>
 
             <div >
-                <a href='#join' name='join' role='button' className={!join && 'outline'} onClick={handleClick} >
+                <a href='#join' name='join' role='button' className={join ? '':'outline'} onClick={handleClick} >
                     הצטרף
                 </a>
-                <a href='#create' name='create' role='button' className={!create && 'outline'} onClick={handleClick}>
+                <a href='#create' name='create' role='button' className={create ?  '':'outline'} onClick={handleClick}>
                     צור חדר
                 </a>
             </div>

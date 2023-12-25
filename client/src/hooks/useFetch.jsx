@@ -1,7 +1,7 @@
-const { useEffect } = require("react");
+import { useState, useEffect } from 'react'
 
 
-async function useInEffect(URL, setState) {
+function useInEffect(URL, setState) {
     useEffect(() => {
 
         async function fetchData() {
@@ -17,6 +17,33 @@ async function useInEffect(URL, setState) {
         fetchData()
     }, [URL, setState])
 }
+
+function useStateAndEffect(URL, INITIAL_STATE) {
+
+    const [state, setState] = useState(INITIAL_STATE)
+
+    // console.log('errorr?');
+    useEffect(() => {
+
+        async function fetchData() {
+            try {
+                const res = await fetch(URL)
+                const data = await res.json()
+                setState(data)
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchData()
+
+    }, [URL])
+
+    return [state, setState]
+}
+
+
 async function useNow(URL, setState) {
     try {
         const res = await fetch(URL)
@@ -30,8 +57,9 @@ async function useNow(URL, setState) {
 }
 
 const fetcher = {
-    useInEffect,
     useNow,
+    useInEffect,
+    useStateAndEffect,
 }
 
 export default fetcher

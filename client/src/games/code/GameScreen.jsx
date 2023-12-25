@@ -20,7 +20,10 @@ function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 			height: 540,
 		})
 		let startTime
-		k.onLoad(() => startTime = Date.now())
+		k.onLoad(() => {
+			startTime = Date.now()
+			console.log('start on', startTime);
+		})
 
 		k.onUpdate(() => k.setCursor("default"))
 
@@ -44,7 +47,7 @@ function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 		})
 
 
-	}, [funcGame, setResult, settings])
+	}, [funcGame, setResult, settings,moveToNextGame])
 
 	return <div>
 		<canvas ref={canvasRef} ></canvas>

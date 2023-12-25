@@ -19,7 +19,8 @@ router.get('/', async (req, res, next) => {
 
         console.log(rooms);
         res.json(rooms)
-
+        
+        next()
     } catch (error) {
         next(error)
     }
@@ -65,7 +66,7 @@ router.get('/:roomId/leave/:userId', async (req, res, next) => {
         const result = await DB.players.leaveRoom(client, roomId, userId)
         console.log('result', result);
         res.json({ result: result })
-        
+
         next()
     } catch (error) {
         next(error)

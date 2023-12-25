@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
 import gameList from '../../games'
-// import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import fetcher from '../../hooks/useFetch';
 
 const triviaSettings = {
   question: 'when WarioWare, Inc.: Mega Microgame$! released',
@@ -15,10 +16,14 @@ const triviaSettings = {
 const rounds = [1, 2, 2, 1]
 
 const INITIAL_RESULT = { success: false, time: 0 }
+
 function SinglePlayer() {
 
-  // const state = useParams()
-  // console.log(state);
+  const { roomId, user } = useLocation().state
+
+  const [state, setState] = fetcher.useStateAndEffect('hibye','dehoid')
+
+
 
   const [result, setResult] = useState(INITIAL_RESULT)
   const [curRound, setCurRound] = useState(0)
@@ -42,7 +47,7 @@ function SinglePlayer() {
     <div  /* className='middle' */ >
       <button onClick={moveToNextGame}>change game</button>
 
-      <Game key={curRound} settings={triviaSettings} setResult={setResult} moveToNextGame={moveToNextGame} />
+      <Game key={curRound} settings={triviaSettings} setResult={setResult} /* moveToNextGame={moveToNextGame} */ />
 
       <h4>round {curRound}</h4>
       <span>success: {result.success ? 'true' : 'false'}</span>
