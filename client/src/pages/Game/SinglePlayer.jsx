@@ -21,15 +21,16 @@ function SinglePlayer() {
 
   const { roomId, user } = useLocation().state
 
-  const url = `${BASE_URL}/rounds/in-room/${roomId}`
+  const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
   const [rounds, setRounds] = fetcher.useStateAndEffect(url, [])
 
-  console.log(rounds);
+  // console.log(rounds);
 
   const [result, setResult] = useState(INITIAL_RESULT)
   const [curRound, setCurRound] = useState(0)
 
-
+  const sorted = rounds.sort((a, b) => a?.round_num - b?.round_num)
+  const thisRound = sorted[curRound]
 
   const moveToNextGame = () => {
 
@@ -42,18 +43,18 @@ function SinglePlayer() {
   }
 
 
-  const Game = gameList[rounds[curRound]]
+  const Game = gameList[thisRound?.game_id]
   const playing = rounds.length > 0
 
   return (<>
     <div  /* className='middle' */ >
-      <button onClick={moveToNextGame}>change game</button>
+      {/* <button onClick={moveToNextGame}>change game</button> */}
+      <h4 style={{textAlign:"center"}}> סבב מספר {thisRound?.round_num}</h4>
 
       {playing &&
-        <Game key={curRound} settings={triviaSettings} setResult={setResult} moveToNextGame={moveToNextGame} />
+        <Game key={curRound} settings={thisRound?.settings} setResult={setResult} moveToNextGame={moveToNextGame} />
       }
 
-      <h4>round {curRound}</h4>
       <span>success: {result.success ? 'true' : 'false'}</span>
       <p>time: {result.time}</p>
 

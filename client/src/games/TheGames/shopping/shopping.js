@@ -16,7 +16,7 @@ function ShoppingGame(k = kaboom()) {
     const {
         loadSprite, setBackground, vec2, add, finish,
         sprite, area, scale, pos, anchor, rect, width,
-        color, rotate, loadSound, outline,/* settings, */ onUpdate,
+        color, rotate, loadSound, outline,settings:settingsProps, onUpdate,
     } = k
 
     const mulitple = 1.5
@@ -49,7 +49,7 @@ function ShoppingGame(k = kaboom()) {
     loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
 
     //! RELEASE COMMENT todo
-    const settings = /* settings || */ {
+    const settings = settingsProps || {
         fish: k.randi(1, 5),
         challah: k.randi(1, 5)
     }

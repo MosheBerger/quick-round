@@ -8,18 +8,18 @@ import GameScreen from '../../code/GameScreen';
 function Trivia(props) {
 
     return <>
-        <GameScreen funcGame={TriviaGame} {...props}  />
+        <GameScreen funcGame={TriviaGame} {...props} />
     </>
 }
 
 function TriviaGame(k = kaboom()) {
 
-    
+
     const {
         setBackground, vec2,
         width: screenWidth, height: screenHeight, add,
         pos, rect, outline, anchor, color, text, settings
-        
+
     } = k
 
     const {
@@ -27,12 +27,12 @@ function TriviaGame(k = kaboom()) {
         question: questionText, trueAnswer
 
     } = settings
-    
+
     setBackground(233, 233, 233)
 
 
     const setFinish = (obj) => {
-        k.finish(obj.text === settings[trueAnswer])
+        k.finish(obj.text === fixHeb(settings[trueAnswer]))
     }
 
     const width = screenWidth()
