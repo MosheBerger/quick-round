@@ -40,9 +40,9 @@ function GameScreen({ funcGame, settings, setResult }) {
 
 	}, [funcGame, setResult, settings])
 
-	return <>
+	return <div>
 		<canvas ref={canvasRef} ></canvas>
-	</>
+	</div>
 
 }
 
