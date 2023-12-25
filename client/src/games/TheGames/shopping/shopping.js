@@ -2,17 +2,8 @@ import startDragSystem from '../../code/middleWares/playDragSystem';
 import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
-import GameScreen from '../../code/GameScreen';
 
-function Shopping({settings, setResult}){
-    
-    return<>   
-        <GameScreen funcGame={ShoppingGame} setResult={setResult} settings={settings} />
-    </>
-}
-
-
-function ShoppingGame(k = kaboom(), settings, setResult) {
+function TestGame(k = kaboom(), settings, setResult) {
     const { loadSprite, setBackground, vec2, add, sprite, area, scale, pos, anchor, rect, width, color, rotate, loadSound, outline, onUpdate, } = k
 
     const mulitple = 1.5
@@ -44,8 +35,7 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
     loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
     loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
 
-    //! RELEASE COMMENT
-    settings = /* settings || */ {
+    settings = settings || {
         fish: k.randi(1, 5),
         challah: k.randi(1, 5)
     }
@@ -61,7 +51,7 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
     for (let i = 0; i < settings.fish; i++) {
         giveMe.add([
             scale(0.12),
-            pos(i * -30 * mulitple, 5.5 * mulitple),
+            pos(i * -30*mulitple, 5.5*mulitple),
             sprite('fish', { flipX: true }),
             anchor('topright'),
         ])
@@ -69,7 +59,7 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
     for (let i = 0; i < settings.challah; i++) {
         giveMe.add([
             scale(0.12),
-            pos(i * -31 * mulitple, 45.5 * mulitple),
+            pos(i * -31*mulitple, 45.5*mulitple),
             sprite('challah', { flipX: true }),
             anchor('topright'),
         ])
@@ -120,16 +110,14 @@ function ShoppingGame(k = kaboom(), settings, setResult) {
             shoppingCart.items.fish === settings.fish
             && shoppingCart.items.challah === settings.challah
         ) {
-            setResult({ success: true, time: 1 })
-            k.quit()
+            setResult('winner')
         }
 
         if (
             shoppingCart.items.challah > settings.challah
             || shoppingCart.items.fish > settings.fish
         ) {
-            setResult({ success: false, time: 1 })
-            k.quit()
+            setResult('you lose..')
         }
     })
 
@@ -211,4 +199,4 @@ function createShoppingCart(k = kaboom()) {
     return shoppingCart
 }
 
-export default Shopping
+export default TestGame

@@ -1,30 +1,24 @@
-
+// import React, { useState } from 'react'
+// import TestGame from '../../games/TheGames/game 1 test/TestGame.jsx'
+// import TriviaGame from '../../games/TheGames/Trivia/Trivia.js'
 import { useState } from 'react';
 import gameList from '../../games'
 import GameScreen from '../../games/code/GameScreen.jsx'
+// import useFetch from '../../hooks/useFetch.jsx'
 import { useParams } from 'react-router-dom'
-import Trivia from '../../games/TheGames/Trivia/Trivia';
 
-const triviaSettings ={
-  question: 'when WarioWare, Inc.: Mega Microgame$! released',
-  answerA: '2000',
-  answerB: '2003',
-  answerC: '2012',
-  answerD: '1956',
-  trueAnswer: 'answerB',
-}
-
-const INITIAL_RESULT={ success: false, time: 0 }
 function SinglePlayer() {
 
   const state = useParams()
   console.log(state);
 
-  const [result, setResult] = useState(INITIAL_RESULT)
-  const [game, setGame] = useState(2)
+
+  // const [rounds, setRounds] = useState([])
+  // useFetch('',setRounds)
+  // const [status, setStatus] = useState('playing')
+  const [game, setGame] = useState(1)
 
   const handle = () => {
-    setResult(INITIAL_RESULT)
     if (game === 2) {
       setGame(prev => prev - 1)
     } else {
@@ -33,22 +27,49 @@ function SinglePlayer() {
     }
   }
 
-  const Game = gameList[game]
+  // const playing = status === 'playing'
+  // if (status === 'winner') { setStatus('playing2') }
 
   return (<div  /* className='middle' */ >
-    <button onClick={handle}>change game</button>
+    <button onClick={handle}></button>
+    {/* <div>
+      <GameScreen funcGame={gameList[1]}/>
+    </div> */}
+    <div>
+      <GameScreen funcGame={gameList[game]} promise={new Promise((res) => { setTimeout(res, 0) })} />
+    </div>
+    {/* <div>
+      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,4000)})}/>
+    </div>
+    <div>
+      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,6000)})}/>
+    </div>
+    <div>
+      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,8000)})}/>
+    </div>
+    <div>
+      <GameScreen funcGame={gameList[2]} promise={new Promise((res)=>{setTimeout(res,10000)})}/>
+    </div> */}
+    {/* <div>
+      <GameScreen funcGame={gameList[1]}/>
+    </div> */}
 
-    {/* {result.time === 0 && <> */}
-      {/* <GameScreen funcGame={gameList[game]} setResult={setResult} settings={triviaSettings} /> */}
-    {/* </>}   */}
+    {/* {status === 'playing1' &&
+      <div className='middle'>
+        <GameScreen funcGame={TriviaGame} settings={settings} setResult={setStatus} />
+      </div>
+    }
+    {status === 'playing2' &&
+      <div className='middle'>
+        <GameScreen funcGame={TriviaGame} settings={settings2} setResult={setStatus} />
+      </div>
+    } */}
+    {/* {playing && <GameScreen funcGame={TestGame} setResult={setStatus} />} */}
 
-  {/* <Trivia settings={triviaSettings}  setResult={setResult} /> */}
-  <Game settings={triviaSettings}  setResult={setResult} />
-    
-    <span>success: {result.success ? 'true': 'false'}</span>
-    <p>time: {result.time}</p>
+    {/* <h1 style={{ textAlign: 'center' }}>{status}</h1>
+    <button onClick={() => setStatus('playing')}>reset</button> */}
 
-  </div >)
+  </div>)
 
 
 }

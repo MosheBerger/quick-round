@@ -1,9 +1,9 @@
 import TriviaGame from "./TheGames/Trivia/Trivia"
-import ShoppingGame from "./TheGames/shopping/shopping"
+import TestGame from "./TheGames/shopping/shopping"
 
 const gameList = {
     "1":TriviaGame,
-    "2":ShoppingGame,
+    "2":TestGame,
 }
 
 export default gameList

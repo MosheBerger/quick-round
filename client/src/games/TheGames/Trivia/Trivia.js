@@ -2,15 +2,7 @@
 import kaboom from 'kaboom';
 import addButton from '../../code/addObjectFuncs/addButton';
 import fixHeb from '../../code/utils/fixHebrew';
-import GameScreen from '../../code/GameScreen';
 
-
-function Trivia({settings, setResult}){
-    
-    return<>   
-        <GameScreen funcGame={TriviaGame} setResult={setResult} settings={settings} />
-    </>
-}
 
 function TriviaGame(k = kaboom(), settings = {}, setResult) {
 
@@ -39,12 +31,10 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
     // }
     const func = (obj) => {
         if (obj.text === settings[trueAnswer]) {
-            setResult({success:true,time:1})
-            k.quit()
+            setResult('winner')
         }
         else {
-            setResult({success:false,time:1})
-            k.quit()
+            setResult('lose')
         }
     }
     // k.onMouseMove((p, d) => {
@@ -112,4 +102,4 @@ function TriviaGame(k = kaboom(), settings = {}, setResult) {
 
 
 
-export default Trivia
+export default TriviaGame
