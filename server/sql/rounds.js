@@ -83,6 +83,7 @@ async function showByRoom(client, roomId) {
             text: `
             SELECT * FROM rounds
             WHERE room_id = $1
+            ORDER BY round_num
             ;`,
             values: [roomId]
         }
