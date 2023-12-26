@@ -5,24 +5,15 @@ import { useLocation } from 'react-router-dom';
 import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASE URL';
 
-const triviaSettings = {
-  question: 'when WarioWare, Inc.: Mega Microgame$! released',
-  answerA: '2000',
-  answerB: '2003',
-  answerC: '2012',
-  answerD: '1956',
-  trueAnswer: 'answerB',
-}
-
 
 const INITIAL_RESULT = { success: false, time: 0 }
 
 function SinglePlayer() {
 
-  const { roomId, user } = useLocation().state
+  const { roomId, /* user */ } = useLocation().state
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
-  const [rounds, setRounds] = fetcher.useStateAndEffect(url, [])
+  const [rounds, ] = fetcher.useStateAndEffect(url, [])
 
   // console.log(rounds);
 
