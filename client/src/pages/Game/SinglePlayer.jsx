@@ -1,18 +1,9 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import gameList from '../../games'
 import { useLocation } from 'react-router-dom';
 import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASE URL';
-
-const triviaSettings = {
-  question: 'when WarioWare, Inc.: Mega Microgame$! released',
-  answerA: '2000',
-  answerB: '2003',
-  answerC: '2012',
-  answerD: '1956',
-  trueAnswer: 'answerB',
-}
 
 
 const INITIAL_RESULT = { success: false, time: 0 }
@@ -22,12 +13,17 @@ function SinglePlayer() {
   const { roomId, user } = useLocation().state
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
-  const [rounds, setRounds] = fetcher.useStateAndEffect(url, [])
-
-  // console.log(rounds);
+  const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
 
   const [result, setResult] = useState(INITIAL_RESULT)
   const [curRound, setCurRound] = useState(0)
+
+  useEffect(() => {
+    return () => {
+      const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
+      fetcher.useNow(url)
+    }
+  })
 
   const sorted = rounds.sort((a, b) => a?.round_num - b?.round_num)
   const thisRound = sorted[curRound]
@@ -47,9 +43,9 @@ function SinglePlayer() {
   const playing = rounds.length > 0
 
   return (<>
-    <div  /* className='middle' */ >
+    <div>
       {/* <button onClick={moveToNextGame}>change game</button> */}
-      <h4 style={{textAlign:"center"}}> סבב מספר {thisRound?.round_num}</h4>
+      <h4 style={{ textAlign: "center" }}> סבב מספר {thisRound?.round_num}</h4>
 
       {playing &&
         <Game key={curRound} settings={thisRound?.settings} setResult={setResult} moveToNextGame={moveToNextGame} />
