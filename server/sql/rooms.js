@@ -70,8 +70,10 @@ async function showAllDataPerRoom(client, roomId) {
         const room = await showOne(client, roomId)
         room.manager = await users.showProfile(client, room.manager)
         room.playersInRoom = await players.countInRoom(client, roomId)
+        room.players = await players.showAllInRoom(client, roomId)
         room.rounds = await rounds.showByRoom(client, roomId)
 
+        
         return room
     } catch (error) {
         console.log(error);
