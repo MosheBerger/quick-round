@@ -16,7 +16,7 @@ function ShoppingGame(k = kaboom()) {
     const {
         loadSprite, setBackground, vec2, add, finish,
         sprite, area, scale, pos, anchor, rect, width,
-        color, rotate, loadSound, outline,settings:settingsProps, onUpdate,
+        color, rotate, loadSound, outline, settings: settingsProps, onUpdate,
     } = k
 
     const mulitple = 1.5
@@ -62,18 +62,23 @@ function ShoppingGame(k = kaboom()) {
         pos(width() - 20, 30)
 
     ])
-    for (let i = 0; i < settings.fish; i++) {
+    for (let i = 1; i <= settings.fish; i++) {
         giveMe.add([
+            'fish' + i,
             scale(0.12),
-            pos(i * -30 * mulitple, 5.5 * mulitple),
+            color('#828282'),
+            pos((i - 1) * -30 * mulitple, 5.5 * mulitple),
             sprite('fish', { flipX: true }),
             anchor('topright'),
         ])
     }
-    for (let i = 0; i < settings.challah; i++) {
+    for (let i = 1; i <= settings.challah; i++) {
         giveMe.add([
+            'challah' + i,
+            area(),
             scale(0.12),
-            pos(i * -31 * mulitple, 45.5 * mulitple),
+            color('#828282'),
+            pos((i - 1) * -31 * mulitple, 45.5 * mulitple),
             sprite('challah', { flipX: true }),
             anchor('topright'),
         ])
@@ -199,17 +204,30 @@ function createShoppingCart(k = kaboom()) {
 
         if (obj.is('fish')) {
             shoppingCart.items.fish++
-            // shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
+
+            const tag = 'fish' + shoppingCart.items.fish
+            drawGiveMeItemUsChecked(tag)
 
         } else {
             k.play('chale', { volume: 0.1 })
             shoppingCart.items.challah++
-            // shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
+
+            const tag = 'challah' + shoppingCart.items.challah
+            drawGiveMeItemUsChecked(tag)
         }
+        
         obj.destroy()
 
         wait(0.15, () => shoppingCart.scaleTo(current))
     })
+
+    function drawGiveMeItemUsChecked(tag){
+        const giveMeItem = k.get(tag, { recursive: true })
+        if (giveMeItem.length > 0){
+            giveMeItem[0].color = (new k.Color(255, 255, 255))
+        }
+    }
+
     return shoppingCart
 }
 
