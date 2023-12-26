@@ -3,6 +3,7 @@ import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
 import GameScreen from '../../code/GameScreen';
+import fixHeb from '../../code/utils/fixHebrew';
 
 function Shopping(props) {
 
@@ -55,19 +56,27 @@ function ShoppingGame(k = kaboom()) {
     }
 
     const giveMe = add([
-        rect(170 * mulitple, 100 * mulitple, { radius: 20 * mulitple }),
+        rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
         color('#f2f2f2'),
         anchor('topright'),
         outline(5, '#111111'),
         pos(width() - 20, 30)
 
     ])
+    giveMe.add([
+        pos(-10, 30),
+        color('#123456'),
+        anchor('right'),
+        k.text(fixHeb("אני צריך לכבוד שבת:"), {
+            size: 20,
+        }),
+    ])
     for (let i = 1; i <= settings.fish; i++) {
         giveMe.add([
             'fish' + i,
             scale(0.12),
             color('#828282'),
-            pos((i - 1) * -30 * mulitple, 5.5 * mulitple),
+            pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
             sprite('fish', { flipX: true }),
             anchor('topright'),
         ])
@@ -78,7 +87,7 @@ function ShoppingGame(k = kaboom()) {
             area(),
             scale(0.12),
             color('#828282'),
-            pos((i - 1) * -31 * mulitple, 45.5 * mulitple),
+            pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
             sprite('challah', { flipX: true }),
             anchor('topright'),
         ])
