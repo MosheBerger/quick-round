@@ -3,6 +3,7 @@ import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
 import GameScreen from '../../code/GameScreen';
+import fixHeb from '../../code/utils/fixHebrew';
 
 function Shopping(props) {
 
@@ -16,7 +17,7 @@ function ShoppingGame(k = kaboom()) {
     const {
         loadSprite, setBackground, vec2, add, finish,
         sprite, area, scale, pos, anchor, rect, width,
-        color, rotate, loadSound, outline,settings:settingsProps, onUpdate,
+        color, rotate, loadSound, outline, settings: settingsProps, onUpdate,
     } = k
 
     const mulitple = 1.5
@@ -55,25 +56,38 @@ function ShoppingGame(k = kaboom()) {
     }
 
     const giveMe = add([
-        rect(170 * mulitple, 100 * mulitple, { radius: 20 * mulitple }),
+        rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
         color('#f2f2f2'),
         anchor('topright'),
         outline(5, '#111111'),
         pos(width() - 20, 30)
 
     ])
-    for (let i = 0; i < settings.fish; i++) {
+    giveMe.add([
+        pos(-10, 30),
+        color('#123456'),
+        anchor('right'),
+        k.text(fixHeb("אני צריך לכבוד שבת:"), {
+            size: 20,
+        }),
+    ])
+    for (let i = 1; i <= settings.fish; i++) {
         giveMe.add([
+            'fish' + i,
             scale(0.12),
-            pos(i * -30 * mulitple, 5.5 * mulitple),
+            color('#828282'),
+            pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
             sprite('fish', { flipX: true }),
             anchor('topright'),
         ])
     }
-    for (let i = 0; i < settings.challah; i++) {
+    for (let i = 1; i <= settings.challah; i++) {
         giveMe.add([
+            'challah' + i,
+            area(),
             scale(0.12),
-            pos(i * -31 * mulitple, 45.5 * mulitple),
+            color('#828282'),
+            pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
             sprite('challah', { flipX: true }),
             anchor('topright'),
         ])
@@ -102,22 +116,31 @@ function ShoppingGame(k = kaboom()) {
     const shoppingCart = createShoppingCart(k)
 
     for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
-
         for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
 
-            addDraggable(k, { sprite: 'fish', scale: 0.12, pos: vec2(x, y) })
+            addDraggable(k, {
+                sprite: 'fish',
+                scale: 0.12,
+                pos: vec2(x, y),
+                returnOnLeave: true
+            })
 
         }
     }
 
     for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
-
         for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
 
-            addDraggable(k, { sprite: 'challah', scale: 0.12, pos: vec2(x, y) })
+            addDraggable(k, {
+                sprite: 'challah',
+                scale: 0.12,
+                pos: vec2(x, y),
+                returnOnLeave: true
+            })
 
         }
     }
+    // function 
 
     onUpdate(() => {
         if (
@@ -199,17 +222,30 @@ function createShoppingCart(k = kaboom()) {
 
         if (obj.is('fish')) {
             shoppingCart.items.fish++
-            // shoppingCart.fishText.text = `${shoppingCart.items.fish}:םיגד `
+
+            const tag = 'fish' + shoppingCart.items.fish
+            drawGiveMeItemUsChecked(tag)
 
         } else {
             k.play('chale', { volume: 0.1 })
             shoppingCart.items.challah++
-            // shoppingCart.challahText.text = `${shoppingCart.items.challah}:תולח `
+
+            const tag = 'challah' + shoppingCart.items.challah
+            drawGiveMeItemUsChecked(tag)
         }
+
         obj.destroy()
 
         wait(0.15, () => shoppingCart.scaleTo(current))
     })
+
+    function drawGiveMeItemUsChecked(tag) {
+        const giveMeItem = k.get(tag, { recursive: true })
+        if (giveMeItem.length > 0) {
+            giveMeItem[0].color = (new k.Color(255, 255, 255))
+        }
+    }
+
     return shoppingCart
 }
 

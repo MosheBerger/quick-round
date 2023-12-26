@@ -5,6 +5,7 @@ import LogIn from './pages/log-in/Log-in';
 import Lobby from './pages/Lobby/Lobby'
 import SinglePlayer from './pages/Game/SinglePlayer';
 import './app.css'
+import ScoreBoard from './pages/ScoreBoard/ScoreBoard';
 
 function App() {
   return (<>
@@ -19,6 +20,7 @@ function App() {
           <Route path='/log-in/' element={<LogIn />} />
           <Route path='/lobby/' element={<Lobby />} />
           <Route path='/game/single-player/' element={<SinglePlayer />} />
+          <Route path='/room/:roomId/score-board' element={<ScoreBoard />} />
 
         </Routes>
 
