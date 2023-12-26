@@ -107,22 +107,31 @@ function ShoppingGame(k = kaboom()) {
     const shoppingCart = createShoppingCart(k)
 
     for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
-
         for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
 
-            addDraggable(k, { sprite: 'fish', scale: 0.12, pos: vec2(x, y) })
+            addDraggable(k, {
+                sprite: 'fish',
+                scale: 0.12,
+                pos: vec2(x, y),
+                returnOnLeave: true
+            })
 
         }
     }
 
     for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
-
         for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
 
-            addDraggable(k, { sprite: 'challah', scale: 0.12, pos: vec2(x, y) })
+            addDraggable(k, {
+                sprite: 'challah',
+                scale: 0.12,
+                pos: vec2(x, y),
+                returnOnLeave: true
+            })
 
         }
     }
+    // function 
 
     onUpdate(() => {
         if (
@@ -215,15 +224,15 @@ function createShoppingCart(k = kaboom()) {
             const tag = 'challah' + shoppingCart.items.challah
             drawGiveMeItemUsChecked(tag)
         }
-        
+
         obj.destroy()
 
         wait(0.15, () => shoppingCart.scaleTo(current))
     })
 
-    function drawGiveMeItemUsChecked(tag){
+    function drawGiveMeItemUsChecked(tag) {
         const giveMeItem = k.get(tag, { recursive: true })
-        if (giveMeItem.length > 0){
+        if (giveMeItem.length > 0) {
             giveMeItem[0].color = (new k.Color(255, 255, 255))
         }
     }

@@ -6,6 +6,7 @@ function addDraggable(k = kaboom(),
         sprite: '',
         pos: undefined,
         scale: undefined,
+        returnOnLeave: false
     }
 ) {
 
@@ -25,6 +26,7 @@ function addDraggable(k = kaboom(),
         props.sprite,
         sprite(props.sprite),
         pos(props.pos),
+        { startPosition: props.pos },
         area({ cursor: "grab" }),
         anchor("center"),
         drag(k),
@@ -64,6 +66,10 @@ function addDraggable(k = kaboom(),
     gameObject.onDragEnd(() => {
         gameObject.scale = vec2(props.scale)
         gameObject.shadow.destroy()
+        
+        if (props.returnOnLeave){
+            gameObject.pos = gameObject.startPosition
+        }
     })
 
     return gameObject
