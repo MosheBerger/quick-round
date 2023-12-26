@@ -12,23 +12,24 @@ router.post('/login/:username', async (req, res, next) => {
     try {
         const { username } = req.params
         const { password } = req.body
-        console.log('username',username);
-        console.log('password',password);
+        console.log('username', username);
+        console.log('password', password);
 
         if (username === undefined)
-            throw { code: 400, message: 'please enter a username' }
+            throw { statusCode: 400, message: 'please enter a username' }
         if (password === undefined)
-            throw { code: 400, message: 'please enter a password' }
+            throw { statusCode: 400, message: 'please enter a password' }
 
 
         const user = await DB.logIn(client, username, password)
-        // console.log(user);
-        // if (user === undefined)
-        //     throw { code: 404, message: `the user ${username} doesn't exist` }
+        console.log(user);
+
+        if (!user)
+            throw { statusCode: 403, message: `the user ${username} doesn't exist` }
 
         res.json(user)
         next()
-        
+
     } catch (error) {
         next(error)
     }

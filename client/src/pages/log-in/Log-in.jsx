@@ -3,6 +3,7 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import { useNavigate } from 'react-router-dom'
 import BASE_URL from '../../BASE URL'
+import checkError from '../../utils/checkError'
 
 const INITIAL_STATE = { username: '', password: '' }
 
@@ -27,18 +28,19 @@ function LogIn() {
                 body: JSON.stringify({ password }),
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
             })
             const data = await res.json()
-            // console.log(data);
+            console.log(data);
 
+            checkError(data)
+            
             navigate('/lobby', {
                 state: data
             })
 
         } catch (error) {
-            console.log(error);
-            console.log('whyyyy!');
+            console.log('error',error);
 
         } finally {
             setLoading(false)

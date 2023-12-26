@@ -32,7 +32,7 @@ function SinglePlayer() {
         const url = `${BASE_URL}/api/results/in-round/${sorted[curRound - 1].id}/user/${user.id}`
         const res = await fetch(url, {
           method: 'post',
-          body: JSON.stringify({ result }),
+          body: JSON.stringify({ ...result }),
           headers: {
             "Content-Type": "application/json"
           }

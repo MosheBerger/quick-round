@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/in-round/:roundId/user/:userId', async (req, res, next) => {
     const client = req.client
     const { roundId, userId } = req.params
-    const { success, finishTime } = req.body.result
+    const { success, finishTime } = req.body
 
     try {
         const resultObj = await DB.create(client, roundId, userId, success, finishTime)
