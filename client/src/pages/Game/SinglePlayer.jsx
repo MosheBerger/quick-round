@@ -6,7 +6,7 @@ import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASE URL';
 
 
-const INITIAL_RESULT = { success: false, time: 0 }
+const INITIAL_RESULT = { success: false, finishTime: 0 }
 
 function SinglePlayer() {
 
@@ -18,12 +18,39 @@ function SinglePlayer() {
   const [result, setResult] = useState(INITIAL_RESULT)
   const [curRound, setCurRound] = useState(0)
 
+  // sendResult
   useEffect(() => {
-    return () => {
-      // const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
-      // fetcher.useNow(url)
+    const sendResult = async () => {
+      // console.log('result',result);
+      try {
+        const url = `${BASE_URL}/api/results/in-round/${roomId}/user/${user.id}`
+        const res = await fetch(url, {
+          method: 'post',
+          body: JSON.stringify({ result }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const data = await res.json()
+        console.log('🛜',data);
+
+      } catch (error) {
+        console.log('❌',error);
+      }
     }
-  })
+
+    if (result.finishTime !== 0) {
+      console.log('sending');
+      sendResult()
+    }
+  }, [result, roomId, user])
+
+  // useEffect(() => () => {
+  // console.log('leave');
+  // const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
+  // fetcher.useNow(url)
+  // TODO fix leaving the page cause leaving the room 
+  // }, [])
 
   const sorted = rounds.sort((a, b) => a?.round_num - b?.round_num)
   const thisRound = sorted[curRound]
@@ -52,7 +79,7 @@ function SinglePlayer() {
       }
 
       <span>success: {result.success ? 'true' : 'false'}</span>
-      <p>time: {result.time}</p>
+      <p>time: {result.finishTime}</p>
 
     </div >
   </>)
