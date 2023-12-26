@@ -20,8 +20,8 @@ function SinglePlayer() {
 
   useEffect(() => {
     return () => {
-      const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
-      fetcher.useNow(url)
+      // const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
+      // fetcher.useNow(url)
     }
   })
 
