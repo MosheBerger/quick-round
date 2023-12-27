@@ -1,0 +1,6 @@
+GET http://localhost:8080/api/users/login/
+
+
+###
+GET http://localhost:8080/api/users/signup/moishy1
+# Content-Type: application/json

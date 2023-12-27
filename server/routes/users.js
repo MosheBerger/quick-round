@@ -8,7 +8,7 @@ const router = express.Router()
 
 //LOG IN
 router.post('/login/:username', async (req, res, next) => {
-    const client = await pool.connect()
+    const client = req.client
     try {
         const { username } = req.params
         const { password } = req.body
@@ -28,6 +28,57 @@ router.post('/login/:username', async (req, res, next) => {
             throw { statusCode: 404, message: `the user ${username} doesn't exist` }
 
         res.json(user)
+        next()
+
+    } catch (error) {
+        next(error)
+    }
+})
+
+//SIGN UP
+router.post('/signup/:username', async (req, res, next) => {
+    const client = req.client
+    try {
+        const { username } = req.params
+        const { password, email, avatar } = req.body
+        console.log('username', username);
+        console.log('password', password);
+
+        if (!isValid(username, type.username))
+            throw { statusCode: 400, message: 'please enter a valid username' }
+
+        if (!isValid(password, type.password))
+            throw { statusCode: 400, message: 'please enter a valid password' }
+
+        if (!isValid(email, type.email))
+            throw { statusCode: 400, message: 'please enter a valid email' }
+
+        const user = await DB.create(client, username, password, email, avatar)
+        console.log(user);
+
+        if (!user)
+            throw { statusCode: 400, message: `an error append` }
+
+        res.json(user)
+        next()
+
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/signup/:username', async (req, res, next) => {
+    const client = req.client
+    try {
+        const { username } = req.params
+
+        const isExist = await DB.checkIfExist(client, username)
+        console.log(isExist);
+
+        if (!isExist)
+            throw { statusCode: 400, message: `an error append` }
+
+        res.json({ result: isExist })
         next()
 
     } catch (error) {

@@ -16,6 +16,11 @@ function isValid(value = '', type = 'string') {
                 && value.length < 20
             )
 
+        case 'email':
+            return (
+                value.includes('@')
+            )
+
         default:
             break;
     }
@@ -27,6 +32,7 @@ const validation = {
     type: {
         username: 'username',
         password: 'password',
+        email: 'email',
     }
 }
 
