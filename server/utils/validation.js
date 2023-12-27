@@ -16,7 +16,6 @@ function isValid(value = '', type = 'string') {
                 && value.length < 20
             )
 
-
         default:
             break;
     }
@@ -25,7 +24,7 @@ function isValid(value = '', type = 'string') {
 
 const validation = {
     isValid,
-    t: {
+    type: {
         username: 'username',
         password: 'password',
     }
