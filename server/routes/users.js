@@ -1,7 +1,7 @@
 const express = require('express')
 const pool = require('../sql/pool')
 const DB = require('../DB').users
-
+const v = require('../utils/validation')
 
 const router = express.Router()
 
@@ -15,17 +15,17 @@ router.post('/login/:username', async (req, res, next) => {
         console.log('username', username);
         console.log('password', password);
 
-        if (username === undefined)
+         if (v.isValid(username, v.t.username))
             throw { statusCode: 400, message: 'please enter a username' }
-        if (password === undefined)
+        
+        if (v.isValid(password, v.t.password))
             throw { statusCode: 400, message: 'please enter a password' }
-
 
         const user = await DB.logIn(client, username, password)
         console.log(user);
 
         if (!user)
-            throw { statusCode: 403, message: `the user ${username} doesn't exist` }
+            throw { statusCode: 404, message: `the user ${username} doesn't exist` }
 
         res.json(user)
         next()
