@@ -68,7 +68,7 @@ router.post('/signup/:username', async (req, res, next) => {
 })
 
 // user exist?
-router.get('/signup/:username', async (req, res, next) => {
+router.get('/signup/available/:username', async (req, res, next) => {
     const client = req.client
     try {
         const { username } = req.params
@@ -79,7 +79,7 @@ router.get('/signup/:username', async (req, res, next) => {
         if (isExist === undefined)
             throw { statusCode: 400, message: `an error append` }
 
-        res.json({ result: isExist })
+        res.json({ available: !isExist })
         next()
 
     } catch (error) {
