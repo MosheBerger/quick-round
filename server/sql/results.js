@@ -26,6 +26,7 @@ async function showByRound(client, roundId) {
             text: `
             SELECT * FROM results
             WHERE round_id = $1
+            ORDER BY success DESC, finish_time
             ;`,
             values: [roundId]
         }
