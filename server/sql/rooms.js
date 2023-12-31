@@ -8,7 +8,7 @@ async function create(client, name, numOfPlayers, numOfRounds, manager) {
     try {
 
         const query = {
-            text: `0
+            text: `
             INSERT INTO rooms(name, numOfPlayers, numOfRounds, manager)
             VALUES($1,$2,$3,$4)
             RETURNING *

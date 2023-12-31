@@ -23,8 +23,8 @@ async function createMany(client, roundsArr = []) {
 
         const results = []
 
-        for (let i = 0; i < roundsArr.length; i++) {
-            const { roomId, roundNum, gameId, settings } = roundsArr[i]
+        for (const round of roundsArr) {
+            const { roomId, roundNum, gameId, settings } = round
             results.push(await create(client, roomId, roundNum, gameId, settings))
         }
 

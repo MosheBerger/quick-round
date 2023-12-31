@@ -4,6 +4,23 @@ const DB = require('../DB')
 
 const router = express.Router()
 
+// CREATE
+router.post('/', async (req, res, next) => {
+
+    const client = req.client
+    const { name, numOfPlayers, numOfRounds, manager } = req.body
+
+    try {
+        const newRoom = await DB.rooms.create(client, name, numOfPlayers, numOfRounds, manager)
+
+        console.log(newRoom);
+        res.json(newRoom)
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
 
 //GET ALL
 router.get('/', async (req, res, next) => {
@@ -12,14 +29,14 @@ router.get('/', async (req, res, next) => {
     try {
         const rooms = await DB.rooms.showAll(client)
 
-        for (let i = 0; i < rooms.length; i++) {
-            const roomId = rooms[i].id
-            rooms[i].playersInRoom = await DB.players.countInRoom(client, roomId)
+        for (const room of rooms) {
+            const roomId = room.id
+            room.playersInRoom = await DB.players.countInRoom(client, roomId)
         }
 
         console.log(rooms);
         res.json(rooms)
-        
+
         next()
     } catch (error) {
         next(error)

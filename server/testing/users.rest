@@ -4,3 +4,30 @@ GET http://localhost:8080/api/users/login/
 
 GET http://localhost:8080/api/users/signup/available/moishy
 # Content-Type: application/json
+###
+
+# SIGN UP
+POST http://localhost:8080/api/users/signup/hiiii HTTP/1.1
+Content-Type: application/json
+
+{
+    "password":"1234NI5678",
+    "email":"123@321.com",
+    "avatar":"abc:red"
+}
+
+
+### SHOW PROFILE
+GET http://localhost:8080/api/users/show/25
+
+
+### UPDATE AVATAR
+PUT http://localhost:8080/api/users/update/hiiii HTTP/1.1 
+Content-Type: application/json
+
+{
+    "password":"1234NI5678",
+    "avatar":"abcdefg:blue"
+}
+
+

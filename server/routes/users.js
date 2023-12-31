@@ -110,14 +110,14 @@ router.get('/show/:userId', async (req, res, next) => {
 
 
 
-// SHOW PROFILE
+// UPDATE AVATAR
 router.put('/update/:username', async (req, res, next) => {
     const client = req.client
     try {
         const { username } = req.params
         const {password,avatar} = req.body
 
-        //todo
+        //todo validation for avatar
         const user = await DB.updateAvatar(client, username, password, avatar)
         console.log(user);
 

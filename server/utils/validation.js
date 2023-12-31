@@ -6,14 +6,14 @@ function isValid(value = '', type = 'string') {
 
         case 'username':
             return (
-                value.length > 4
-                && value.length < 20
+                value.length >= 4
+                && value.length <= 20
             )
 
         case 'password':
             return (
-                value.length > 8
-                && value.length < 20
+                value.length >= 8
+                && value.length <= 20
             )
 
         case 'email':
