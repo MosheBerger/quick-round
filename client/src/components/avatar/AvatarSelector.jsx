@@ -13,7 +13,9 @@ const bkColors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
     '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
     '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF']
 
-function AvatarSelector({ name, setAvatar }) {
+const moreColors = ['#ffffff','#fee2e2','#fecaca','#fca5a5','#f87171','#ef4444','#ffedd5','#fed7aa','#fdba74','#fb923c','#f97316','#fef9c3','#fef08a','#fde047','#facc15','#eab308','#','#','#','#','#','#','#','#','#','#','#','#','#']
+
+function AvatarSelector({ name, setAvatar, close }) {
     const [seeds, setSeeds] = useState(defaultValue)
     const [imageSeed, chooseImage] = useState(0)
     const [colorIndex, setColorIndex] = useState(0)
@@ -34,34 +36,66 @@ function AvatarSelector({ name, setAvatar }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         setAvatar({ seedName: name + imageSeed, color: bkColors[colorIndex] })
+        close()
+    }
+
+    const handleOuterDivClose = (e) => {
+        if (e.target.className === 'outer-div') {
+            close()
+        }
     }
 
     return (<>
-        <div>AvatarSelector</div>
+        <div className='outer-div' onClick={handleOuterDivClose} >
+        <article className='container'>
 
-        <article>
-            <a href='/#' role='button' onClick={(e) => updateSeeds(e, -1)}>last avatars</a>
-            {seeds.map(s => (
-                <Avatar
-                    onClick={() => chooseImage(s)}
-                    key={s} seed={s} seedName={name + s}
-                    color={bkColors[colorIndex]}
-                    imageSeed={imageSeed}
-                />
-            ))}
-            <a href='/#' role='button' onClick={(e) => updateSeeds(e, 1)}>next avatars</a>
+            <div className='flex'>
+                <h2> בחירת דמות </h2>
+                <Avatar seedName={name + imageSeed} color={bkColors[colorIndex]} />
+            </div>
+
+            <article>
+                <span> דמות </span>
+
+                <div className='flex'>
+                    <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, -1)}> ▶️ </a>
+
+                    {seeds.map(s => (
+                        <Avatar
+                            onClick={() => chooseImage(s)}
+                            key={s} seed={s} seedName={name + s}
+                            // color={bkColors[colorIndex]}
+                            imageSeed={imageSeed}
+                        />
+                    ))}
+
+                    <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, 1)}> ◀️ </a>
+
+                </div>
+            </article>
+
+
+            <article>
+
+                <span> צבע </span>
+                <div>
+                    {bkColors.map((color, index) => {
+                        return <a href='/#' role='button'
+                            onClick={(e) => { e.preventDefault(); setColorIndex(index) }}
+                            key={color}
+                            style={{
+                                background: color,
+                                width: 50, height: 50,
+                                outline: index === colorIndex ? '4px black solid' : '1px black solid'
+                            }}
+                        >{''}</a>
+                    })}
+                </div>
+            </article>
+
+            <button type="submit" onClick={handleSubmit}> שמירה </button>
         </article>
-
-
-        <div>
-            {bkColors.map((color, index) => {
-                return <a href='/#' role='button'
-                    onClick={(e) => { e.preventDefault(); setColorIndex(index) }}
-                    key={color} style={{ background: color, width: 50, height: 50, outline: index === colorIndex ? '4px black solid' : '1px black solid' }}
-                >{''}</a>
-            })}
-            <button type="submit" onClick={handleSubmit}>choose this avatar</button>
-        </div>
+    </div >
     </>)
 }
 
