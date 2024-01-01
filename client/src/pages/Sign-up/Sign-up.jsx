@@ -3,7 +3,6 @@ import AvatarSelector from '../../components/avatar/AvatarSelector/AvatarSelecto
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import Avatar from '../../components/avatar/Avatar.jsx'
-import fetcher from '../../hooks/useFetch.jsx'
 import BASE_URL from '../../BASE URL.js'
 
 const INITIAL_STATE = { username: '', password: '', email: '' }
