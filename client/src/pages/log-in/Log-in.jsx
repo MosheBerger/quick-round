@@ -21,26 +21,28 @@ function LogIn() {
         const { username, password } = inputs
         //todo format validation
         setLoading(true)
-        
+
         try {
-            const res = await fetch(`${BASE_URL}/api/users/login/${username}`, {
-                method: 'POST',
-                body: JSON.stringify({ password }),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
+            const res = await fetch(`${BASE_URL}/api/users/login/${username}`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify({ password }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                }
+            )
             const data = await res.json()
             console.log(data);
 
             checkError(data)
-            
+
             navigate('/lobby', {
                 state: data
             })
 
         } catch (error) {
-            console.log('error',error);
+            console.log('error', error);
 
         } finally {
             setLoading(false)

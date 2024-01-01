@@ -6,7 +6,7 @@ function useInputs(defaultInputsValue) {
     const handleChange = ({ target }) => {
         const { value, name: key } = target;
 
-        setInputs(prev => ({ ...prev, [key]: value }))
+        setInputs(prev => ({ ...prev, [key]: value.trimStart() }))
     }
     return [inputs, handleChange]
 }
