@@ -1,25 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BASE_URL from '../../../BASE URL'
 import GameSettings from './GameSettings'
-// import useDialog from '../../../hooks/useDialog'
+import useDialog from '../../../hooks/useDialog'
 
 
 
 
-function GameInfo({ id, name, description, settings, imageurl, genre, choose}) {
-    // const [Dialog, isOpen, openClose] = useDialog()
+function GameInfo({ id, name, description, settings, imageurl, genre, choose }) {
+    const [Dialog, isOpen, openClose] = useDialog()
+    const [userSettings, setSettings] = useState(null)
+
+    const handleChoose = () => {
+        if (userSettings) {
+            choose()
+            return;
+        }
+        openClose()
+    }
 
     return (
-        <article onClick={choose}>
-            <h4 className='unmargin'>{name}</h4>
-            {/* <span > קטגוריה: {genre}</span> */}
-            <h6 className='unmargin'> {description} </h6>
+        <article >
 
             <img src={`${BASE_URL}/assets/${imageurl}`} alt="game" />
+            
+            <div className='flex sb'>
+                <h4 className='unmargin'>{name}</h4>
+                <span > קטגוריה: {genre}</span>
+            </div>
+            <p className='unmargin'> {description} </p>
 
-            {/* <Dialog title={'בחירת סבבים'} open={isOpen} close={openClose} > */}
+            <br />
+            
+            <Dialog title={'הגדרת משחק '+name} open={isOpen} close={openClose} >
                 <GameSettings settings={settings} />
-            {/* </Dialog> */}
+            </Dialog>
+
+            <button onClick={handleChoose}> בחר </button>
+
         </article>
     )
 }

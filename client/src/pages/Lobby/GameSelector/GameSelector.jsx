@@ -18,7 +18,6 @@ function GameSelector({ choose, index, close }) {
     {gameList.map((game) => <Fragment key={game.id}>
 
       <GameInfo
-
         {...game}
         choose={() => handleChoose(game)}
       />
