@@ -18,7 +18,7 @@ function SetRound({ index, game, choose }) {
             {game?.id ?
                 <>
                     <GameCard {...game} />
-                    <button onClick={openClose} className='secondary'> {'החלף משחק'}</button>
+                    <button onClick={openClose} className='secondary outline'> {'החלף משחק'}</button>
                 </>
                 :
                 <button onClick={openClose} className='secondary'> {'בחר משחק'}</button>

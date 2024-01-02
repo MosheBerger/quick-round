@@ -1,7 +1,7 @@
 import React from 'react'
 import BASE_URL from '../../../BASE URL'
 import GameSettings from './GameSettings'
-import useDialog from '../../../hooks/useDialog'
+// import useDialog from '../../../hooks/useDialog'
 
 
 

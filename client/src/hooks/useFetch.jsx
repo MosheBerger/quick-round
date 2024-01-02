@@ -49,7 +49,12 @@ async function useNow(URL, setState) {
         const res = await fetch(URL)
         const data = await res.json()
         
-        setState?.(data)
+        if(setState){
+            setState(data)
+            return
+        }
+        
+        return data
 
     } catch (error) {
         return error
