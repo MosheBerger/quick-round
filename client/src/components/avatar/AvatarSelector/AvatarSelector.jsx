@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Avatar from '../Avatar'
 import COLORS from './colors'
 import ColorsSelector from './ColorSelector'
-import useOuterDiv from '../../../hooks/useOuterDiv'
+// import useOuterDiv from '../../../hooks/useOuterDiv'
 
 
 const defaultValue = [1, 2, 3, 4, 5]
@@ -12,6 +12,7 @@ function AvatarSelector({ name, setAvatar, close, children }) {
     const [imageSeed, chooseImage] = useState(1)
     const [colorIndex, setColorIndex] = useState(0)
 
+    console.log('RENDER');
     const updateSeeds = (e, num) => {
         e.preventDefault()
         setSeeds(prev => prev.map(n => n + 5 * num))
@@ -23,15 +24,11 @@ function AvatarSelector({ name, setAvatar, close, children }) {
         close()
     }
 
-    const OuterDiv = useOuterDiv(close)
+    // const OuterDiv = useOuterDiv(close)
 
     return (<>
-        <OuterDiv >
-            <article className='container' >
-
-                <div className='flex'>
-                    <h2> בחירת דמות </h2>
-                </div>
+        {/* <OuterDiv > */}
+            {/* <article className='container' > */}
 
                 {children}
 
@@ -63,8 +60,8 @@ function AvatarSelector({ name, setAvatar, close, children }) {
                     <br />
                     שמירה
                 </button>
-            </article>
-        </OuterDiv >
+            {/* </article> */}
+        {/* </OuterDiv > */}
     </>)
 }
 

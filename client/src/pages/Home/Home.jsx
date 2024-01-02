@@ -15,10 +15,11 @@ function Home() {
         עם כל המשחקים שיש בו
       </p>
 
-      <div>
+      <div >
         <Link role='button' className='outline' to='/log-in ' > התחבר </Link>
         <Link role='button' className='outline secondary' to='sign-up'> הרשם </Link>
-        <Link role='button' to='lobby' > הצטרף בלי חשבון משתמש</Link>
+        <br />
+        {/* <Link role='button' to='unregister' > הצטרף בלי חשבון משתמש</Link> */}
       </div>
 
     </main>

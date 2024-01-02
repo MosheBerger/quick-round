@@ -3,11 +3,14 @@ import './input.module.css'
 
 function Input({ insertTo, type, name, setInput, value, label, min, max }) {
 
+    type = type || setType(insertTo, name)
+
     const show = (label || value !== '')
+
     return (<>
         <label hidden={!show} htmlFor={name}>{name}</label>
         <input
-            type={type ? type : isValidInputType(name) ? name : 'text'}
+            type={type}
             id={name}
             name={insertTo || name}
             placeholder={!label && name}
@@ -26,5 +29,12 @@ function isValidInputType(type) {
         , "password", "radio", "range", "reset", "search", "submit"
         , "tel", "text", "time", "url", "week"
     ].includes(type)
+}
+
+function setType(insertTo, name) {
+    if (insertTo) {
+        return isValidInputType(insertTo)? insertTo : 'text'
+    }
+    return isValidInputType(name)? name : 'text'
 }
 export default Input

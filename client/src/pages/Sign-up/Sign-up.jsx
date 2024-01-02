@@ -4,19 +4,20 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import Avatar from '../../components/avatar/Avatar.jsx'
 import BASE_URL from '../../BASE URL.js'
+import useDialog from '../../hooks/useDialog.jsx'
 
 const INITIAL_STATE = { username: '', password: '', email: '' }
 
 function SignUp() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const [avatar, setAvatar] = useState({ seedName: '', color: '#ffffff' })
-    const [showAvatarChooser, setShowAvatarChooser] = useState(false)
+    // const [showAvatarChooser, setShowAvatarChooser] = useState(false)
 
     const { username, email, password } = inputs
 
-    const handleOpenCloseAvatarChooser = () => {
-        setShowAvatarChooser(prev => !prev)
-    }
+    // const handleOpenCloseAvatarChooser = () => {
+    //     setShowAvatarChooser(prev => !prev)
+    // }
 
     useEffect(() => {
         const seedName = username.trim() + 1
@@ -45,33 +46,33 @@ function SignUp() {
 
     const submitDisable = (Object.values(inputs).includes(''))
 
+    const [Dialog, avatarSelectorIsOpen, openClose] = useDialog()
 
     return (<>
-        <h1> Sign Up </h1>
+        <h1> הרשמה </h1>
 
         <form className='inputs'>
-            <Input name={'username'} value={username} setInput={setInputs} />
-            <Input name={'password'} value={password} setInput={setInputs} />
+            <Input name={'שם משתמש'} insertTo={'username'} value={username} setInput={setInputs} />
+            <Input name={'סיסמה'} insertTo={'password'} value={password} setInput={setInputs} />
             <br />
 
-            <Input name={'email'} value={email} setInput={setInputs} />
+            <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <br />
 
 
 
-            {showAvatarChooser ?
-                <AvatarSelector name={username.trim()} setAvatar={setAvatar} close={handleOpenCloseAvatarChooser} />
-                :
-                <div>
-                    <button disabled={username === ''} className={'secondary'} onClick={handleOpenCloseAvatarChooser} >
-                        <Avatar {...avatar}> </Avatar>
-                        <br />
-                        בחר דמות
-                    </button>
-                </div>
-            }
+            <Dialog title={' בחירת דמות '} open={avatarSelectorIsOpen} close={openClose}>
+                <AvatarSelector name={username.trim()} setAvatar={setAvatar} close={openClose} />
+            </Dialog>
+
+            <button disabled={username === ''} className={'secondary'} onClick={e => { e.preventDefault(); openClose() }} >
+                <Avatar {...avatar}> </Avatar>
+                <br />
+                בחר דמות
+            </button>
+
             <button disabled={submitDisable} type="submit" onClick={handleSubmit}>Enter</button>
-        </form>
+        </form >
     </>)
 }
 
