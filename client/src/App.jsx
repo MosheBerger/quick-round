@@ -6,7 +6,7 @@ import Lobby from './pages/Lobby/Lobby'
 import SinglePlayer from './pages/Game/SinglePlayer';
 import './app.css'
 import ScoreBoard from './pages/ScoreBoard/ScoreBoard';
-import SetProfile from './pages/UnregisterUser/SetProfile';
+// import SetProfile from './pages/UnregisterUser/SetProfile';
 
 function App() {
   return (<>
