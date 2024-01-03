@@ -10,7 +10,7 @@ function Dialog({ title, open, close, children }) {
     const closeByOuterClick =(e) => {
         e.preventDefault()
 
-        if (e.target.className !== 'outer') {return}
+        if (e.target.className !== 'outer'+title) {return}
         close()
     }
     
@@ -27,7 +27,7 @@ function Dialog({ title, open, close, children }) {
 
     return (
         <>
-            <dialog className='outer' open={open || false} onClick={closeByOuterClick}>
+            <dialog className={'outer'+title} open={open || false} onClick={closeByOuterClick}>
                 <article>
                     <header>
                         <a href="./" aria-label="Close" onClick={handleClose} className="close"></a>

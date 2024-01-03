@@ -8,21 +8,21 @@ import useDialog from '../../../hooks/useDialog'
 
 function GameInfo({ id, name, description, settings, imageurl, genre, choose }) {
     const [Dialog, isOpen, openClose] = useDialog()
-    const [userSettings, setSettings] = useState(null)
+    const [userSettings, setUserSettings] = useState(null)
 
     const handleChoose = () => {
         if (userSettings) {
             choose()
             return;
         }
-        openClose()
     }
+    const handleGoToSettings = openClose
 
     return (
         <article >
 
             <img src={`${BASE_URL}/assets/${imageurl}`} alt="game" />
-            
+
             <div className='flex sb'>
                 <h4 className='unmargin'>{name}</h4>
                 <span > קטגוריה: {genre}</span>
@@ -30,12 +30,14 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose }) 
             <p className='unmargin'> {description} </p>
 
             <br />
+            {isOpen &&
+                <Dialog title={'הגדרת משחק ' + name} open={isOpen} close={openClose} >
+                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} close={openClose} />
+                </Dialog>
+            }
             
-            <Dialog title={'הגדרת משחק '+name} open={isOpen} close={openClose} >
-                <GameSettings settings={settings} />
-            </Dialog>
-
-            <button onClick={handleChoose}> בחר </button>
+            <button className='secondary' onClick={handleGoToSettings}> {!userSettings ? 'הגדרה': 'הגדר מחדש'} </button>
+            {userSettings && <button onClick={handleChoose}> {'בחירה'} </button>}
 
         </article>
     )

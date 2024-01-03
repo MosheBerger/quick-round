@@ -25,8 +25,9 @@ function SetRound({ index, game, choose }) {
             }
 
             <Dialog title={'בחירת משחק לסבב ' + index} open={isOpen} close={openClose} >
-                <GameSelector choose={choose} index={index} close={openClose}/>
+                <GameSelector choose={choose} index={index} close={openClose} />
             </Dialog>
+            
             <hr />
         </section>
     )
