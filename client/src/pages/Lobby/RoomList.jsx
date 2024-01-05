@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import BASE_URL from '../../BASE URL'
 import { useNavigate } from 'react-router-dom'
 import fetcher from '../../hooks/useFetch'
+import Avatar from '../../components/avatar/Avatar'
 
 
 function RoomList({ user }) {
@@ -57,9 +58,10 @@ function RoomList({ user }) {
             <table hidden={empty}>
                 <thead>
                     <tr>
+                        <th> מנהל </th>
                         <th> שם </th>
-                        <th> 👥 </th>
-                        <th> 🕹️ </th>
+                        <th> שחקנים </th>
+                        <th> סבבים </th>
                         {/* <th> מצב </th> */}
                         <th> הצטרפות </th>
                     </tr>
@@ -67,10 +69,16 @@ function RoomList({ user }) {
 
                 <tbody >
                     {roomList.map((room) => {
-                        const { id, name, status, numofplayers, playersInRoom, numofrounds } = room;
+                        const { id, name, manager_name, manager_avatar, numofplayers, playersInRoom, numofrounds } = room;
 
                         return (
                             <tr key={id}>
+                                <td>
+                                    <div>
+                                    <Avatar seed={'j'} seedName={manager_avatar.split(':')[0]} color={manager_avatar.split(':')[1]} />
+                                    {manager_name}
+                                    </div>
+                                </td>
                                 <td>{name}</td>
                                 <td><b>{`${numofplayers} / ${playersInRoom}`}</b></td>
                                 <td><b>{numofrounds}</b></td>
