@@ -37,3 +37,13 @@
 .unmargin{
     margin: 0;
 }
+#root{
+    background-image: url(background.png);
+    min-height: 100svh;
+}
+article{
+    background-image: url(background2.png);
+}
+a{
+    background-color: rgb(45, 44, 44) !important;
+}

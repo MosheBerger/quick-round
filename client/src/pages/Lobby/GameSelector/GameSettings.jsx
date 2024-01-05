@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 
-const SETTINGS = {
-  number: { name: 'מספר', type: 'N', min: 3, max: 10 },
-  number2: { name: '2מספר', type: 'N' }, //number without max min
-  // color: { name: 'צבע', type: 'C' },
-  text: { name: 'טקסט', type: 'T' },
-  selector: {
-    name: 'בחירה', type: 'S',
-    options: [
-      { name: 'א', value: 'a' },
-      { name: 'ב', value: 'b' },
-      { name: 'ג', value: 'c' },
-    ]
-  },
-}
+// const SETTINGS = {
+//   number: { name: 'מספר', type: 'N', min: 3, max: 10 },
+//   number2: { name: '2מספר', type: 'N' }, //number without max min
+//   // color: { name: 'צבע', type: 'C' },
+//   text: { name: 'טקסט', type: 'T' },
+//   selector: {
+//     name: 'בחירה', type: 'S',
+//     options: [
+//       { name: 'א', value: 'a' },
+//       { name: 'ב', value: 'b' },
+//       { name: 'ג', value: 'c' },
+//     ]
+//   },
+// }
 
 
-function GameSettings({ settings, setUserSettings, userSettings, close }) {
+function GameSettings({ settings, setUserSettings, userSettings, closeAll }) {
 
   const keys = Object.keys(settings)
 
@@ -71,7 +71,7 @@ function GameSettings({ settings, setUserSettings, userSettings, close }) {
   const handleSave = (e) => {
     e.preventDefault()
     setUserSettings(inputs)
-    close()
+    closeAll()
   }
 
   return (<form>

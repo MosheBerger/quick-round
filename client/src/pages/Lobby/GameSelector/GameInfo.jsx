@@ -6,7 +6,7 @@ import useDialog from '../../../hooks/useDialog'
 
 
 
-function GameInfo({ id, name, description, settings, imageurl, genre, choose }) {
+function GameInfo({ id, name, description, settings, imageurl, genre, choose, close }) {
     const [Dialog, isOpen, openClose] = useDialog()
     const [userSettings, setUserSettings] = useState(null)
 
@@ -18,8 +18,13 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose }) 
     }
     const handleGoToSettings = openClose
 
+    const closeAll = () => {
+        close()
+        openClose()
+    }
+
     return (
-        <article >
+        <article className='unmargin' >
 
             <img src={`${BASE_URL}/assets/${imageurl}`} alt="game" />
 
@@ -31,14 +36,13 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose }) 
 
             <br />
             {isOpen &&
-                <Dialog title={'הגדרת משחק ' + name} open={isOpen} close={openClose} >
-                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} close={openClose} />
+                <Dialog title={'הגדרת משחק ' + name} open={isOpen} close={openClose}  >
+                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} closeAll={closeAll} />
                 </Dialog>
             }
-            
-            <button className='secondary' onClick={handleGoToSettings}> {!userSettings ? 'הגדרה': 'הגדר מחדש'} </button>
-            {userSettings && <button onClick={handleChoose}> {'בחירה'} </button>}
 
+            <button className='secondary' onClick={handleGoToSettings}> {!userSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
+            {userSettings && <button onClick={handleChoose}> {'בחירה'} </button>}
         </article>
     )
 }

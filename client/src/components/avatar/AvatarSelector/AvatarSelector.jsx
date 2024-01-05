@@ -12,7 +12,6 @@ function AvatarSelector({ name, setAvatar, close, children }) {
     const [imageSeed, chooseImage] = useState(1)
     const [colorIndex, setColorIndex] = useState(0)
 
-    console.log('RENDER');
     const updateSeeds = (e, num) => {
         e.preventDefault()
         setSeeds(prev => prev.map(n => n + 5 * num))
@@ -42,7 +41,7 @@ function AvatarSelector({ name, setAvatar, close, children }) {
                             <Avatar
                                 onClick={() => chooseImage(s)}
                                 key={s} seed={s} seedName={name + s}
-                                color={'#'}
+                                color={'#ffffff'}
                                 imageSeed={imageSeed}
                             />
                         ))}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import GameSelector from './GameSelector'
 import useDialog from '../../../hooks/useDialog'
 import GameCard from './GameCard'
-import BASE_URL from '../../../BASE URL'
+// import BASE_URL from '../../../BASE URL'
 
 function SetRound({ index, game, choose }) {
 
@@ -18,7 +18,7 @@ function SetRound({ index, game, choose }) {
             {game?.id ?
                 <>
                     <GameCard {...game} />
-                    <button onClick={openClose} className='secondary outline'> {'החלף משחק'}</button>
+                    <button onClick={openClose} className='outline'> {'החלף משחק'}</button>
                 </>
                 :
                 <button onClick={openClose} className='secondary'> {'בחר משחק'}</button>

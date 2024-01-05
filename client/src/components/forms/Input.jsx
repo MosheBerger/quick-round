@@ -5,10 +5,10 @@ function Input({ insertTo, type, name, setInput, value, label, min, max }) {
 
     type = type || setType(insertTo, name)
 
-    const show = (label || value !== '')
+    // const show = (label || value !== '')
 
     return (<>
-        <label hidden={!show} htmlFor={name}>{name}</label>
+        <label htmlFor={name}>{name}</label>
         <input
             type={type}
             id={name}
