@@ -54,11 +54,14 @@ router.get('/:roomId/join/:userId', async (req, res, next) => {
         const room = await DB.rooms.showOne(client, roomId)
         const playersInRoom = await DB.players.showAllInRoom(client, roomId)
 
-        if (playersInRoom.length >= room.numofplayers) {
-            throw { statusCode: 403, message: 'the room is full' }
-        }
+        // if (playersInRoom.length >= room.numofplayers) {
+        //     throw { statusCode: 403, message: 'the room is full' }
+        // }
         if (playersInRoom.some((p) => p.id == userId)) {
-            throw { statusCode: 409, message: 'you already here!' }
+            // throw { statusCode: 409, message: 'you already here!' }
+            res.json({ result: true })
+            next()
+            return
         }
 
         const result = await DB.players.joinRoom(client, roomId, userId)
@@ -74,21 +77,21 @@ router.get('/:roomId/join/:userId', async (req, res, next) => {
 
 
 //LEAVE
-router.get('/:roomId/leave/:userId', async (req, res, next) => {
+// router.get('/:roomId/leave/:userId', async (req, res, next) => {
 
-    const client = req.client
-    const { userId, roomId } = req.params
+//     const client = req.client
+//     const { userId, roomId } = req.params
 
-    try {
-        const result = await DB.players.leaveRoom(client, roomId, userId)
-        console.log('result', result);
-        res.json({ result: result })
+//     try {
+//         const result = await DB.players.leaveRoom(client, roomId, userId)
+//         console.log('result', result);
+//         res.json({ result: result })
 
-        next()
-    } catch (error) {
-        next(error)
-    }
-})
+//         next()
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
 
 

@@ -4,7 +4,7 @@ export default function Avatar({ seedName, seed, imageSeed, color, onClick, outl
 
     const props = {
         src: `https://api.dicebear.com/7.x/lorelei-neutral/svg?backgroundColor=transparent&scale=120&seed=${seedName}`,
-        style: { height: '10%', outline:( outline || seed === imageSeed) ? '#904c08 solid 5px' : 'black solid 3px', borderRadius: '30%', background: color }
+        style: { height: '10%', maxHeight:60 ,outline:( outline || seed === imageSeed) ? '#904c08 solid 5px' : 'black solid 3px', borderRadius: '30%', background: color|| 'white' }
     }
     
     return (

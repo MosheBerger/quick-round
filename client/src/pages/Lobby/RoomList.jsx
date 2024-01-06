@@ -74,9 +74,9 @@ function RoomList({ user }) {
                         return (
                             <tr key={id}>
                                 <td>
-                                    <div>
-                                    <Avatar seed={'j'} seedName={manager_avatar.split(':')[0]} color={manager_avatar.split(':')[1]} />
-                                    {manager_name}
+                                    <div className='flex col'>
+                                        <Avatar seed={'j'} seedName={manager_avatar.split(':')[0]} color={manager_avatar.split(':')[1]} />
+                                        <span>{manager_name}</span>
                                     </div>
                                 </td>
                                 <td>{name}</td>
