@@ -31,23 +31,23 @@ function RoomList({ user }) {
         }
     }
 
-    const handleLeave = async (e, roomId) => {
-        e.preventDefault()
-        try {
-            const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`)
-            const operation = await res.json()
+    // const handleLeave = async (e, roomId) => {
+    //     e.preventDefault()
+    //     try {
+    //         const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`)
+    //         const operation = await res.json()
 
-            console.log(operation);
+    //         console.log(operation);
 
-            fetcher.useNow(`${BASE_URL}/api/rooms`, setRoomsList)
+    //         fetcher.useNow(`${BASE_URL}/api/rooms`, setRoomsList)
 
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     const join = (id) => { return (e) => handleJoin(e, id) }
-    const leave = (id) => { return (e) => handleLeave(e, id) }
+    // const leave = (id) => { return (e) => handleLeave(e, id) }
 
     const empty = (roomList.length === 0)
 
@@ -60,10 +60,10 @@ function RoomList({ user }) {
                     <tr>
                         <th> מנהל </th>
                         <th> שם </th>
-                        <th> שחקנים </th>
                         <th> סבבים </th>
+                        <th> שיחקו </th>
                         {/* <th> מצב </th> */}
-                        <th> הצטרפות </th>
+                        <th> כניסה </th>
                     </tr>
                 </thead>
 
@@ -80,16 +80,16 @@ function RoomList({ user }) {
                                     </div>
                                 </td>
                                 <td>{name}</td>
-                                <td><b>{`${numofplayers} / ${playersInRoom}`}</b></td>
                                 <td><b>{numofrounds}</b></td>
+                                <td><b>{/* '${numofplayers} */ `${playersInRoom}`}</b></td>
                                 {/* <td>{status}</td> */}
                                 <td>
                                     <a href='#b' role='button' onClick={join(id)}>
-                                        הצטרף
+                                        כניסה
                                     </a>
-                                    <a href='#a' className='outline' role='button' onClick={leave(id)}>
+                                    {/* <a href='#a' className='outline' role='button' onClick={leave(id)}>
                                         עזוב
-                                    </a >
+                                    </a > */}
                                 </td>
                             </tr>
                         )

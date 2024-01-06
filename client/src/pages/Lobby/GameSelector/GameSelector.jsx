@@ -19,7 +19,6 @@ function GameSelector({ choose, index, close }) {
 
       <GameInfo
         {...game}
-        close={close}
         choose={() => handleChoose(game)}
       />
 

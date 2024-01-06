@@ -8,7 +8,7 @@ const INITIAL_STATE = { roomName: '', players: 1, rounds: 1 }
 function CreateRoom() {
     const [inputs, setInput] = useInputs(INITIAL_STATE)
     const [games, setGames] = useState([])
-    const { roomName, players, rounds } = inputs
+    const { roomName, rounds } = inputs
 
     const chooseGame = useCallback((game, index) => {
         setGames(prev => {
@@ -47,19 +47,19 @@ function CreateRoom() {
             </section>
             <hr />
 
-            <section>
+            {/* <section>
                 <h6> שחקנים </h6>
                 <Input min={1} max={8} insertTo={'players'} type={'range'} name={'מספר שחקנים'} setInput={setInput} value={players} />
                 <div>{players}</div>
             </section>
-            <hr />
+            <hr /> */}
 
-            <section>
+            {/* <section className='unmargin'>
                 <h6> סבבי משחק </h6>
                 <Input min={1} max={20} insertTo={'rounds'} type={'range'} name={'מספר סבבים'} setInput={setInput} value={rounds} />
                 <div>{rounds}</div>
             </section>
-            <hr />
+            <hr /> */}
 
 
             <div>

@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 // }
 
 
-function GameSettings({ settings, setUserSettings, userSettings, closeAll }) {
+function GameSettings({ settings, setUserSettings, userSettings, choose }) {
 
   const keys = Object.keys(settings)
 
@@ -71,7 +71,7 @@ function GameSettings({ settings, setUserSettings, userSettings, closeAll }) {
   const handleSave = (e) => {
     e.preventDefault()
     setUserSettings(inputs)
-    closeAll()
+    choose()
   }
 
   return (<form>

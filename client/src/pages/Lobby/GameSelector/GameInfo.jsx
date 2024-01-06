@@ -6,22 +6,17 @@ import useDialog from '../../../hooks/useDialog'
 
 
 
-function GameInfo({ id, name, description, settings, imageurl, genre, choose, close }) {
+function GameInfo({ id, name, description, settings, imageurl, genre, choose }) {
     const [Dialog, isOpen, openClose] = useDialog()
     const [userSettings, setUserSettings] = useState(null)
 
     const handleChoose = () => {
-        if (userSettings) {
-            choose()
-            return;
-        }
-    }
-    const handleGoToSettings = openClose
-
-    const closeAll = () => {
-        close()
         openClose()
+        choose()
+        return;
     }
+    const goToSettings = openClose
+
 
     return (
         <article className='unmargin' >
@@ -37,11 +32,11 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose, cl
             <br />
             {isOpen &&
                 <Dialog title={'הגדרת משחק ' + name} open={isOpen} close={openClose}  >
-                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} closeAll={closeAll} />
+                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} choose={handleChoose} />
                 </Dialog>
             }
 
-            <button className='secondary' onClick={handleGoToSettings}> {!userSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
+            <button className='secondary' onClick={goToSettings}> {!userSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
             {userSettings && <button onClick={handleChoose}> {'בחירה'} </button>}
         </article>
     )
