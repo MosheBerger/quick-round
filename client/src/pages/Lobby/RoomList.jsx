@@ -69,7 +69,7 @@ function RoomList({ user }) {
 
                 <tbody >
                     {roomList.map((room) => {
-                        const { id, name, manager_name, manager_avatar, numofplayers, playersInRoom, numofrounds } = room;
+                        const { id, name, manager_name, manager_avatar, /* numofplayers, */ playersInRoom, numofrounds } = room;
 
                         return (
                             <tr key={id}>
