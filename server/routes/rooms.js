@@ -8,16 +8,25 @@ const router = express.Router()
 router.post('/', async (req, res, next) => {
 
     const client = req.client
-    const { name, numOfPlayers, numOfRounds, manager } = req.body
+    const { name, numOfRounds, manager, rounds } = req.body
 
     try {
-        const newRoom = await DB.rooms.create(client, name, numOfPlayers, numOfRounds, manager)
+        await client.query('BEGIN')
+        const newRoom = await DB.rooms.create(client, name, numOfRounds, manager)
+        console.log('🚀 -> router.post -> newRoom:', newRoom)
 
+        rounds.forEach(r => r.roomId = newRoom.id);
+
+        const roundsResult = await DB.rounds.createMany(client, rounds)
+        newRoom.rounds = roundsResult
         console.log(newRoom);
-        res.json(newRoom)
 
+        res.json(newRoom)
+        await client.query('COMMIT')
         next()
+
     } catch (error) {
+        await client.query('ROLLBACK')
         next(error)
     }
 })

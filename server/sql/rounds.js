@@ -1,60 +1,50 @@
 
 
 async function create(client, roomId, roundNum, gameId, settings) {
-    try {
-        const query = {
-            text: `
+    const query = {
+        text: `
             INSERT INTO rounds(room_id, round_num, game_id, settings)
             VALUES($1,$2,$3,$4)
             RETURNING *
             ;`,
-            values: [roomId, roundNum, gameId, settings]
-        }
-        const res = await client.query(query)
-        return res.rows[0]
-
-    } catch (error) {
-        console.log(error);
+        values: [roomId, roundNum, gameId, settings]
     }
+    const res = await client.query(query)
+    return res.rows[0]
+
 }
 
 async function createMany(client, roundsArr = []) {
-    try {
 
-        const results = []
+    const results = []
 
-        for (const round of roundsArr) {
-            const { roomId, roundNum, gameId, settings } = round
-            results.push(await create(client, roomId, roundNum, gameId, settings))
-        }
-
-        return results
-
-    } catch (error) {
-        console.log(error);
+    for (const round of roundsArr) {
+        const { roomId, roundNum, gameId, settings } = round
+        results.push(await create(client, roomId, roundNum, gameId, settings))
     }
+
+    return results
+
+
 }
 
 async function remove(client, roundId) {
-    try {
 
-        const query = {
-            text: `
+    const query = {
+        text: `
             DELETE FROM rounds
             WHERE id = $1
             RETURNING id
             ;`,
-            values: [roundId]
-        }
-        const res = await client.query(query)
-        return {
-            operation: res.command,
-            success: (res.rowCount > 0),
-            ...res.rows[0], //:id
-        }
-    } catch (error) {
-        console.log(error);
+        values: [roundId]
     }
+    const res = await client.query(query)
+    return {
+        operation: res.command,
+        success: (res.rowCount > 0),
+        ...res.rows[0], //:id
+    }
+
 }
 
 async function show(client, roundId) {
@@ -70,9 +60,9 @@ async function show(client, roundId) {
         const res = await client.query(query)
 
         return res.rows[0]
-        
+
     } catch (error) {
-        console.log(error);
+        return (error);
     }
 }
 
@@ -92,7 +82,7 @@ async function showByRoom(client, roomId) {
         return res.rows
 
     } catch (error) {
-        console.log(error);
+        return (error);
     }
 }
 
@@ -121,6 +111,6 @@ const test = async () => {
     // ]));
     // console.log(await rounds.show(2));
     // console.log(await rounds.remove(4));
-    console.log( await rounds.showByRoom(1));
+    console.log(await rounds.showByRoom(1));
 }
 // test()

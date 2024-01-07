@@ -25,7 +25,7 @@ function Room() {
                 <h1>לובי</h1>
 
                 <div style={{padding:2, width:"20vw"}} className='unmargin flex col'>
-                    <Avatar />
+                    <Avatar avatarSeed={user?.avatar}/>
                     <h4 className='unmargin'> {user.username} </h4>
                     <button className='secondary outline'> יציאה </button>{/* //todo */}
                 </div>
@@ -33,7 +33,7 @@ function Room() {
 
             <div >
                 <a href='#join' name='join' role='button' className={join ? '' : 'outline'} onClick={handleClick} >
-                    הצטרף
+                    רשימת חדרים
                 </a>
                 <a href='#create' name='create' role='button' className={create ? '' : 'outline'} onClick={handleClick}>
                     צור חדר

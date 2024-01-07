@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BASE_URL from '../../../BASE URL'
 import GameSettings from './GameSettings'
 import useDialog from '../../../hooks/useDialog'
@@ -6,17 +6,28 @@ import useDialog from '../../../hooks/useDialog'
 
 
 
-function GameInfo({ id, name, description, settings, imageurl, genre, choose, userSettings: us }) {
-    const [Dialog, isOpen, openClose] = useDialog()
-    const [userSettings, setUserSettings] = useState(us || null)
+function GameInfo({ game, choose, chosenGame }) {
+    const { name, description, settings, imageurl, genre } = game
 
-    const handleChoose = () => {
+    const [Dialog, isOpen, openClose] = useDialog()
+    const [lastSettings, setLastSettings] = useState(chosenGame?.userSettings || null)
+
+    const handleChoose = (userSettings) => {
+        game.userSettings = userSettings
         openClose()
-        choose()
+        choose(game)
         return;
     }
     const goToSettings = openClose
 
+    useEffect(() => {
+        if (chosenGame){
+            setLastSettings(prev => chosenGame?.userSettings||prev)
+            
+        }else{
+            setLastSettings(prev => null)
+        }
+    },[chosenGame])
 
     return (
         <article className='unmargin' >
@@ -32,12 +43,12 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose, us
             <br />
             {isOpen &&
                 <Dialog title={'הגדרת משחק ' + name} open={isOpen} close={openClose}  >
-                    <GameSettings settings={settings} userSettings={userSettings} setUserSettings={setUserSettings} choose={handleChoose} />
+                    <GameSettings settings={settings} userSettings={lastSettings} setUserSettings={setLastSettings} choose={handleChoose} />
                 </Dialog>
             }
 
-            <button className='secondary' onClick={goToSettings}> {!userSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
-            {userSettings && <button onClick={choose}> {'בחירה'} </button>}
+            <button className='secondary' onClick={goToSettings}> {!lastSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
+            {lastSettings && <button onClick={choose}> {'בחירה'} </button>}
         </article>
     )
 }

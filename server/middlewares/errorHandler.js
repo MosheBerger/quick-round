@@ -7,10 +7,11 @@ const errorHandler = (err, req, res, next) => {
     
     err.isError = true
     console.log('❌',err);
-
+    
     res.status(err.statusCode || 500).json(err)
     console.log('✖️','--------------','✖️');
     console.log();
+
     next()
 }
 

@@ -1,19 +1,19 @@
 
 const players = require('./players.js')
-const pool = require('./pool.js')
+// const pool = require('./pool.js')
 const rounds = require('./rounds.js')
 const users = require('./users.js')
 
-async function create(client, name, numOfPlayers, numOfRounds, manager) {
+async function create(client, name, numOfRounds, manager) {
     try {
 
         const query = {
             text: `
-            INSERT INTO rooms(name, numOfPlayers, numOfRounds, manager)
-            VALUES($1,$2,$3,$4)
+            INSERT INTO rooms(name, numOfRounds, manager)
+            VALUES($1,$2,$3)
             RETURNING *
         `,
-            values: [name, numOfPlayers, numOfRounds, manager]
+            values: [name, numOfRounds, manager]
         }
         const res = await client.query(query)
         return res.rows[0]
@@ -91,16 +91,16 @@ module.exports = rooms
 
 
 
-const test = async () => {
-    // console.log(await rooms.create('החדר של אבי', 4, 2, 1));
-    // console.log(await rooms.join(1, 1));
-    // console.log(await rooms.join(1, 2));
-    // console.log(await rooms.join(1, 4));
-    // console.log(await rooms.join(2, 1));
-    // console.log(await rooms.leave(5, 5));
-    // console.table(await rooms.showAll());
-    const client = await pool.connect()
-    console.log(await rooms.showAllDataPerRoom(client,1));
-    client.release()
-}
+// const test = async () => {
+//     // console.log(await rooms.create('החדר של אבי', 4, 2, 1));
+//     // console.log(await rooms.join(1, 1));
+//     // console.log(await rooms.join(1, 2));
+//     // console.log(await rooms.join(1, 4));
+//     // console.log(await rooms.join(2, 1));
+//     // console.log(await rooms.leave(5, 5));
+//     // console.table(await rooms.showAll());
+//     const client = await pool.connect()
+//     console.log(await rooms.showAllDataPerRoom(client,1));
+//     client.release()
+// }
 // test()

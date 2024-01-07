@@ -31,7 +31,7 @@ function ScoreBoard() {
                         <article key={p.id}>
 
                             <h5>{p.username}</h5>
-                            <Avatar seedName={p.avatar} />
+                            <Avatar avatarSeed={p.avatar} />
 
                         </article>
                     )}
@@ -41,7 +41,7 @@ function ScoreBoard() {
                     {room.rounds.map((r) => <Fragment key={r.id}>
 
                         <h5> סבב {r.round_num} </h5>
-                        <p> משחק {r.game_id} </p>
+                        <p> קוד משחק {r.game_id} </p>
 
                         {r.results.map((res) => <div key={res.id}>
                             <span> קוד שחקן {res.user_id}</span>

@@ -8,7 +8,7 @@ const clientManager = {
         next()
     },
     close: async (req, res, next) => {
-        req.client.release()
+        req.client?.release?.()
         console.log('⬅️ ','disconnect');
     }
 }

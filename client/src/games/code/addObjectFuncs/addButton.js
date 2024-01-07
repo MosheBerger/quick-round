@@ -35,7 +35,7 @@ function addButton(
         anchor('center'),
         { originalText: thisText },
         text(thisText, {
-            size: 18*2,
+            size: 25,
         }),
         color('#ffffff')
 

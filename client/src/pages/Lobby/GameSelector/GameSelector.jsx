@@ -4,7 +4,7 @@ import fetcher from '../../../hooks/useFetch'
 import BASE_URL from '../../../BASE URL'
 
 
-function GameSelector({ choose, index, close, userSettings }) {
+function GameSelector({ chosenGame,choose, index, close }) {
 
   const url = `${BASE_URL}/api/games`
   const [gameList] = fetcher.useStateAndEffect(url, [])
@@ -18,9 +18,9 @@ function GameSelector({ choose, index, close, userSettings }) {
     {gameList.map((game) => <Fragment key={game.id}>
 
       <GameInfo
-        {...game}
-        userSettings={userSettings}
-        choose={() => handleChoose(game)}
+        game={game}
+        chosenGame={game.id === chosenGame.id ? chosenGame : undefined}
+        choose={handleChoose}
       />
 
     </Fragment>)}

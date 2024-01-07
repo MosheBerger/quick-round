@@ -1,18 +1,22 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import SetRound from './GameSelector/SetRound'
+import BASE_URL from '../../BASE URL'
 
-const INITIAL_STATE = { roomName: '', players: 1, rounds: 1 } //todo remove players from rooms table
+const INITIAL_STATE = { roomName: '', rounds: 1 }
 
-function CreateRoom() {
-    const [games, setGames] = useState([{}])
+function CreateRoom({ user }) {
+    const [rounds, setGameInRound] = useState([{}])
+
+
 
     const [inputs, setInput] = useInputs(INITIAL_STATE)
     const { roomName } = inputs
 
     const chooseGame = (game, index) => {
-        setGames(prev => {
+
+        setGameInRound(prev => {
             const arr = [...prev]
             arr[index] = game
             return arr
@@ -20,30 +24,66 @@ function CreateRoom() {
     }
 
     const addRounds = (index) => {
-        setGames(prev => {
+
+        setGameInRound(prev => {
             const arr = [...prev]
             arr.splice(index + 1, 0, {})
             return arr
         })
     }
+
     const removeRounds = (index) => {
-        if (games.length <= 1) {
-            alert('אם תמחק אותי מה ישאר?')
+
+        if (rounds.length <= 1) {
+            alert('אם תמחק אותי מה יישאר?')
             return
         }
 
-        setGames(prev => {
+        setGameInRound(prev => {
             const arr = [...prev]
             arr.splice(index, 1)
             return arr
         })
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
+
         e.preventDefault()
-        //todo
+        const roundsData = rounds.map((r, i) => {
+            return {
+                roundNum: (i + 1),
+                gameId: r.id,
+                settings: r.userSettings
+            }
+        })
+
+        const room = {
+            name: roomName,
+            numOfRounds: rounds.length,
+            manager: user.id,
+            rounds: roundsData
+        }
+
+        console.log(room);
+        try {
+            const res = await fetch(`${BASE_URL}/api/rooms`,
+                {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(room),
+                }
+            )
+            const data = await res.json()
+            console.log(data);
+
+        } catch (error) {
+            console.log('error', error);
+        }
     }
 
-    // console.log('full =>', checkFullList(games,rounds));
+    const canCreate = (rounds.every(g => g.id) && roomName)
 
     return (
         <article>
@@ -54,29 +94,23 @@ function CreateRoom() {
             </section>
             <hr />
 
-            {games.map((game, i) => {
+            <h5> הגדרת סבבים ומשחקים </h5>
+
+            {rounds.map((game, i) => {
                 return < SetRound
                     key={i} index={i}
                     game={game}
                     choose={chooseGame}
-                    cantRemove={games.length <= 1}
+                    cantRemove={rounds.length <= 1}
                     add={() => addRounds(i)} remove={() => removeRounds(i)}
                 />
             })}
 
-            <button type='submit' onSubmit={handleSubmit}> פתיחת חדר </button>
+            <br />
+            <button type='submit' disabled={!canCreate} onClick={handleSubmit}> פתיחת חדר </button>
 
         </article>
     )
 }
 
 export default CreateRoom
-
-function checkFullList(list = [], lengthRequired) {
-    if (list.length < lengthRequired) return false
-
-    for (let i = 0; i < lengthRequired; i++) {
-        if (list[i] === undefined) return false
-    }
-    return true
-}

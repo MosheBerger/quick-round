@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
 // const SETTINGS = {
 //   number: { name: 'מספר', type: 'N', min: 3, max: 10 },
@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 // }
 
 
-function GameSettings({ settings, setUserSettings, userSettings, choose }) {
+function GameSettings({ settings, userSettings, choose }) {
 
   const keys = Object.keys(settings)
 
@@ -51,7 +51,7 @@ function GameSettings({ settings, setUserSettings, userSettings, choose }) {
 
     let { value, name: key, type, min, max } = target;
 
-    if (type === 'number') {
+    if (type === 'number' || type === 'range') {
       value = parseInt(value)
       min = parseInt(min)
       max = parseInt(max)
@@ -61,39 +61,38 @@ function GameSettings({ settings, setUserSettings, userSettings, choose }) {
       else if (min && min > value) { value = min }
 
     }
-    if (type === 'text') {
-      value = value.trimStart()
-    }
+    // if (type === 'text') {
+    //   value = value.trimStart()
+    // }
 
     setInputs(prev => ({ ...prev, [key]: value }))
   }
 
   const handleSave = (e) => {
     e.preventDefault()
-    setUserSettings(inputs)
-    choose()
+    choose(inputs)
   }
 
   return (<form>
     {keys.map((key) => {
 
-      const { name, type: rawType, options, ...rest } = settings[key]
+      const { name, type: rawType, options, min, ...rest } = settings[key]
       const type = extractType(rawType)
 
       if (type !== 'select' && type!== 'number') {
-        return (
-
-          <label key={key}>
+        return (<Fragment key={key}>
+          
+          <label>
             {name}
-            <input
+            </label>
+            <textarea
               name={key}
               value={inputs[key]}
               onChange={handleChange}
               type={type}
               {...rest}
             />
-          </label>
-        )
+        </Fragment>)
       }
       if (type !== 'select'){
         return (
@@ -104,7 +103,8 @@ function GameSettings({ settings, setUserSettings, userSettings, choose }) {
               name={key}
               value={inputs[key]}
               onChange={handleChange}
-              type={'range'}
+              type={min ?'range':'number'}
+              min={min|| Number.MIN_SAFE_INTEGER}
               {...rest}
             />
           </label>
