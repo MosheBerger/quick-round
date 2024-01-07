@@ -1,10 +1,10 @@
 import React from 'react'
 
-function PicoButton({ className, children, onClick, ...rest }) {
+function PicoButton({ children, onClick, outline, ...rest }) {
   return (
     <div
       role="button"
-      style={{ display: 'inline' }}
+      style={{ display: 'inline', margin: '5px' }}
       onClick={onClick}
       {...rest}
     >

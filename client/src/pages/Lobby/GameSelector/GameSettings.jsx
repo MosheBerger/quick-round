@@ -80,7 +80,7 @@ function GameSettings({ settings, setUserSettings, userSettings, choose }) {
       const { name, type: rawType, options, ...rest } = settings[key]
       const type = extractType(rawType)
 
-      if (type !== 'select') {
+      if (type !== 'select' && type!== 'number') {
         return (
 
           <label key={key}>
@@ -95,7 +95,21 @@ function GameSettings({ settings, setUserSettings, userSettings, choose }) {
           </label>
         )
       }
+      if (type !== 'select'){
+        return (
 
+          <label key={key}>
+            {name+"  " + inputs[key]}
+            <input
+              name={key}
+              value={inputs[key]}
+              onChange={handleChange}
+              type={'range'}
+              {...rest}
+            />
+          </label>
+        )
+      }
 
       return (
 

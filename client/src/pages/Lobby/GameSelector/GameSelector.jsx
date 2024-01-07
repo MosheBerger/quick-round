@@ -4,7 +4,7 @@ import fetcher from '../../../hooks/useFetch'
 import BASE_URL from '../../../BASE URL'
 
 
-function GameSelector({ choose, index, close }) {
+function GameSelector({ choose, index, close, userSettings }) {
 
   const url = `${BASE_URL}/api/games`
   const [gameList] = fetcher.useStateAndEffect(url, [])
@@ -19,6 +19,7 @@ function GameSelector({ choose, index, close }) {
 
       <GameInfo
         {...game}
+        userSettings={userSettings}
         choose={() => handleChoose(game)}
       />
 

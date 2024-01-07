@@ -6,9 +6,9 @@ import useDialog from '../../../hooks/useDialog'
 
 
 
-function GameInfo({ id, name, description, settings, imageurl, genre, choose }) {
+function GameInfo({ id, name, description, settings, imageurl, genre, choose, userSettings: us }) {
     const [Dialog, isOpen, openClose] = useDialog()
-    const [userSettings, setUserSettings] = useState(null)
+    const [userSettings, setUserSettings] = useState(us || null)
 
     const handleChoose = () => {
         openClose()
@@ -37,7 +37,7 @@ function GameInfo({ id, name, description, settings, imageurl, genre, choose }) 
             }
 
             <button className='secondary' onClick={goToSettings}> {!userSettings ? 'הגדרה' : 'הגדר מחדש'} </button>
-            {userSettings && <button onClick={handleChoose}> {'בחירה'} </button>}
+            {userSettings && <button onClick={choose}> {'בחירה'} </button>}
         </article>
     )
 }

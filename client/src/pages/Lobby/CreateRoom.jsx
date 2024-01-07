@@ -3,40 +3,47 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import SetRound from './GameSelector/SetRound'
 
-const INITIAL_STATE = { roomName: '', players: 1, rounds: 1 }
+const INITIAL_STATE = { roomName: '', players: 1, rounds: 1 } //todo remove players from rooms table
 
 function CreateRoom() {
-    const [inputs, setInput] = useInputs(INITIAL_STATE)
-    const [games, setGames] = useState([])
-    const { roomName, rounds } = inputs
+    const [games, setGames] = useState([{}])
 
-    const chooseGame = useCallback((game, index) => {
+    const [inputs, setInput] = useInputs(INITIAL_STATE)
+    const { roomName } = inputs
+
+    const chooseGame = (game, index) => {
         setGames(prev => {
             const arr = [...prev]
-            arr[index - 1] = game
+            arr[index] = game
             return arr
         })
-    }, [setGames])
+    }
 
+    const addRounds = (index) => {
+        setGames(prev => {
+            const arr = [...prev]
+            arr.splice(index + 1, 0, {})
+            return arr
+        })
+    }
+    const removeRounds = (index) => {
+        if (games.length <= 1) {
+            alert('אם תמחק אותי מה ישאר?')
+            return
+        }
 
+        setGames(prev => {
+            const arr = [...prev]
+            arr.splice(index, 1)
+            return arr
+        })
+    }
     const handleSubmit = (e) => {
         e.preventDefault()
         //todo
     }
 
-    console.log('roundsarr', games);
-    console.log('length', games.length);
-
-    console.log('full =>', checkFullList(games,rounds));
-
-    const setRounds = useMemo(() => {
-
-        const setters = []
-        for (let i = 1; i <= rounds; i++) {
-            setters.push(<SetRound key={i} index={i} game={games[i - 1]} choose={chooseGame} />)
-        }
-        return setters
-    }, [rounds, games, chooseGame])
+    // console.log('full =>', checkFullList(games,rounds));
 
     return (
         <article>
@@ -47,24 +54,15 @@ function CreateRoom() {
             </section>
             <hr />
 
-            {/* <section>
-                <h6> שחקנים </h6>
-                <Input min={1} max={8} insertTo={'players'} type={'range'} name={'מספר שחקנים'} setInput={setInput} value={players} />
-                <div>{players}</div>
-            </section>
-            <hr /> */}
-
-            {/* <section className='unmargin'>
-                <h6> סבבי משחק </h6>
-                <Input min={1} max={20} insertTo={'rounds'} type={'range'} name={'מספר סבבים'} setInput={setInput} value={rounds} />
-                <div>{rounds}</div>
-            </section>
-            <hr /> */}
-
-
-            <div>
-                {setRounds}
-            </div>
+            {games.map((game, i) => {
+                return < SetRound
+                    key={i} index={i}
+                    game={game}
+                    choose={chooseGame}
+                    cantRemove={games.length <= 1}
+                    add={() => addRounds(i)} remove={() => removeRounds(i)}
+                />
+            })}
 
             <button type='submit' onSubmit={handleSubmit}> פתיחת חדר </button>
 
