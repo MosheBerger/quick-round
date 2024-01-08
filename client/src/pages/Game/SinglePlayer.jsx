@@ -6,7 +6,7 @@ import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASE URL';
 
 
-const INITIAL_RESULT = { success: false, finishTime: 0 }
+// const INITIAL_RESULT = { success: false, finishTime: 0 }
 
 function SinglePlayer() {
 
@@ -17,52 +17,61 @@ function SinglePlayer() {
   const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
 
 
-  const [result, setResult] = useState(INITIAL_RESULT)
+  const [result, setResult] = useState([])
   const [curRound, setCurRound] = useState(0)
 
   const sorted = rounds.sort((a, b) => a?.round_num - b?.round_num)
   const thisRound = sorted[curRound]
 
+  // useEffect(() => {
+  //   onbeforeunload = confirmExit;
+  //   function confirmExit() {
+  //     return "הנתונים לא יישמרו. לצאת?";
+  //   }
+  //   return () => {
+  //     onbeforeunload = null
+  //   }
+  // }, [])
 
   // sendResult
   useEffect(() => {
     const sendResult = async () => {
       // console.log('result',result);
       try {
-        const url = `${BASE_URL}/api/results/in-round/${sorted[curRound - 1].id}/user/${user.id}`
-        const res = await fetch(url, {
-          method: 'post',
-          body: JSON.stringify({ ...result }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        const data = await res.json()
+      //   const url = `${BASE_URL}/api/results/in-round/${sorted[curRound - 1].id}/user/${user.id}`
+      //   const res = await fetch(url, {
+      //     method: 'post',
+      //     body: JSON.stringify({ ...result }),
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   })
+      //   const data = await res.json()
+      const data = result
         console.log('🛜', data);
 
       } catch (error) {
         console.log('❌', error);
 
       } finally {
-        if (!thisRound) {
-          navigate(`/room/${roomId}/score-board`,{
-            state:{user}
-          })
-        }
+        // if (!thisRound) {
+        //   navigate(`/room/${roomId}/score-board`, {
+        //     state: { user }
+        //   })
+        // }
       }
     }
 
-    if (result.finishTime !== 0) {
+    if (result.length === rounds.length ) {
       console.log('sending');
       sendResult()
     }
-  }, [curRound, navigate, result, roomId, sorted, thisRound, user])
+  }, [curRound, navigate, result, roomId, sorted, thisRound, user, rounds])
 
   // useEffect(() => () => {
   // console.log('leave');
   // const url = `${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`
   // fetcher.useNow(url)
-  // TODO fix leaving the page cause leaving the room 
   // }, [])
 
 
@@ -70,9 +79,9 @@ function SinglePlayer() {
     setCurRound(prev => prev + 1)
   }
 
-  if (!thisRound){
+  if (!thisRound) {
     console.log('bye');
-    return<></>
+    return <></>
   }
 
   const Game = gameList[thisRound?.game_id]
@@ -87,7 +96,7 @@ function SinglePlayer() {
         <Game key={curRound} settings={thisRound?.settings} setResult={setResult} moveToNextGame={moveToNextGame} />
       }
 
-      <progress value={curRound+1} max={rounds.length+1}></progress>
+      <progress value={curRound + 1} max={rounds.length + 1}></progress>
 
 
       <span>success: {result.success ? 'true' : 'false'}</span>

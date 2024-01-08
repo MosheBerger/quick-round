@@ -35,7 +35,7 @@ function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 
 		k.finish = (success = false, reason) => {
 			const finishTime = Date.now() - startTime
-			// setResult({ success, finishTime })
+			setResult(prev => [...prev ,{ success, finishTime }])
 			k.wait(0.2, () => {
 
 				if (success) {
