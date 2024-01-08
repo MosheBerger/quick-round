@@ -6,7 +6,7 @@ import fetcher from '../../hooks/useFetch'
 import Avatar from '../../components/avatar/Avatar'
 
 
-function RoomList({ user }) {
+function RoomList({ user, ...rest }) {
 
     const [roomList, setRoomsList] = useState([])
     fetcher.useInEffect(`${BASE_URL}/api/rooms`, setRoomsList)
@@ -52,7 +52,7 @@ function RoomList({ user }) {
     const empty = (roomList.length === 0)
 
     return (<>
-        <article>
+        <article {...rest}>
             <h4 aria-busy={empty}> רשימת חדרים </h4>
 
             <table hidden={empty}>

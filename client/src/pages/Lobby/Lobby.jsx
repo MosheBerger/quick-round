@@ -1,48 +1,58 @@
-import React, { useState } from 'react'
+import React from 'react'
 import RoomList from './RoomList'
 import CreateRoom from './CreateRoom'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
 
 function Room() {
-    const [tab, setTab] = useState('join')
+    const tab = useLocation().hash.slice(1)
 
-    const user = useLocation().state
+    const user = useLocation().state?.user
     console.log(user);
-
-    const handleClick = (e) => {
-        e.preventDefault()
-        const operation = e.target.name
-        setTab(operation)
-    }
 
     const join = (tab === 'join')
     const create = (tab === 'create')
+
     return (<>
         <header>
 
             <div className='flex sb'>
                 <h1>לובי</h1>
 
-                <div style={{padding:2, width:"20vw"}} className='unmargin flex col'>
-                    <Avatar avatarSeed={user?.avatar}/>
-                    <h4 className='unmargin'> {user.username} </h4>
+                <div style={{ padding: 2, width: "20vw" }} className='unmargin flex col'>
+                    <Avatar avatarSeed={user?.avatar} />
+                    <h4 className='unmargin'> {user?.username} </h4>
                     <button className='secondary outline'> יציאה </button>{/* //todo */}
                 </div>
             </div>
 
-            <div >
-                <a href='#join' name='join' role='button' className={join ? '' : 'outline'} onClick={handleClick} >
+            {!(join || create) && <article>
+                <h2 className='unmargin'>
+                    ברוכים הבאים ללובי
+                </h2>
+                <b className='unmargin'>
+                    כאן תוכלו לשחק בחדרי משחק שנבנו באתר, או לבנות אחד בעצמכם!
+                </b>
+                <p className='unmargin'>
+                    כל חדר מכיל תחרות עם כמה סבבים,
+                    כשבכול סבב יהיה משחקון שהוגדר מראש על ידי המשתמשים.
+                    המטרה היא לעבור את החדר כמה שיותר מהר מבלי לטעות כמובן...
+                    <b> בהצלחה! </b>
+                </p>
+            </article>}
+
+            <div className='tabs'>
+                <Link to='#join' role='button' state={{ user }} className={join ? '' : 'outline'}  >
                     רשימת חדרים
-                </a>
-                <a href='#create' name='create' role='button' className={create ? '' : 'outline'} onClick={handleClick}>
+                </Link>
+                <Link to='#create' role='button' state={{ user }} className={create ? '' : 'outline'} >
                     צור חדר
-                </a>
+                </Link>
             </div>
 
         </header>
-        {join && <RoomList user={user} />}
-        {create && <CreateRoom user={user} />}
+        <RoomList user={user} hidden={!join} />
+        <CreateRoom user={user} hidden={!create} />
 
     </>)
 }

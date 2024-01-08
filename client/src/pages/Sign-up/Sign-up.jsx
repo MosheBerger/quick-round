@@ -47,7 +47,7 @@ function SignUp() {
             
             
             navigate('/lobby', {
-                state: data
+                state: {user: data}
             })
         } catch (error) {
             console.log('error', error); 

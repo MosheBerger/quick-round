@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
 import fetcher from '../../hooks/useFetch'
 import BASE_URL from '../../BASE URL';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Avatar from '../../components/avatar/Avatar';
+import GameCard from '../../components/GameCard';
 
 function ScoreBoard() {
+    const user = useLocation().state
 
     const roomId = parseInt(useParams('roomId').roomId)
 
@@ -13,11 +15,14 @@ function ScoreBoard() {
 
     console.log(room);
 
+    const BackToLobby = <Link to={'/lobby#join'} state={user} ><button> בחזרה ללובי </button></Link>
+
 
     return (<div >
 
         <h1>לוח ניקוד</h1>
 
+        {BackToLobby}
         {!room ?
             <div aria-busy="true">טוען</div>
 
@@ -41,7 +46,8 @@ function ScoreBoard() {
                     {room.rounds.map((r) => <Fragment key={r.id}>
 
                         <h5> סבב {r.round_num} </h5>
-                        <p> קוד משחק {r.game_id} </p>
+                        {/* <p> קוד משחק {r.game_id} </p> */}
+                        <GameCard id={r.game_id} />
 
                         {r.results.map((res) => <div key={res.id}>
                             <span> קוד שחקן {res.user_id}</span>
@@ -52,6 +58,9 @@ function ScoreBoard() {
                         </div>)}
                     </Fragment>)}
                 </article>
+
+
+                {BackToLobby}
             </>
         }
 

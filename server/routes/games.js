@@ -22,6 +22,23 @@ router.get('/:gameId', async (req, res, next) => {
     }
 })
 
+// Random settings
+router.get('random-settings/:gameId', async (req, res, next) => {
+
+    const client = req.client
+    const { gameId } = req.params
+    try {
+        // const game = await DB.showGame(client, gameId)
+        const game = {result:'under construction'}
+        console.log(game);
+        res.json(game)
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 // CREATE
 // DB.createGame

@@ -50,7 +50,7 @@ function LogIn() {
             checkError(data)
 
             navigate('/lobby', {
-                state: data
+                state: {user: data}
             })
 
         } catch (error) {

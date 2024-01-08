@@ -87,6 +87,9 @@ function SinglePlayer() {
         <Game key={curRound} settings={thisRound?.settings} setResult={setResult} moveToNextGame={moveToNextGame} />
       }
 
+      <progress value={curRound+1} max={rounds.length+1}></progress>
+
+
       <span>success: {result.success ? 'true' : 'false'}</span>
       <p>time: {result.finishTime}</p>
 

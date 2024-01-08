@@ -1,7 +1,7 @@
 import React from 'react'
 import GameSelector from './GameSelector'
 import useDialog from '../../../hooks/useDialog'
-import GameCard from './GameCard'
+import GameCard from '../../../components/GameCard'
 import PicoButton from '../../../components/PicoButton.jsx'
 
 function SetRound({ index, game, choose, add, remove, cantRemove }) {

@@ -6,10 +6,8 @@ import BASE_URL from '../../BASE URL'
 
 const INITIAL_STATE = { roomName: '', rounds: 1 }
 
-function CreateRoom({ user }) {
+function CreateRoom({ user, ...rest}) {
     const [rounds, setGameInRound] = useState([{}])
-
-
 
     const [inputs, setInput] = useInputs(INITIAL_STATE)
     const { roomName } = inputs
@@ -86,7 +84,7 @@ function CreateRoom({ user }) {
     const canCreate = (rounds.every(g => g.id) && roomName)
 
     return (
-        <article>
+        <article {...rest}>
             <h4> יצירת חדר </h4>
 
             <section>
