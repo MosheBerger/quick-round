@@ -6,7 +6,6 @@ function addButton(
     props = {
         pos: k.vec2(k.center()),
         color: undefined,
-        text: '',
         onclick: () => { },
         size: {}
     }
@@ -36,6 +35,7 @@ function addButton(
         { originalText: thisText },
         text(thisText, {
             size: 25,
+            font: 'Abraham',
         }),
         color('#ffffff')
 

@@ -3,6 +3,9 @@ import kaboom from "kaboom"
 import * as React from "react"
 import debugToggle from "./middleWares/debug"
 import './game-screen.css'
+import successScene from "../scenes/success"
+import failureScene from "../scenes/failure"
+import BASE_URL from "../../BASE URL";
 
 
 
@@ -24,17 +27,29 @@ function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 			startTime = Date.now()
 		})
 
+		k.loadFont('Abraham', `${BASE_URL}/assets/fonts/Abraham-Regular.ttf`)
+	
 		k.onUpdate(() => k.setCursor("default"))
 
 		k.settings = settings
 
-		k.finish = (success = false) => {
+		k.finish = (success = false, reason) => {
 			const finishTime = Date.now() - startTime
-			setResult({ success, finishTime })
-			k.quit()
+			// setResult({ success, finishTime })
+			k.wait(0.2, () => {
 
-			moveToNextGame?.()
+				if (success) {
+					k.go('success', { time: finishTime })
+
+				} else {
+					k.go('failure', { reason })
+				}
+			})
 		}
+
+
+		successScene(k,moveToNextGame)
+		failureScene(k,moveToNextGame)
 
 		funcGame(k)
 
@@ -54,3 +69,4 @@ function GameScreen({ funcGame, settings, setResult, moveToNextGame }) {
 }
 
 export default GameScreen
+

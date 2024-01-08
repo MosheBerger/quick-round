@@ -69,6 +69,7 @@ function ShoppingGame(k = kaboom()) {
         anchor('right'),
         k.text(fixHeb("אני צריך לכבוד שבת:"), {
             size: 20,
+            font:'Abraham',
         }),
     ])
     for (let i = 1; i <= settings.fish; i++) {
@@ -150,11 +151,11 @@ function ShoppingGame(k = kaboom()) {
             finish(true)
         }
 
-        if (
-            shoppingCart.items.challah > settings.challah
-            || shoppingCart.items.fish > settings.fish
-        ) {
-            finish()
+        if (shoppingCart.items.fish > settings.fish) {
+            finish(false,'יותר מדי דגים')
+        }
+        if (shoppingCart.items.challah > settings.challah) {
+            finish(false,'יותר מדי חלות')
         }
     })
 

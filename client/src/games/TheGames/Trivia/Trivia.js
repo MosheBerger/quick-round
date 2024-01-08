@@ -32,7 +32,7 @@ function TriviaGame(k = kaboom()) {
 
 
     const setFinish = (obj) => {
-        k.finish(obj.text === fixHeb(settings[trueAnswer]))
+        k.finish(obj.text === fixHeb(settings[trueAnswer]), 'תשובה לא נכונה')
     }
 
     const width = screenWidth()
@@ -50,9 +50,10 @@ function TriviaGame(k = kaboom()) {
         'question',
         anchor('center'),
         text(fixHeb(questionText), {
-            size: 20 * 1.5,
+            size: 20 * 1.7,
             width: width * 0.8,
-            align: 'center'
+            align: 'center',
+            font: 'Abraham',
         }),
         color('#000000')
 
