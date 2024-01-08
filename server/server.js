@@ -19,7 +19,11 @@ app.use('/api/', apiRouter)
 
 
 app.use('/assets/', express.static(assetsPath))
-app.use('/*', express.static(buildPath))
+app.use(express.static(buildPath))
+// app.get("/*", (req, res) => {
+
+// })
+
 
 
 app.listen(port, () => {
