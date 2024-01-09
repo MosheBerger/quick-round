@@ -2,169 +2,159 @@ import startDragSystem from '../../code/middleWares/playDragSystem';
 import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
-import GameScreen from '../../code/GameScreen';
 import fixHeb from '../../code/utils/fixHebrew';
 
-function Shopping(props) {
+const Shopping = {
 
-    return <>
-        <GameScreen funcGame={ShoppingGame} {...props} />
-    </>
-}
+    tag: 'shopping-game',
+
+    assets: [
+        ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
+        ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
+        ['Sprite', 'fish', `${BASE_URL}/assets/objects/fish.png`],
+        ['Sprite', 'challah', `${BASE_URL}/assets/objects/challah.png`],
+        ['Sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`],
+        ['Sprite', 'shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`],
+        ['Sprite', 'refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`],
+    ],
+
+    createScene(k = kaboom()) {
+        const {
+            setBackground, vec2, add, sprite, area,
+            scale, pos, anchor, rect, width,
+            color, rotate, outline, onUpdate,
+        } = k
 
 
-function ShoppingGame(k = kaboom()) {
-    const {
-        loadSprite, setBackground, vec2, add, finish,
-        sprite, area, scale, pos, anchor, rect, width,
-        color, rotate, loadSound, outline, settings: settingsProps, onUpdate,
-    } = k
+        k.scene(this.tag, (userSettings) => {
 
-    const mulitple = 1.5
-    startDragSystem(k)
-
-    //---- BACKGROUND
-    setBackground('#8ee575')
-    add([
-        rect(width() + 100, 200),
-        pos(0, k.height() - 200),
-        color('#6eb25a'),
-        rotate(5)
-    ])
-    //---------------
-
-    // loadSound('sadViolin',`${BASE_URL}/assets/sfx/19011_ViolinComedy_CTE09_98.2.mp3`)
-    // const violin = k.play('sadViolin',{paused:true})
-
-    loadSound('chale', `${BASE_URL}/assets/sfx/chale!.mpeg`)
-
-    // k.onMouseDown(() => {
-    //     violin.play()
-    // })
-
-    loadSprite('kaboom', 'https://kaboomjs.com/static/img/ka.svg')
-    loadSprite('fish', `${BASE_URL}/assets/objects/fish.png`)
-    loadSprite('challah', `${BASE_URL}/assets/objects/challah.png`)
-    loadSprite('shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`)
-    loadSprite('shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`)
-    loadSprite('refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`)
-
-    //! RELEASE COMMENT todo
-    const settings = settingsProps || {
-        fish: k.randi(1, 5),
-        challah: k.randi(1, 5)
-    }
-
-    const giveMe = add([
-        rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
-        color('#f2f2f2'),
-        anchor('topright'),
-        outline(5, '#111111'),
-        pos(width() - 20, 30)
-
-    ])
-    giveMe.add([
-        pos(-10, 30),
-        color('#123456'),
-        anchor('right'),
-        k.text(fixHeb("אני צריך לכבוד שבת:"), {
-            size: 20,
-            font:'Abraham',
-        }),
-    ])
-    for (let i = 1; i <= settings.fish; i++) {
-        giveMe.add([
-            'fish' + i,
-            scale(0.12),
-            color('#828282'),
-            pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
-            sprite('fish', { flipX: true }),
-            anchor('topright'),
-        ])
-    }
-    for (let i = 1; i <= settings.challah; i++) {
-        giveMe.add([
-            'challah' + i,
-            area(),
-            scale(0.12),
-            color('#828282'),
-            pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
-            sprite('challah', { flipX: true }),
-            anchor('topright'),
-        ])
-    }
-
-    // addDraggable(k, { sprite: 'refrigerator', pos: vec2(120, 170), scale: 0.6 })
-    // addDraggable(k, { sprite: 'shelf', pos: vec2(340, 170), scale: 0.6 })
-    // addDraggable(k, { sprite: 'shopping-cart', pos: vec2(530, 245), scale: 0.5 })
-
-    add([
-        sprite('refrigerator'),
-        pos(120 * mulitple, 170 * mulitple),
-        scale(0.9),
-        anchor('center'),
-        area(),
-
-    ])
-    add([
-        sprite('shelf'),
-        pos(340 * mulitple, 170 * mulitple),
-        scale(0.9),
-        anchor('center'),
-        area(),
-
-    ])
-    const shoppingCart = createShoppingCart(k)
-
-    for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
-        for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
-
-            addDraggable(k, {
-                sprite: 'fish',
-                scale: 0.12,
-                pos: vec2(x, y),
-                returnOnLeave: true
+            k.onLoad(() => {
+                // todo timestamp       
             })
 
-        }
-    }
+            const mulitple = 1.5
+            startDragSystem(k)
 
-    for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
-        for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
+            //---- BACKGROUND
+            setBackground('#8ee575')
+            add([
+                rect(width() + 100, 200),
+                pos(0, k.height() - 200),
+                color('#6eb25a'),
+                rotate(5)
+            ])
+            //---------------
 
-            addDraggable(k, {
-                sprite: 'challah',
-                scale: 0.12,
-                pos: vec2(x, y),
-                returnOnLeave: true
+            const settings = userSettings || {
+                fish: k.randi(1, 5),
+                challah: k.randi(1, 5)
+            }
+
+            // message for what you need to take
+            const giveMe = add([
+                rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
+                color('#f2f2f2'),
+                anchor('topright'),
+                outline(5, '#111111'),
+                pos(width() - 20, 30)
+
+            ])
+            giveMe.add([
+                pos(-10, 30),
+                color('#123456'),
+                anchor('right'),
+                k.text(fixHeb("אני צריך לכבוד שבת:"), {
+                    size: 20,
+                    font: 'Abraham',
+                }),
+            ])
+            for (let i = 1; i <= settings.fish; i++) {
+                giveMe.add([
+                    'fish' + i,
+                    scale(0.12),
+                    color('#828282'),
+                    pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
+                    sprite('fish', { flipX: true }),
+                    anchor('topright'),
+                ])
+            }
+            for (let i = 1; i <= settings.challah; i++) {
+                giveMe.add([
+                    'challah' + i,
+                    area(),
+                    scale(0.12),
+                    color('#828282'),
+                    pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
+                    sprite('challah', { flipX: true }),
+                    anchor('topright'),
+                ])
+            }
+
+
+            add([
+                sprite('refrigerator'),
+                pos(120 * mulitple, 170 * mulitple),
+                scale(0.9),
+                anchor('center'),
+                area(),
+
+            ])
+            add([
+                sprite('shelf'),
+                pos(340 * mulitple, 170 * mulitple),
+                scale(0.9),
+                anchor('center'),
+                area(),
+
+            ])
+            const shoppingCart = createShoppingCart(k)
+
+            // הוספת מוצרים למדפים
+            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
+                for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
+
+                    addDraggable(k, {
+                        sprite: 'fish',
+                        scale: 0.12,
+                        pos: vec2(x, y),
+                        returnOnLeave: true
+                    })
+
+                }
+            }
+
+            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
+                for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
+
+                    addDraggable(k, {
+                        sprite: 'challah',
+                        scale: 0.12,
+                        pos: vec2(x, y),
+                        returnOnLeave: true
+                    })
+
+                }
+            }
+
+            // בדיקת ניצחון/הפסד
+            onUpdate(() => {
+                if (
+                    shoppingCart.items.fish === settings.fish
+                    && shoppingCart.items.challah === settings.challah
+                ) {
+                    k.finish(true)
+                }
+
+                if (shoppingCart.items.fish > settings.fish) {
+                    k.finish(false, 'יותר מדי דגים')
+                }
+                if (shoppingCart.items.challah > settings.challah) {
+                    k.finish(false, 'יותר מדי חלות')
+                }
             })
 
-        }
+        })
     }
-    // function 
-
-    onUpdate(() => {
-        if (
-            shoppingCart.items.fish === settings.fish
-            && shoppingCart.items.challah === settings.challah
-        ) {
-            finish(true)
-        }
-
-        if (shoppingCart.items.fish > settings.fish) {
-            finish(false,'יותר מדי דגים')
-        }
-        if (shoppingCart.items.challah > settings.challah) {
-            finish(false,'יותר מדי חלות')
-        }
-    })
-
-
-
-    //   wait(3,() => {  destroyAll('*')})
-    // some.onCollide('kaboom', (kaboom) => {
-    // 	kaboom.destroy()
-    // })
 }
 
 
@@ -191,25 +181,6 @@ function createShoppingCart(k = kaboom()) {
         },
     ])
 
-
-    // const fishText = shoppingCart.add([
-    //     k.text(`${shoppingCart.items.fish}:םיגד `),
-    //     anchor('center'),
-    //     color('#000000'),
-    //     pos(0, -100),
-
-    // ])
-    // shoppingCart.fishText = fishText
-
-
-    // const challahText = shoppingCart.add([
-    //     k.text(`${shoppingCart.items.challah}:תולח `),
-    //     anchor('center'),
-    //     color('#000000'),
-    //     pos(0, -150),
-
-    // ])
-    // shoppingCart.challahText = challahText
 
 
     shoppingCart.onCollide((obj) => {

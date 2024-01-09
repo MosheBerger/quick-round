@@ -11,7 +11,7 @@ function failureScene(k = kaboom(), moveToNextGame) {
                 size: 100,
                 font: 'Abraham',
             }),
-            k.pos(k.width() / 2, k.height() / 2),
+            k.pos(k.width() / 2, k.height() / 3),
             k.anchor('center'),
         ])
 

@@ -4,7 +4,6 @@ import SignUp from './pages/Sign-up/Sign-up';
 import LogIn from './pages/log-in/Log-in';
 import Lobby from './pages/Lobby/Lobby'
 import SinglePlayer from './pages/Game/SinglePlayer';
-import SinglePlayer2 from './pages/Game/SinglePlayer copy';
 import './app.css'
 import ScoreBoard from './pages/ScoreBoard/ScoreBoard';
 // import SetProfile from './pages/UnregisterUser/SetProfile';
@@ -22,7 +21,7 @@ function App() {
           <Route path='/log-in/' element={<LogIn />} />
           {/* <Route path='/unregister/' element={<SetProfile />} /> */}
           <Route path='/lobby/' element={<Lobby />} />
-          <Route path='/game/single-player/' element={<SinglePlayer2 />} />
+          <Route path='/game/single-player/' element={<SinglePlayer />} />
           <Route path='/room/:roomId/score-board' element={<ScoreBoard />} />
 
         </Routes>

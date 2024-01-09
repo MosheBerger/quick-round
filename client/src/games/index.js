@@ -1,4 +1,6 @@
+// import TriviaGame from "./TheGames/Trivia/Trivia"
 import TriviaGame from "./TheGames/Trivia/Trivia"
+// import ShoppingGame from "./TheGames/shopping/shopping"
 import ShoppingGame from "./TheGames/shopping/shopping"
 
 const gameList = {

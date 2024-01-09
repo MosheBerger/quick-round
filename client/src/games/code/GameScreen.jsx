@@ -7,7 +7,6 @@ import successScene from "../scenes/success"
 import failureScene from "../scenes/failure"
 import BASE_URL from "../../BASE URL";
 import gameList from ".."
-import Shopping from "../TheGames/shopping/shopping copy"
 
 
 
@@ -17,9 +16,11 @@ function GameScreen({ rounds }) {
 
 	React.useEffect(() => {
 
+		// run once management
 		if (runAlready.current) { return }
 		runAlready.current = true
 
+		// define kaboom
 		const k = kaboom({
 			stretch: true,
 			global: false,
@@ -27,33 +28,82 @@ function GameScreen({ rounds }) {
 			width: 960,
 			height: 540,
 		})
-		let i = 0
+
+
+		///--🖼️--Assets Loader--🔊-----
+
+		const allAssets = [
+			['Font', 'Abraham', `${BASE_URL}/assets/fonts/Abraham-Regular.ttf`],
+		]
+
+		// push every asset from the each game in the room
+		for (const round of rounds) {
+			const game = gameList[round.game_id]
+			game.assets.forEach(asset => allAssets.push(asset))
+			// create scene for each game
+			game.createScene(k)
+		}
+
+		// load every asset 
+		allAssets.forEach((asset) => {
+			const [type, tag, url] = asset
+			console.log('check for loading', tag);
+
+			const theAssetsIsExist = k[`get${type}`](tag)
+			if (theAssetsIsExist) { return }
+
+			k[`load${type}`](tag, url)
+			console.info('loaded', tag);
+		})
+		///-----------------
+
+
 
 		//! refactor this
-		let startTime
-		k.onLoad(() => {
-			startTime = Date.now()
-		})
+		// let startTime
+		// k.onLoad(() => {
+		// 	startTime = Date.now()
+		// })
 
+		const roundManager = {
+			roundNum: 0,
+			run() {
+				k.go(
+					this.currentGame(),
+					this.currentRound().settings
+				)
+			},
+			currentRound() {
+				return rounds[this.roundNum]
+			},
+			currentGame() {
+				return gameList[this.currentRound().game_id].tag
+			},
+			nextRound() {
+				this.roundNum++
 
-		k.loadFont('Abraham', `${BASE_URL}/assets/fonts/Abraham-Regular.ttf`)
+				if (this.roundNum >= rounds.length) {
+					console.log('moveToFinish');
+					k.quit()
+					return
+				}
+				this.run()
+			}
+		}
+
 
 		k.onUpdate(() => k.setCursor("default"))
 
-		// k.settings = settings
 
 		// ! MOVE TO THE NEXT GAME
-		const moveToNextGame = () => {
-			k.go('shopping-game')
-		}
 
 		k.finish = (success = false, reason) => {
-			const finishTime = Date.now() - startTime
+			// const finishTime = Date.now() - startTime
 			// setResult(prev => [...prev ,{ success, finishTime }])
 			k.wait(0.2, () => {
 
 				if (success) {
-					k.go('success', { time: finishTime })
+					k.go('success', { time: 'finishTime' })
 
 				} else {
 					k.go('failure', { reason })
@@ -61,37 +111,17 @@ function GameScreen({ rounds }) {
 			})
 		}
 
-		successScene(k, moveToNextGame)
-		failureScene(k, moveToNextGame)
+		successScene(k, () => roundManager.nextRound())
+		failureScene(k, () => roundManager.nextRound())
 
-		Shopping.assets.forEach((asset) => {
-			const [type, tag, url] = asset
+		roundManager.run()
 
-			const isExist = k[`get${type}`](tag)
-			if (isExist) { return }
 
-			k[`load${type}`](tag, url)
-		})
-
-		Shopping.scene(k)
-		k.go(Shopping.tag)
-		// funcGame(k)
-
-		debugToggle(k)
-		console.log('gameScreen');
-
+			debugToggle(k)
 
 		//TESTING
 		k.onLoad(() => {
 			console.log('hi');
-		})
-		k.onKeyPress('space', () => {
-			k.debug.log('yey');
-
-			if (i >= rounds.length) { return }
-			let game = gameList[rounds[i].game_id]
-			k.debug.log(game)
-			i++
 		})
 
 		// return (() => {
