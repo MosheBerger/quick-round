@@ -13,11 +13,10 @@ function SinglePlayer() {
   // todo const navigate = useNavigate()
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
-  // const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
-const rounds =[]
+  const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
   console.log(rounds);
 
-  
+
   //! מונע מהמשתמש לעזוב את העמוד 
   useEffect(() => {
     window.onbeforeunload = confirmExit;
@@ -69,14 +68,15 @@ const rounds =[]
 
   return (<>
     <div>
-
+      {rounds.length > 0 &&
         <GameScreen rounds={rounds} />
+      }
 
       {/* <progress value={curRound + 1} max={rounds.length + 1}></progress> */}
 
 
       {/* <span>success: {result.success ? 'true' : 'false'}</span>
-      <p>time: {result.finishTime}</p> */} 
+      <p>time: {result.finishTime}</p> */}
 
     </div >
   </>)

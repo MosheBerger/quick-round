@@ -10,6 +10,7 @@ const Shopping = {
 
     assets: [
         ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
+        ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
         ['Sprite', 'fish', `${BASE_URL}/assets/objects/fish.png`],
         ['Sprite', 'challah', `${BASE_URL}/assets/objects/challah.png`],
         ['Sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`],
@@ -25,7 +26,13 @@ const Shopping = {
         } = k
         
         console.log('scene');
+
         k.scene(this.tag, (userSettings) => {
+
+            k.onLoad(() => {
+                console.log(k.getAsset('fish'));       
+            })
+
             console.log(k.get('shopping-game'))
 
             const mulitple = 1.5

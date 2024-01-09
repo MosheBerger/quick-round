@@ -23,11 +23,7 @@ function failureScene(k = kaboom(), moveToNextGame) {
             k.anchor('center'),
         ])
 
-        k.wait(3, () => {
-            k.debug.log('quit')
-            k.quit()
-            moveToNextGame?.()
-        })
+        k.wait(3, moveToNextGame)
     })
 }
 

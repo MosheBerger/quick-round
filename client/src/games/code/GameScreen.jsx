@@ -12,10 +12,13 @@ import Shopping from "../TheGames/shopping/shopping copy"
 
 
 function GameScreen({ rounds }) {
-
 	const canvasRef = React.useRef(null)
+	const runAlready = React.useRef(false)
 
 	React.useEffect(() => {
+
+		if (runAlready.current) { return }
+		runAlready.current = true
 
 		const k = kaboom({
 			stretch: true,
@@ -40,7 +43,9 @@ function GameScreen({ rounds }) {
 		// k.settings = settings
 
 		// ! MOVE TO THE NEXT GAME
-		const moveToNextGame = () => { }
+		const moveToNextGame = () => {
+			k.go('shopping-game')
+		}
 
 		k.finish = (success = false, reason) => {
 			const finishTime = Date.now() - startTime
@@ -61,23 +66,37 @@ function GameScreen({ rounds }) {
 
 		Shopping.assets.forEach((asset) => {
 			const [type, tag, url] = asset
-			k['load'+type](tag,url)
+
+			const isExist = k[`get${type}`](tag)
+			if (isExist) { return }
+
+			k[`load${type}`](tag, url)
 		})
+
 		Shopping.scene(k)
 		k.go(Shopping.tag)
 		// funcGame(k)
 
 		debugToggle(k)
+		console.log('gameScreen');
+
+
+		//TESTING
+		k.onLoad(() => {
+			console.log('hi');
+		})
 		k.onKeyPress('space', () => {
+			k.debug.log('yey');
+
 			if (i >= rounds.length) { return }
 			let game = gameList[rounds[i].game_id]
 			k.debug.log(game)
 			i++
 		})
 
-		return (() => {
-			k.destroyAll()
-		})
+		// return (() => {
+		// 	k.destroyAll()
+		// })
 
 
 	}, [rounds])
