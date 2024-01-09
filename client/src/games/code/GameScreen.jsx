@@ -7,6 +7,7 @@ import successScene from "../scenes/success"
 import failureScene from "../scenes/failure"
 import BASE_URL from "../../BASE URL";
 import gameList from ".."
+import Shopping from "../TheGames/shopping/shopping copy"
 
 
 
@@ -55,10 +56,15 @@ function GameScreen({ rounds }) {
 			})
 		}
 
-
 		successScene(k, moveToNextGame)
 		failureScene(k, moveToNextGame)
 
+		Shopping.assets.forEach((asset) => {
+			const [type, tag, url] = asset
+			k['load'+type](tag,url)
+		})
+		Shopping.scene(k)
+		k.go(Shopping.tag)
 		// funcGame(k)
 
 		debugToggle(k)
@@ -74,7 +80,7 @@ function GameScreen({ rounds }) {
 		})
 
 
-	}, [])
+	}, [rounds])
 
 	return <div>
 		<canvas ref={canvasRef} ></canvas>

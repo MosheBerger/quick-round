@@ -13,8 +13,8 @@ function SinglePlayer() {
   // todo const navigate = useNavigate()
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
-  const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
-
+  // const [rounds, /* setRounds */] = fetcher.useStateAndEffect(url, [])
+const rounds =[]
   console.log(rounds);
 
   

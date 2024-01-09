@@ -5,144 +5,151 @@ import BASE_URL from '../../../BASE URL';
 import fixHeb from '../../code/utils/fixHebrew';
 
 const Shopping = {
+
+    tag: 'shopping-game',
+
     assets: [
-        ['sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
-        ['sprite', 'fish', `${BASE_URL}/assets/objects/fish.png`],
-        ['sprite', 'challah', `${BASE_URL}/assets/objects/challah.png`],
-        ['sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`],
-        ['sprite', 'shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`],
-        ['sprite', 'refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`],
+        ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
+        ['Sprite', 'fish', `${BASE_URL}/assets/objects/fish.png`],
+        ['Sprite', 'challah', `${BASE_URL}/assets/objects/challah.png`],
+        ['Sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`],
+        ['Sprite', 'shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`],
+        ['Sprite', 'refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`],
     ],
-    scene(k = kaboom(), userSettings) {
+
+    scene(k = kaboom()) {
         const {
-            loadSprite, setBackground, vec2, add, finish,
+            setBackground, vec2, add, finish,
             sprite, area, scale, pos, anchor, rect, width,
-            color, rotate, loadSound, outline, settings: settingsProps, onUpdate,
+            color, rotate, outline, onUpdate,
         } = k
+        
+        console.log('scene');
+        k.scene(this.tag, (userSettings) => {
+            console.log(k.get('shopping-game'))
 
+            const mulitple = 1.5
+            startDragSystem(k)
 
-        const mulitple = 1.5
-        startDragSystem(k)
-
-        //---- BACKGROUND
-        setBackground('#8ee575')
-        add([
-            rect(width() + 100, 200),
-            pos(0, k.height() - 200),
-            color('#6eb25a'),
-            rotate(5)
-        ])
-        //---------------
-
-        const settings = userSettings || {
-            fish: k.randi(1, 5),
-            challah: k.randi(1, 5)
-        }
-
-        // message for what you need to take
-        const giveMe = add([
-            rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
-            color('#f2f2f2'),
-            anchor('topright'),
-            outline(5, '#111111'),
-            pos(width() - 20, 30)
-
-        ])
-        giveMe.add([
-            pos(-10, 30),
-            color('#123456'),
-            anchor('right'),
-            k.text(fixHeb("אני צריך לכבוד שבת:"), {
-                size: 20,
-                font: 'Abraham',
-            }),
-        ])
-        for (let i = 1; i <= settings.fish; i++) {
-            giveMe.add([
-                'fish' + i,
-                scale(0.12),
-                color('#828282'),
-                pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
-                sprite('fish', { flipX: true }),
-                anchor('topright'),
+            //---- BACKGROUND
+            setBackground('#8ee575')
+            add([
+                rect(width() + 100, 200),
+                pos(0, k.height() - 200),
+                color('#6eb25a'),
+                rotate(5)
             ])
-        }
-        for (let i = 1; i <= settings.challah; i++) {
+            //---------------
+
+            const settings = userSettings || {
+                fish: k.randi(1, 5),
+                challah: k.randi(1, 5)
+            }
+
+            // message for what you need to take
+            const giveMe = add([
+                rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
+                color('#f2f2f2'),
+                anchor('topright'),
+                outline(5, '#111111'),
+                pos(width() - 20, 30)
+
+            ])
             giveMe.add([
-                'challah' + i,
+                pos(-10, 30),
+                color('#123456'),
+                anchor('right'),
+                k.text(fixHeb("אני צריך לכבוד שבת:"), {
+                    size: 20,
+                    font: 'Abraham',
+                }),
+            ])
+            for (let i = 1; i <= settings.fish; i++) {
+                giveMe.add([
+                    'fish' + i,
+                    scale(0.12),
+                    color('#828282'),
+                    pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
+                    sprite('fish', { flipX: true }),
+                    anchor('topright'),
+                ])
+            }
+            for (let i = 1; i <= settings.challah; i++) {
+                giveMe.add([
+                    'challah' + i,
+                    area(),
+                    scale(0.12),
+                    color('#828282'),
+                    pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
+                    sprite('challah', { flipX: true }),
+                    anchor('topright'),
+                ])
+            }
+
+
+            add([
+                sprite('refrigerator'),
+                pos(120 * mulitple, 170 * mulitple),
+                scale(0.9),
+                anchor('center'),
                 area(),
-                scale(0.12),
-                color('#828282'),
-                pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
-                sprite('challah', { flipX: true }),
-                anchor('topright'),
+
             ])
-        }
+            add([
+                sprite('shelf'),
+                pos(340 * mulitple, 170 * mulitple),
+                scale(0.9),
+                anchor('center'),
+                area(),
 
+            ])
+            const shoppingCart = createShoppingCart(k)
 
-        add([
-            sprite('refrigerator'),
-            pos(120 * mulitple, 170 * mulitple),
-            scale(0.9),
-            anchor('center'),
-            area(),
+            // הוספת מוצרים למדפים
+            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
+                for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
 
-        ])
-        add([
-            sprite('shelf'),
-            pos(340 * mulitple, 170 * mulitple),
-            scale(0.9),
-            anchor('center'),
-            area(),
+                    addDraggable(k, {
+                        sprite: 'fish',
+                        scale: 0.12,
+                        pos: vec2(x, y),
+                        returnOnLeave: true
+                    })
 
-        ])
-        const shoppingCart = createShoppingCart(k)
-
-        // הוספת מוצרים למדפים
-        for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
-            for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
-
-                addDraggable(k, {
-                    sprite: 'fish',
-                    scale: 0.12,
-                    pos: vec2(x, y),
-                    returnOnLeave: true
-                })
-
-            }
-        }
-
-        for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
-            for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
-
-                addDraggable(k, {
-                    sprite: 'challah',
-                    scale: 0.12,
-                    pos: vec2(x, y),
-                    returnOnLeave: true
-                })
-
-            }
-        }
-
-        // בדיקת ניצחון/הפסד
-        onUpdate(() => {
-            if (
-                shoppingCart.items.fish === settings.fish
-                && shoppingCart.items.challah === settings.challah
-            ) {
-                finish(true)
+                }
             }
 
-            if (shoppingCart.items.fish > settings.fish) {
-                finish(false, 'יותר מדי דגים')
+            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
+                for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
+
+                    addDraggable(k, {
+                        sprite: 'challah',
+                        scale: 0.12,
+                        pos: vec2(x, y),
+                        returnOnLeave: true
+                    })
+
+                }
             }
-            if (shoppingCart.items.challah > settings.challah) {
-                finish(false, 'יותר מדי חלות')
-            }
+
+            // בדיקת ניצחון/הפסד
+            onUpdate(() => {
+                if (
+                    shoppingCart.items.fish === settings.fish
+                    && shoppingCart.items.challah === settings.challah
+                ) {
+                    finish(true)
+                }
+
+                if (shoppingCart.items.fish > settings.fish) {
+                    finish(false, 'יותר מדי דגים')
+                }
+                if (shoppingCart.items.challah > settings.challah) {
+                    finish(false, 'יותר מדי חלות')
+                }
+            })
+
         })
-
-
     }
 }
 
