@@ -7,6 +7,7 @@ import successScene from "../scenes/success"
 import failureScene from "../scenes/failure"
 import BASE_URL from "../../BASE URL";
 import gameList from ".."
+import RoundManager from "./roundManagar"
 
 
 
@@ -36,7 +37,7 @@ function GameScreen({ rounds }) {
 			['Font', 'Abraham', `${BASE_URL}/assets/fonts/Abraham-Regular.ttf`],
 		]
 
-		// push every asset from the each game in the room
+		// push every asset from each game in the room
 		for (const round of rounds) {
 			const game = gameList[round.game_id]
 			game.assets.forEach(asset => allAssets.push(asset))
@@ -44,7 +45,7 @@ function GameScreen({ rounds }) {
 			game.createScene(k)
 		}
 
-		// load every asset 
+		// load all assets
 		allAssets.forEach((asset) => {
 			const [type, tag, url] = asset
 			console.log('check for loading', tag);
@@ -57,53 +58,24 @@ function GameScreen({ rounds }) {
 		})
 		///-----------------
 
+		const results = []
 
+		const roundManager = new RoundManager(k, rounds)
 
-		//! refactor this
-		// let startTime
-		// k.onLoad(() => {
-		// 	startTime = Date.now()
-		// })
+		k.onUpdate(() => { k.setCursor("default") })
 
-		const roundManager = {
-			roundNum: 0,
-			run() {
-				k.go(
-					this.currentGame(),
-					this.currentRound().settings
-				)
-			},
-			currentRound() {
-				return rounds[this.roundNum]
-			},
-			currentGame() {
-				return gameList[this.currentRound().game_id].tag
-			},
-			nextRound() {
-				this.roundNum++
-
-				if (this.roundNum >= rounds.length) {
-					console.log('moveToFinish');
-					k.quit()
-					return
-				}
-				this.run()
-			}
-		}
-
-
-		k.onUpdate(() => k.setCursor("default"))
-
-
-		// ! MOVE TO THE NEXT GAME
 
 		k.finish = (success = false, reason) => {
-			// const finishTime = Date.now() - startTime
-			// setResult(prev => [...prev ,{ success, finishTime }])
+
+			const roundId = roundManager.currentRound().id
+			const finishTime = Date.now() - roundManager.startTime
+
+			results.push({ roundId, success, finishTime })
+
 			k.wait(0.2, () => {
 
 				if (success) {
-					k.go('success', { time: 'finishTime' })
+					k.go('success', { time: finishTime.toFixed(2) })
 
 				} else {
 					k.go('failure', { reason })
@@ -117,7 +89,7 @@ function GameScreen({ rounds }) {
 		roundManager.run()
 
 
-			debugToggle(k)
+		debugToggle(k)
 
 		//TESTING
 		k.onLoad(() => {

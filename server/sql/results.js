@@ -1,14 +1,14 @@
 
 
-async function create(client, roundId, userId, success, finishTime) {
+async function create(client, roundId, userId, roomId, success, finishTime) {
     try {
         const query = {
             text: `
-            INSERT INTO results(round_id, user_id, success, finish_time)
+            INSERT INTO results(round_id, user_id, room_id success, finish_time)
             VALUES($1,$2,$3,$4)
             RETURNING *
             ;`,
-            values: [roundId, userId, success, finishTime]
+            values: [roundId, userId, roomId, success, finishTime]
         }
         const res = await client.query(query)
         return res.rows[0]
@@ -39,11 +39,32 @@ async function showByRound(client, roundId) {
     }
 }
 
+async function showByRoom(client, roomId) {
+    try {
+
+        const query = {
+            text: `
+            SELECT * FROM results
+            WHERE room_id = $1
+            ORDER BY success DESC, finish_time
+            ;`,
+            values: [roomId]
+        }
+        const res = await client.query(query)
+
+        return res.rows
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 const results = {
     create,
-    showByRound
+    showByRoom,
+    showByRound,
 }
 
 module.exports = results

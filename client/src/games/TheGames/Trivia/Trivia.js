@@ -18,10 +18,6 @@ const Trivia = {
         } = k
 
         k.scene(this.tag, (userSettings) => {
-            k.onLoad(() => {
-                // todo timestamp       
-            })
-
 
             const {
                 answerA, answerB, answerC, answerD,

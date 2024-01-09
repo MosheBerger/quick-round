@@ -28,10 +28,6 @@ const Shopping = {
 
         k.scene(this.tag, (userSettings) => {
 
-            k.onLoad(() => {
-                // todo timestamp       
-            })
-
             const mulitple = 1.5
             startDragSystem(k)
 
