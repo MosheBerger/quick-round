@@ -10,7 +10,7 @@ function startDragSystem(k = kaboom()) {
         if (k.curDragging) {
             return
         }
-        // Loop all "bean"s in reverse, so we pick the topmost one
+        // Loop all "drag" in reverse, so we pick the topmost one
         for (const obj of k.get("drag").reverse()) {
             // If mouse is pressed and mouse position is inside, we pick
             if (obj.isHovering()) {
