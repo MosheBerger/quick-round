@@ -14,8 +14,11 @@ function ScoreBoard() {
     const [room] = fetcher.useStateAndEffect(url)
 
     console.log(room);
-    console.log(room && Object.groupBy(room.rounds[0].results, ({user_id}) => user_id));
     
+    // first attempt for each player // TODO make it for each round
+    const resultByUser = room && Object.groupBy(room.rounds[0].results, ({ user_id }) => user_id)
+    if (room) room.players.forEach((user) => console.log('user', user.id, resultByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v)))
+
     const BackToLobby = <Link to={'/lobby#join'} state={user} ><button> בחזרה ללובי </button></Link>
 
 
