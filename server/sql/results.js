@@ -4,8 +4,8 @@ async function create(client, roundId, userId, roomId, success, finishTime) {
     try {
         const query = {
             text: `
-            INSERT INTO results(round_id, user_id, room_id success, finish_time)
-            VALUES($1,$2,$3,$4)
+            INSERT INTO results(round_id, user_id, room_id, success, finish_time)
+            VALUES($1,$2,$3,$4,$5)
             RETURNING *
             ;`,
             values: [roundId, userId, roomId, success, finishTime]

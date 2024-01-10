@@ -10,7 +10,7 @@ import GameScreen from '../../games/code/GameScreen';
 function SinglePlayer() {
 
   const { roomId, user } = useLocation().state
-  // todo const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
   const [rounds] = fetcher.useStateAndEffect(url, [])
@@ -30,46 +30,35 @@ function SinglePlayer() {
 
   // !sendResult
   // useEffect(() => {
-  //   const sendResult = async () => {
-  //     // console.log('result',result);
-  //     try {
-  //       //   const url = `${BASE_URL}/api/results/in-round/${sorted[curRound - 1].id}/user/${user.id}`
-  //       //   const res = await fetch(url, {
-  //       //     method: 'post',
-  //       //     body: JSON.stringify({ ...result }),
-  //       //     headers: {
-  //       //       "Content-Type": "application/json"
-  //       //     }
-  //       //   })
-  //       //   const data = await res.json()
-  //       const data = result
-  //       console.log('🛜', data);
+  const sendResult = async (results) => {
+    console.log('resultim', results);
+    try {
+      const url = `${BASE_URL}/api/results/in-room/${roomId}/user/${user.id}`
+      const res = await fetch(url, {
+        method: 'post',
+        body: JSON.stringify({ results }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      const data = await res.json()
+      console.log('🛜', data);
+      
+      navigate(`/room/${roomId}/score-board`, {
+        state: { user }
+      })
+    } catch (error) {
+      console.log('❌', error);
 
-  //     } catch (error) {
-  //       console.log('❌', error);
+    } finally {
 
-  //     } finally {
-  //       // if (!thisRound) {
-  //       //   navigate(`/room/${roomId}/score-board`, {
-  //       //     state: { user }
-  //       //   })
-  //       // }
-  //     }
-  //   }
-
-  //   if (result.length === rounds.length) {
-  //     console.log('sending');
-  //     sendResult()
-  //   }
-  // }, [curRound, navigate, result, roomId, sorted, thisRound, user, rounds])
-
-
-
+    }
+  }
 
   return (<>
     <div>
       {rounds.length > 0 &&
-        <GameScreen rounds={rounds} />
+        <GameScreen rounds={rounds} sendResults={sendResult}/>
       }
 
       {/* <progress value={curRound + 1} max={rounds.length + 1}></progress> */}

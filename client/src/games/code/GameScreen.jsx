@@ -11,7 +11,7 @@ import RoundManager from "./roundManagar"
 
 
 
-function GameScreen({ rounds }) {
+function GameScreen({ rounds, sendResults }) {
 	const canvasRef = React.useRef(null)
 	const runAlready = React.useRef(false)
 
@@ -57,34 +57,12 @@ function GameScreen({ rounds }) {
 			console.info('loaded', tag);
 		})
 		///-----------------
-
-		const results = []
-
-		const roundManager = new RoundManager(k, rounds)
-
+		
 		k.onUpdate(() => { k.setCursor("default") })
 
+		const roundManager = new RoundManager(k, rounds, sendResults)
 
-		k.finish = (success = false, reason) => {
-
-			if (results.length >= rounds.length) {return}
-
-			const roundId = roundManager.currentRound().id
-			const finishTime = Date.now() - roundManager.startTime
-
-			results.push({ roundId, success, finishTime })
-
-			console.log('תוצאות', results);
-			k.wait(0.2, () => {
-
-				if (success) {
-					k.go('success', { time: finishTime.toFixed(2) })
-
-				} else {
-					k.go('failure', { reason })
-				}
-			})
-		}
+		k.finish = roundManager.finishFunc
 
 		successScene(k, () => roundManager.nextRound())
 		failureScene(k, () => roundManager.nextRound())
@@ -104,7 +82,7 @@ function GameScreen({ rounds }) {
 		// })
 
 
-	}, [rounds])
+	}, [rounds,sendResults])
 
 	return <div>
 		<canvas ref={canvasRef} ></canvas>

@@ -17,7 +17,7 @@ function successScene(k = kaboom(), moveToNextGame) {
         ])
 
         k.add([
-            k.text(fixHeb(`לקח לך ${reverse(time / 1000)} שניות`, {
+            k.text(fixHeb(`לקח לך ${reverse((time / 1000).toFixed(2))} שניות`, {
                 font: 'Abraham',
             })),
             k.pos(k.width() / 2, k.height() / 1.5),

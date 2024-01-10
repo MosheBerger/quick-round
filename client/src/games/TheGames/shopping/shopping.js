@@ -142,10 +142,10 @@ const Shopping = {
                 }
 
                 if (shoppingCart.items.fish > settings.fish) {
-                    k.finish(false, 'יותר מדי דגים')
+                    k.finish(false, fixHeb('יותר מדי דגים'))
                 }
                 if (shoppingCart.items.challah > settings.challah) {
-                    k.finish(false, 'יותר מדי חלות')
+                    k.finish(false, fixHeb('יותר מדי חלות'))
                 }
             })
 
