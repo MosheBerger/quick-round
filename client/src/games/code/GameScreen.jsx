@@ -7,7 +7,8 @@ import successScene from "../scenes/success"
 import failureScene from "../scenes/failure"
 import BASE_URL from "../../BASE URL";
 import gameList from ".."
-import RoundManager from "./roundManagar"
+import RoundManager from "./roundManager"
+import roundNumScene from "../scenes/roundNum"
 
 
 
@@ -68,8 +69,9 @@ function GameScreen({ rounds, sendResults }) {
 
 		successScene(k, () => roundManager.nextRound())
 		failureScene(k, () => roundManager.nextRound())
-
+		roundNumScene(k, () => {console.log('next');})
 		roundManager.run()
+		// k.go('roundNum',{roundNum:1})
 
 
 		debugToggle(k)

@@ -11,7 +11,15 @@ class RoundManager {
     results = []
 
     run() {
+        this.k.go('roundNum', {
+            roundNum: this.roundNum + 1,
+            playTheGame: () => {this.playTheGame()}
+        })
+    }
+
+    playTheGame() {
         this.startTime = Date.now()
+        console.log('start',this.startTime);
         this.k.go(
             this.currentGame(),
             this.currentRound().settings
