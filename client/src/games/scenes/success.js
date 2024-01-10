@@ -24,7 +24,8 @@ function successScene(k = kaboom(), moveToNextGame) {
             k.anchor('center'),
         ])
 
-
+        k.onKeyPress(moveToNextGame)
+        k.onClick(moveToNextGame)
         k.wait(3, moveToNextGame)
     })
 }

@@ -4,6 +4,19 @@ import GameCard from '../../components/GameCard'
 import TimingCard from './TimingCard'
 
 function ScoreTable({ room, tableKey, title }) {
+
+    console.table('table', room[tableKey]);
+
+    const a = room[tableKey].reduce((p, v) => {
+        if (!v[0]) return 0
+        if (v[0].success) {
+            return p[0].finish_time + v[0].finish_time
+        } else {
+            return p[0].finish_time + 30000
+        }
+    }) /1000
+    
+
     return (<>
         <h3 className='unmargin'> {title} </h3>
         <article className='unmargin'>
@@ -37,16 +50,7 @@ function ScoreTable({ room, tableKey, title }) {
                         })}
                     </tbody>
                     <tfoot>
-                        {room[tableKey].reduce((p, v) => {
-                            console.log(v[0]);
-                            if (!v[0]) return p
-                            if (v[0].success) {
-                                return p + v[0].finish_time
-                            } else {
-                                return p + 20000
-                            }
-                        })
-                        }
+                        {}
 
                     </tfoot>
                 </table>

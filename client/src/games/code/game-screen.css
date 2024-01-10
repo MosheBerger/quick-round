@@ -2,8 +2,11 @@ canvas {
     border: 4px black solid;
     border-radius: 10px;
     max-width: 100%;
-    box-sizing: content-box;
     /* margin: 20px 10%; */
     height: auto !important;
+    /* box-sizing: content-box; */
     aspect-ratio: 16/9;
 }
+/* .canvas-container{ */
+    /* max-height: 80vh; */
+/* } */

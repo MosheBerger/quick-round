@@ -28,6 +28,8 @@ function GameScreen({ rounds, sendResults }) {
 			canvas: canvasRef.current,
 			width: 960,
 			height: 540,
+			// letterbox: true,
+
 		})
 
 
@@ -84,7 +86,7 @@ function GameScreen({ rounds, sendResults }) {
 
 	}, [rounds,sendResults])
 
-	return <div>
+	return <div className="canvas-container">
 		<canvas ref={canvasRef} ></canvas>
 	</div>
 
