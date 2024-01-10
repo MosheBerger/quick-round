@@ -67,11 +67,14 @@ function GameScreen({ rounds }) {
 
 		k.finish = (success = false, reason) => {
 
+			if (results.length >= rounds.length) {return}
+
 			const roundId = roundManager.currentRound().id
 			const finishTime = Date.now() - roundManager.startTime
 
 			results.push({ roundId, success, finishTime })
 
+			console.log('תוצאות', results);
 			k.wait(0.2, () => {
 
 				if (success) {

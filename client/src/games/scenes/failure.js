@@ -16,7 +16,7 @@ function failureScene(k = kaboom(), moveToNextGame) {
         ])
 
         k.add([
-            k.text(fixHeb(reason), {
+            k.text(reason, {
                 font: 'Abraham',
             }),
             k.pos(k.width() / 2, k.height() / 1.5),

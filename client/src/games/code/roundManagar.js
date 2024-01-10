@@ -5,8 +5,8 @@ class RoundManager {
         this.k = k
         this.rounds = rounds
     }
-    roundNum= 0
-    startTime= 0
+    roundNum = 0
+    startTime = 0
 
     run() {
         this.startTime = Date.now()

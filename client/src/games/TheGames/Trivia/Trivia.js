@@ -31,7 +31,7 @@ const Trivia = {
             const setFinish = (obj) => {
                 k.finish(
                     obj.text === fixHeb(userSettings[trueAnswer]),
-                    `תשובה לא נכונה. התשובה הנכונה הייתה: ${userSettings[trueAnswer]}`
+                    fixHeb(`תשובה לא נכונה. התשובה הנכונה הייתה: ${userSettings[trueAnswer]}`,10)
                 )
             }
 
