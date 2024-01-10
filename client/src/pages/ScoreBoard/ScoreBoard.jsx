@@ -4,6 +4,7 @@ import BASE_URL from '../../BASE URL';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Avatar from '../../components/avatar/Avatar';
 import GameCard from '../../components/GameCard';
+import ScoreTable from './ScoreTable';
 
 function ScoreBoard() {
     const user = useLocation().state
@@ -14,10 +15,30 @@ function ScoreBoard() {
     const [room] = fetcher.useStateAndEffect(url)
 
     console.log(room);
-    
+
     // first attempt for each player // TODO make it for each round
-    const resultByUser = room && Object.groupBy(room.rounds[0].results, ({ user_id }) => user_id)
-    if (room) room.players.forEach((user) => console.log('user', user.id, resultByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v)))
+
+
+    if (room) {
+        room.firstResultsTable = []
+        room.lastResultsTable = []
+        const { rounds, players } = room
+        rounds.forEach((round) => {
+            const resultsByUser = Object.groupBy(round.results, ({ user_id }) => user_id)
+            const firstRoundArr = []
+            const lastRoundArr = []
+            players.forEach((user) => {
+                firstRoundArr.push(resultsByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v))
+                lastRoundArr.push(resultsByUser[user.id]?.reduce((p, v) => p.id > v.id ? p : v))
+            })
+            room.firstResultsTable.push(firstRoundArr)
+            room.lastResultsTable.push(lastRoundArr)
+        })
+        console.log('first', room.firstResultsTable);
+        console.log('last', room.lastResultsTable);
+    }
+    // const resultByUser = room && Object.groupBy(room.rounds[0].results, ({ user_id }) => user_id)
+    // if (room) room.players.forEach((user) => console.log('user', user.id, resultByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v)))
 
     const BackToLobby = <Link to={'/lobby#join'} state={user} ><button> בחזרה ללובי </button></Link>
 
@@ -46,6 +67,18 @@ function ScoreBoard() {
                     )}
                 </div>
 
+                <ScoreTable
+                    room={room}
+                    tableKey={'firstResultsTable'}
+                    title={'ניקוד על הפעם הראשונה'}
+                />
+                <br />
+                <ScoreTable
+                    room={room}
+                    tableKey={'lastResultsTable'}
+                    title={'ניקוד בפעם האחרונה ששחקת'}
+                />
+
                 <article id='rounds'>
                     {room.rounds.map((r) => <Fragment key={r.id}>
 
@@ -68,7 +101,7 @@ function ScoreBoard() {
             </>
         }
 
-    </div>)
+    </div >)
 }
 
 export default ScoreBoard
