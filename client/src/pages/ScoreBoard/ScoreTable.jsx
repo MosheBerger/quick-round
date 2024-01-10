@@ -7,18 +7,18 @@ function ScoreTable({ room, tableKey, title }) {
     return (<>
         <h3 className='unmargin'> {title} </h3>
         <article className='unmargin'>
-            <figure>
-                <table >
+            <figure className='unmargin'>
+                <table className='unmargin'>
                     <thead>
                         <tr>
-                            <th scope='col'> מספר סבב </th>
+                            <th scope='col'> </th>
                             <th scope='col'> משחק </th>
 
                             {room.players.map(p => (
                                 <th key={p.id} scope='col'>
                                     <div className='flex col'>
                                         <Avatar avatarSeed={p.avatar} />
-                                        {p.username}
+                                        {p.username || 'null'}
                                     </div>
                                 </th>
                             ))}
@@ -36,6 +36,19 @@ function ScoreTable({ room, tableKey, title }) {
                             </tr>
                         })}
                     </tbody>
+                    <tfoot>
+                        {room[tableKey].reduce((p, v) => {
+                            console.log(v[0]);
+                            if (!v[0]) return p
+                            if (v[0].success) {
+                                return p + v[0].finish_time
+                            } else {
+                                return p + 20000
+                            }
+                        })
+                        }
+
+                    </tfoot>
                 </table>
             </figure>
         </article>

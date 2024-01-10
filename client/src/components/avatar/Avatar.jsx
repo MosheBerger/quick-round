@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Avatar({ seedName, seed, imageSeed, color, onClick, outline, avatarSeed }) {
+export default function Avatar({ seedName, seed, imageSeed, color, onClick, outline, avatarSeed, height }) {
     
     if(avatarSeed){
         [seedName, color] = avatarSeed?.split(':')
@@ -9,7 +9,7 @@ export default function Avatar({ seedName, seed, imageSeed, color, onClick, outl
     const props = {
         src: `https://api.dicebear.com/7.x/lorelei-neutral/svg?backgroundColor=transparent&scale=120&seed=${seedName}`,
         style: {
-            height: '10%',
+            height: height||'10%',
             maxHeight: 60
             , outline: (outline || seed === imageSeed) ? '#904c08 solid 5px' : 'black solid 3px',
             borderRadius: '30%',

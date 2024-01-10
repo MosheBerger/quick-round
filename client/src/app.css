@@ -63,3 +63,12 @@ article{
 /* *{
     transition: all 0.5s linear !important ;
 } */
+th,td{
+    text-align: center;
+}
+th[scope='col']{
+    vertical-align: bottom;
+}
+th[scope='row']{
+    text-align: left;
+}
