@@ -21,6 +21,7 @@ function useInEffect(URL, setState) {
 function useStateAndEffect(URL, INITIAL_STATE) {
 
     const [state, setState] = useState(INITIAL_STATE)
+    const [loading, setLoading] = useState(true)
 
     // console.log('errorr?');
     useEffect(() => {
@@ -30,9 +31,11 @@ function useStateAndEffect(URL, INITIAL_STATE) {
                 const res = await fetch(URL)
                 const data = await res.json()
                 setState(data)
-
+                
             } catch (error) {
                 console.log(error);
+            } finally{
+                setLoading(false)
             }
         }
 
@@ -40,7 +43,7 @@ function useStateAndEffect(URL, INITIAL_STATE) {
 
     }, [URL])
 
-    return [state, setState]
+    return [state,loading, setLoading, setState]
 }
 
 

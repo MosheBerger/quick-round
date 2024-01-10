@@ -13,8 +13,9 @@ function SinglePlayer() {
   const navigate = useNavigate()
 
   const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
-  const [rounds] = fetcher.useStateAndEffect(url, [])
+  const [rounds, loading, setLoading] = fetcher.useStateAndEffect(url, [])
   console.log(rounds);
+  console.log(loading);
 
 
   //! מונע מהמשתמש לעזוב את העמוד 
@@ -33,6 +34,8 @@ function SinglePlayer() {
   const sendResult = async (results) => {
     console.log('resultim', results);
     try {
+      setLoading(true)
+
       const url = `${BASE_URL}/api/results/in-room/${roomId}/user/${user.id}`
       const res = await fetch(url, {
         method: 'post',
@@ -43,7 +46,7 @@ function SinglePlayer() {
       })
       const data = await res.json()
       console.log('🛜', data);
-      
+
       navigate(`/room/${roomId}/score-board`, {
         state: { user }
       })
@@ -57,8 +60,8 @@ function SinglePlayer() {
 
   return (<>
     <div>
-      {rounds.length > 0 &&
-        <GameScreen rounds={rounds} sendResults={sendResult}/>
+      {!loading &&
+        <GameScreen rounds={rounds} sendResults={sendResult} />
       }
 
       {/* <progress value={curRound + 1} max={rounds.length + 1}></progress> */}
