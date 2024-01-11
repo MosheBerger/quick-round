@@ -8,6 +8,8 @@ const Shopping = {
 
     tag: 'shopping-game',
 
+    name: 'קניות לשבת',
+
     assets: [
         ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
         ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],

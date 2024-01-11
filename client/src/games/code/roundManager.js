@@ -13,7 +13,8 @@ class RoundManager {
     run() {
         this.k.go('roundNum', {
             roundNum: this.roundNum + 1,
-            playTheGame: () => {this.playTheGame()}
+            playTheGame: () => {this.playTheGame()},
+            gameName:this.currentGame().name
         })
     }
 
@@ -21,7 +22,7 @@ class RoundManager {
         this.startTime = Date.now()
         console.log('start',this.startTime);
         this.k.go(
-            this.currentGame(),
+            this.currentGame().tag,
             this.currentRound().settings
         )
     }
@@ -30,7 +31,7 @@ class RoundManager {
         return this.rounds[this.roundNum]
     }
     currentGame() {
-        return gameList[this.currentRound().game_id].tag
+        return gameList[this.currentRound().game_id]
     }
 
     nextRound() {

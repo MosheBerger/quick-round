@@ -7,6 +7,8 @@ import fixHeb from '../../code/utils/fixHebrew';
 const Trivia = {
     tag: 'trivia-question',
 
+    name: 'שאלת טריוויה',
+    
     assets: [],
 
     createScene(k = kaboom()) {
