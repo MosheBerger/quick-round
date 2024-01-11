@@ -44,13 +44,13 @@ function SignUp() {
             const data = await res.json()
             console.log(data);
             checkError(data)
-            
-            
+
+
             navigate('/lobby', {
-                state: {user: data}
+                state: { user: data }
             })
         } catch (error) {
-            console.log('error', error); 
+            console.log('error', error);
             setErrorMessage(error.message)
 
         }
@@ -63,6 +63,10 @@ function SignUp() {
     return (<>
         <h1> הרשמה </h1>
 
+        <Dialog title={'בחירת דמות'} open={avatarSelectorIsOpen} close={openClose}>
+            <AvatarSelector name={username.trim()} setAvatar={setAvatar} close={openClose} />
+        </Dialog>
+        
         <form className='inputs'>
             <Input name={'שם משתמש'} insertTo={'username'} value={username} setInput={setInputs} />
             <small> לפחות 4 תווים </small>
@@ -72,9 +76,6 @@ function SignUp() {
             <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <br />
 
-            <Dialog title={' בחירת דמות '} open={avatarSelectorIsOpen} close={openClose}>
-                <AvatarSelector name={username.trim()} setAvatar={setAvatar} close={openClose} />
-            </Dialog>
 
             <button disabled={username === ''} className={'secondary'} onClick={e => { e.preventDefault(); openClose() }} >
                 <Avatar {...avatar}> </Avatar>

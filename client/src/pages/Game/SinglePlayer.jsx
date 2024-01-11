@@ -61,9 +61,9 @@ function SinglePlayer() {
   return (<>
     <div>
       {!loading &&
-      <div>
+      // <div>
         <GameScreen rounds={rounds} sendResults={sendResult} />
-      </div>
+      // </div>
       }
 
       {/* <progress value={curRound + 1} max={rounds.length + 1}></progress> */}

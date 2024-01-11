@@ -3,6 +3,7 @@ import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
 import BASE_URL from '../../../BASE URL';
 import fixHeb from '../../code/utils/fixHebrew';
+import addBorders from '../../code/utils/addBorder';
 
 const Shopping = {
 
@@ -36,6 +37,7 @@ const Shopping = {
 
             //---- BACKGROUND
             setBackground('#8ee575')
+
             add([
                 rect(width() + 100, 200),
                 pos(0, k.height() - 200),
@@ -134,7 +136,7 @@ const Shopping = {
 
                 }
             }
-
+            addBorders(k)
             // בדיקת ניצחון/הפסד
             onUpdate(() => {
                 if (

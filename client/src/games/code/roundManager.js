@@ -41,6 +41,7 @@ class RoundManager {
             console.log('moveToFinish');
             this.k.quit()
             this.sendResult(this.results)
+            document.getElementsByTagName('canvas')[0].remove()
             console.log('res', this.results);
             return
         }

@@ -7,7 +7,7 @@ import ColorsSelector from './ColorSelector'
 
 const defaultValue = [1, 2, 3, 4, 5]
 
-function AvatarSelector({ name, setAvatar, close, children }) {
+function AvatarSelector({ name, setAvatar, close }) {
     const [seeds, setSeeds] = useState(defaultValue)
     const [imageSeed, chooseImage] = useState(1)
     const [colorIndex, setColorIndex] = useState(0)
@@ -28,10 +28,7 @@ function AvatarSelector({ name, setAvatar, close, children }) {
     return (<>
         {/* <OuterDiv > */}
             {/* <article className='container' > */}
-
-                {children}
-
-                <article>
+                <article >
                     <span> דמות </span>
 
                     <div className='flex'>

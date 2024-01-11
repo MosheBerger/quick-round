@@ -4,7 +4,11 @@ import fixHeb from "../code/utils/fixHebrew";
 function roundNumScene(k = kaboom()) {
 
     k.scene('roundNum', ({ roundNum, playTheGame, gameName }) => {
-        k.setBackground(0, 0, 150)
+        // k.setBackground(0, 0, 150)
+        k.add([
+            k.rect(k.width(), k.height()),
+            k.color(0,0,150)
+        ])
 
         k.add([
             k.text(fixHeb('סבב מספר'), {

@@ -17,6 +17,7 @@ function GameScreen({ rounds, sendResults }) {
 	const runAlready = React.useRef(false)
 
 	React.useEffect(() => {
+		if (!rounds) { return }
 
 		// run once management
 		if (runAlready.current) { return }
@@ -25,11 +26,12 @@ function GameScreen({ rounds, sendResults }) {
 		// define kaboom
 		const k = kaboom({
 			stretch: true,
+			background: '#000000',
 			global: false,
 			canvas: canvasRef.current,
 			width: 960,
 			height: 540,
-			// letterbox: true,
+			letterbox: true,
 
 		})
 
@@ -60,7 +62,7 @@ function GameScreen({ rounds, sendResults }) {
 			console.info('loaded', tag);
 		})
 		///-----------------
-		
+
 		k.onUpdate(() => { k.setCursor("default") })
 
 		const roundManager = new RoundManager(k, rounds, sendResults)
@@ -69,7 +71,7 @@ function GameScreen({ rounds, sendResults }) {
 
 		successScene(k, () => roundManager.nextRound())
 		failureScene(k, () => roundManager.nextRound())
-		roundNumScene(k, () => {console.log('next');})
+		roundNumScene(k, () => { console.log('next'); })
 		roundManager.run()
 		// k.go('roundNum',{roundNum:1})
 
@@ -86,9 +88,9 @@ function GameScreen({ rounds, sendResults }) {
 		// })
 
 
-	}, [rounds,sendResults])
+	}, [rounds, sendResults])
 
-	return <div className="canvas-container">
+	return <div className="canvas-container" style={{ minHeight: '80vh' }}>
 		<canvas ref={canvasRef} ></canvas>
 	</div>
 

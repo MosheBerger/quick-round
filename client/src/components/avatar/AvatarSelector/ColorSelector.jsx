@@ -4,7 +4,7 @@ import COLORS from "./colors";
 function ColorsSelector({setColorIndex, colorIndex, name, imageSeed }) {
     return (<article>
 
-        <span> צבע </span>
+        <h4> צבע </h4>
         <div>
             {COLORS.map((color, index) => {
                 return <Avatar onClick={e => {

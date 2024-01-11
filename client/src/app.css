@@ -11,15 +11,19 @@
     gap: 10px;
 
 }
-.flex.sb{
+
+.flex.sb {
     justify-content: space-between;
 }
-.flex.st{
+
+.flex.st {
     justify-content: start;
 }
-.flex.col{
+
+.flex.col {
     flex-direction: column;
 }
+
 .container {
     padding: 3%;
 }
@@ -40,37 +44,75 @@
     margin: 10px;
 } */
 
-.unmargin{
+.unmargin {
     margin: 0;
 }
-#root{
+
+#root {
     background-color: #0e86d4;
     background-image: url(background.png);
     background-repeat: repeat;
     min-height: 100svh;
 }
-article{
+
+article {
     background-image: url(background2.png);
     background-repeat: repeat;
-    opacity: 0.95;
-}
+    /* opacity: 0.95; */
+    /* min-width: 80%; */
+    /* min-width: 500px !important; */
+    /* animation: shadow-drop-2-center-and-scale-up-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both !important; */
 
-.outline[role]{
+}
+dialog > article{
+    opacity: 1;
+}
+small{
+    color: aliceblue;
+}
+.outline[role] {
     background-color: rgb(26, 26, 26) !important;
     /* opacity: 0.8; */
 }
+
 /* .roundSetter{
     
 } */
 /* *{
     transition: all 0.5s linear !important ;
 } */
-th,td{
+th,
+td {
     text-align: center;
 }
-th[scope='col']{
+
+th[scope='col'] {
     vertical-align: bottom;
 }
-th[scope='row']{
+
+th[scope='row'] {
     text-align: left;
+}
+
+@keyframes shadow-drop-2-center-and-scale-up-center {
+    0% {
+        transform: translateZ(0);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        transform: scale(0.5);
+
+    }
+
+    100% {
+        transform: translateZ(50px);
+        box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+        transform: scale(1);
+    }
+}
+
+@keyframes scale-up-center {
+    0% {
+    }
+
+    100% {
+    }
 }
