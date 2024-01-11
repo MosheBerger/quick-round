@@ -52,10 +52,12 @@
 article{
     background-image: url(background2.png);
     background-repeat: repeat;
+    opacity: 0.95;
 }
 
 .outline[role]{
-    background-color: rgb(45, 44, 44) !important;
+    background-color: rgb(26, 26, 26) !important;
+    /* opacity: 0.8; */
 }
 /* .roundSetter{
     

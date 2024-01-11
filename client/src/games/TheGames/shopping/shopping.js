@@ -27,6 +27,7 @@ const Shopping = {
 
 
         k.scene(this.tag, (userSettings) => {
+            k.onUpdate(() => { k.setCursor("default") })
 
             const mulitple = 1.5
             startDragSystem(k)
