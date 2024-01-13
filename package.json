@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server-up": "nodemon ./server/server.js",
+    "server-up": "cd ./server/ && node ./server.js",
+    "client-up": "cd ./client/ && npm start",
     "start": "node server.js"
   },
   "keywords": [],
