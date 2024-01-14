@@ -116,11 +116,18 @@ router.get('/show/:userId', async (req, res, next) => {
 
 
 // UPDATE AVATAR
-router.put('/update/:id', async (req, res, next) => {
+router.put('/update/:userId', async (req, res, next) => {
     const client = req.client
     try {
-        const { id } = req.params
-        const { name, avatar } = req.body
+        const { userId } = req.params
+
+        const oldData = await usersDB.showProfile(client, userId)
+        
+        if (oldData === undefined)
+            throw { statusCode: 400, message: `an error append` }
+
+        const name = req.body?.name || oldData.name
+        const avatar = req.body?.avatar || oldData.avatar
 
         //todo validation for avatar
         const user = await usersDB.updateInfo(client, id, name, avatar)

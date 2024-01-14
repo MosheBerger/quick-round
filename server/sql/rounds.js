@@ -28,15 +28,15 @@ async function createMany(client, roundsArr = []) {
 
 }
 
-async function remove(client, roundId) {
+async function removeByRoom(client, roomId) {
 
     const query = {
         text: `
             DELETE FROM rounds
-            WHERE id = $1
+            WHERE room_id = $1
             RETURNING id
             ;`,
-        values: [roundId]
+        values: [roomId]
     }
     const res = await client.query(query)
     return {
@@ -91,7 +91,7 @@ async function showByRoom(client, roomId) {
 const rounds = {
     create,
     createMany,
-    remove,
+    removeByRoom,
     show,
     showByRoom,
 }
