@@ -1,19 +1,19 @@
 
 async function showAll(client) {
-    const result = await client.query('SELECT id, username, avatar FROM users')
+    const result = await client.query('SELECT id, name, avatar FROM users')
     return result.rows;
 
 }
 
-async function create(client, username, password, email, avatar) {
+async function create(client, name, password, email, avatar) {
     try {
         const query = {
             text: `
-                INSERT INTO users(username, password, email, avatar)
+                INSERT INTO users(name, password, email, avatar)
                 VALUES($1,$2,$3,$4)
                 RETURNING *  
             `,
-            values: [username, password, email, avatar],
+            values: [name, password, email, avatar],
         }
 
         const res = await client.query(query)
@@ -35,7 +35,7 @@ async function showProfile(client, userId) {
             text: `
             SELECT 
             id,
-            username,
+            name,
             avatar
             FROM users
             WHERE id = $1 
@@ -52,15 +52,15 @@ async function showProfile(client, userId) {
     }
 }
 
-async function logIn(client, username, password) {
+async function logIn(client, email, password) {
     try {
         const query = {
             text: `
             SELECT * FROM users
-            WHERE username = $1 
+            WHERE email = $1 
             AND password = $2
             `,
-            values: [username, password]
+            values: [email, password]
         }
 
         const res = await client.query(query)
@@ -72,14 +72,14 @@ async function logIn(client, username, password) {
     }
 }
 
-async function checkIfExist(client, username) {
+async function checkIfExist(client, email) {
     try {
         const query = {
             text: `
-            SELECT username FROM users
-            WHERE username = $1 
+            SELECT email FROM users
+            WHERE email = $1 
         ;`,
-            values: [username]
+            values: [email]
         }
 
         const res = await client.query(query)
@@ -92,17 +92,16 @@ async function checkIfExist(client, username) {
     }
 }
 
-async function updateAvatar(client, username, password, avatar) {
+async function updateInfo(client,id, name, avatar) {
     try {
         const query = {
             text: `
             UPDATE users
-            SET avatar = $3
-            WHERE username = $1
-                AND password = $2
+            SET avatar = $3, name = $2
+            WHERE id = $1
             RETURNING *
             `,
-            values: [username, password, avatar]
+            values: [id, name, avatar]
         }
 
         const res = await client.query(query)
@@ -126,7 +125,7 @@ const users = {
     showProfile,
     showAll,
     checkIfExist,
-    updateAvatar,
+    updateInfo,
 }
 
 module.exports = users

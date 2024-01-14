@@ -1,5 +1,4 @@
 const express = require('express')
-const pool = require('../sql/pool')
 const DB = require('../DB').users
 const { isValid, type } = require('../utils/validation')
 
@@ -15,8 +14,8 @@ router.post('/login/:username', async (req, res, next) => {
         console.log('username', username);
         console.log('password', password);
 
-        if (!isValid(username, type.username))
-            throw { statusCode: 400, message: 'בטוח שהכנסת שם משתמש תקין?' }
+        if (!isValid(username, type.email))
+            throw { statusCode: 400, message: 'בטוח שהכנסת אימייל תקין?' }
 
         if (!isValid(password, type.password))
             throw { statusCode: 400, message: 'בטוח שהכנסת סיסמה תקינה?' }
