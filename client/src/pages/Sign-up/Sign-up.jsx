@@ -32,7 +32,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await fetch(`${BASE_URL}/api/users/signup/${username}`,
+            const res = await fetch(`${BASE_URL}/api/users/signup/${email}`,
                 {
                     method: 'POST',
                     headers: {

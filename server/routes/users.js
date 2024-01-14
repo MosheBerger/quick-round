@@ -1,26 +1,26 @@
 const express = require('express')
-const DB = require('../DB').users
+const usersDB = require('../DB').users
 const { isValid, type } = require('../utils/validation')
 
 const router = express.Router()
 
 
 //LOG IN
-router.post('/login/:username', async (req, res, next) => {
+router.post('/login/:email', async (req, res, next) => {
     const client = req.client
     try {
-        const { username } = req.params
+        const { email } = req.params
         const { password } = req.body
-        console.log('username', username);
+        console.log('email', email);
         console.log('password', password);
 
-        if (!isValid(username, type.email))
+        if (!isValid(email, type.email))
             throw { statusCode: 400, message: 'בטוח שהכנסת אימייל תקין?' }
 
         if (!isValid(password, type.password))
             throw { statusCode: 400, message: 'בטוח שהכנסת סיסמה תקינה?' }
 
-        const user = await DB.logIn(client, username, password)
+        const user = await usersDB.logIn(client, email, password)
         console.log(user);
 
         if (!user)
@@ -35,30 +35,30 @@ router.post('/login/:username', async (req, res, next) => {
 })
 
 //SIGN UP
-router.post('/signup/:username', async (req, res, next) => {
+router.post('/signup/:email', async (req, res, next) => {
     const client = req.client
     try {
-        const { username } = req.params
-        const { password, email, avatar } = req.body
-        console.log('username', username);
+        const { email } = req.params
+        const { password, name, avatar } = req.body
+        console.log('email', email);
         console.log('password', password);
-
-        if (!isValid(username, type.username))
-            throw { statusCode: 400, message: 'בטוח שהכנסת שם משתמש תקין?' }
-
-        if (!isValid(password, type.password))
-            throw { statusCode: 400, message: 'בטוח שהכנסת סיסמה תקינה?' }
 
         if (!isValid(email, type.email))
             throw { statusCode: 400, message: 'בטוח שהכנסת כתובת אימייל תקינה?' }
 
-        const isExist = await DB.checkIfExist(client, username)
+        if (!isValid(password, type.password))
+            throw { statusCode: 400, message: 'בטוח שהכנסת סיסמה תקינה?' }
+
+        if (!isValid(name, type.email))
+            throw { statusCode: 400, message: 'בטוח שהכנסת שם משתמש תקין?' }
+
+        const isExist = await usersDB.checkIfExist(client, email)
         console.log('exist', isExist);
 
         if (isExist)
-            throw { statusCode: 403, message: 'שם משתמש זה כבר קיים במערכת' }
+            throw { statusCode: 403, message: 'אימייל זה כבר קיים במערכת' }
 
-        const user = await DB.create(client, username, password, email, avatar)
+        const user = await usersDB.create(client, name, password, email, avatar)
         console.log(user);
 
         if (!user)
@@ -73,12 +73,12 @@ router.post('/signup/:username', async (req, res, next) => {
 })
 
 // user exist?
-router.get('/signup/available/:username', async (req, res, next) => {
+router.get('/signup/available/:email', async (req, res, next) => {
     const client = req.client
     try {
-        const { username } = req.params
+        const { email } = req.params
 
-        const isExist = await DB.checkIfExist(client, username)
+        const isExist = await usersDB.checkIfExist(client, email)
         console.log(isExist);
 
         if (isExist === undefined)
@@ -99,7 +99,7 @@ router.get('/show/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params
 
-        const user = await DB.showProfile(client, userId)
+        const user = await usersDB.showProfile(client, userId)
         console.log(user);
 
         if (user === undefined)
@@ -116,14 +116,14 @@ router.get('/show/:userId', async (req, res, next) => {
 
 
 // UPDATE AVATAR
-router.put('/update/:username', async (req, res, next) => {
+router.put('/update/:id', async (req, res, next) => {
     const client = req.client
     try {
-        const { username } = req.params
-        const { password, avatar } = req.body
+        const { id } = req.params
+        const { name, avatar } = req.body
 
         //todo validation for avatar
-        const user = await DB.updateAvatar(client, username, password, avatar)
+        const user = await usersDB.updateInfo(client, id, name, avatar)
         console.log(user);
 
         if (user === undefined)

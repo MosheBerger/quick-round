@@ -8,12 +8,12 @@ import ErrorDialog from '../../components/ErrorDialog'
 import v from '../../utils/validation'
 
 
-const INITIAL_STATE = { username: '', password: '' }
+const INITIAL_STATE = { email: '', password: '' }
 
 function LogIn() {
 
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
-    const { username, password } = inputs
+    const { email, password } = inputs
 
     const [errorMessage, setErrorMessage] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -22,12 +22,11 @@ function LogIn() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const { username, password } = inputs
 
         try {
 
-            if (!v.isValid(username, v.type.username)) {
-                throw new Error('שם המשתמש לא תקין')
+            if (!v.isValid(email, v.type.email)) {
+                throw new Error('אימייל לא תקין')
             }
             if (!v.isValid(password, v.type.password)) {
                 throw new Error('הסיסמה לא תקינה')
@@ -35,7 +34,7 @@ function LogIn() {
 
             setLoading(true)
 
-            const res = await fetch(`${BASE_URL}/api/users/login/${username}`,
+            const res = await fetch(`${BASE_URL}/api/users/login/${email}`,
                 {
                     method: 'POST',
                     body: JSON.stringify({ password }),
@@ -67,7 +66,7 @@ function LogIn() {
         <h1> התחברות </h1>
 
         <div className='inputs'>
-            <Input name={'שם משתמש'} insertTo={'username'} value={username} setInput={setInputs} />
+            <Input name={'שם משתמש'} insertTo={'email'} value={email} setInput={setInputs} />
             <Input name={'סיסמה'} insertTo={'password'} value={password} setInput={setInputs} type={'password'} />
             <br />
     
