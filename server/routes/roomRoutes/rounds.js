@@ -1,11 +1,11 @@
 const express = require('express')
-const roundsDB = require('../DB').rounds
+const roundsDB = require('../../DB').rounds
 
 
 const router = express.Router()
 // GET ALL IN SPECIFIC ROOM
 router.get('/', async (req, res, next) => {
-
+console.log('hi');
     const { client, roomId } = req
 
     try {

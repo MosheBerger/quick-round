@@ -6,8 +6,10 @@ const router = express.Router()
 
 const extractRoomId = ((req, res, next) => {
     req.roomId = req.params.roomId
+    console.log(req.roomId);
     next()
 })
+
 // CREATE
 router.post('/', async (req, res, next) => {
 
@@ -94,12 +96,12 @@ router.get('/', async (req, res, next) => {
 
     try {
         const rooms = await DB.rooms.showAll(client)
-        const userLiked = await DB.likes.showLikedByUser(client, userId||0)
+        const userLiked = await DB.likes.showLikedByUser(client, userId || 0)
 
         for (const room of rooms) {
             const roomId = room.id
 
-            room.userLiked = (userLiked.some(l=> l.room_id === roomId))
+            room.userLiked = (userLiked.some(l => l.room_id === roomId))
 
             room.manager = await DB.users.showProfile(client, room.manager)
             room.likes = await DB.likes.countLikes(client, roomId)
@@ -121,10 +123,46 @@ router.get('/liked/:userId', async (req, res, next) => {
     const { userId } = req.params
 
     try {
-        const results = await likesDB.showLikedByUser(client, userId)
-        ///TODO !WE ARE HERE!!
-        console.log(results);
-        res.json(results)
+        const likeList = await DB.likes.showLikedByUser(client, userId)
+
+        const rooms = []
+        for (const like of likeList) {
+            rooms.push(await DB.rooms.showAllDataPerRoom(client, like.room_id))
+        }
+
+        console.log(rooms);
+        res.json(rooms)
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
+
+// GET user created
+router.get('/created-by/:userId', async (req, res, next) => {
+    const client = req.client
+    const { userId } = req.params
+
+    try {
+        const rooms = await DB.rooms.showAll(client)
+        const userLiked = await DB.likes.showLikedByUser(client, userId)
+        
+        const userRooms = rooms.filter((r) => r.manager === userId)
+        const userProfile = await DB.users.showProfile(client, userId)
+       
+        for (const room of userRooms) {
+            const roomId = room.id
+
+            room.userLiked = (userLiked.some(l => l.room_id === roomId))
+
+            room.manager = userProfile
+            room.likes = await DB.likes.countLikes(client, roomId)
+            room.playCount = await DB.players.countUsersPlayedIt(client, roomId)
+        }
+
+        console.log(userRooms);
+        res.json(userRooms)
 
         next()
     } catch (error) {
@@ -162,19 +200,8 @@ router.post('/:roomId/join/:userId', async (req, res, next) => {
 })
 
 
-
-
-// rounds
-const roundRouter = require('./rounds.js')
-router.use('/:roomId/rounds/', extractRoomId, roundRouter)
-
-const likesRouter = require('./likes.js')
-router.use('/like/', likesRouter)
-
-const resultsRouter = require('./results')
-const scoreBoardRouter = require('./scoreBoard.js')
-router.use('/results/', likesRouter)
-router.use('/score-board/', scoreBoardRouter)
+const roomRouter = require('./roomRoutes/router')
+router.use('/:roomId/',extractRoomId, roomRouter)
 
 
 module.exports = router
