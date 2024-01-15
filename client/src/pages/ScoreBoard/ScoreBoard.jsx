@@ -55,7 +55,7 @@ function ScoreBoard() {
             : <>
                 <div className='flex'>
                     <h2>{room.name}</h2>
-                    <h4> מנהל: {room.manager.username} </h4>
+                    <h4> מנהל: {room.manager.name} </h4>
                 </div>
                 {/* 
                 <h4 style={{ marginBottom: 0 }}> שחקנים </h4>
@@ -64,7 +64,7 @@ function ScoreBoard() {
                         {room.players.map((p) =>
                             <article className='unmargin' key={p.id} >
 
-                                <h5>{p.username}</h5>
+                                <h5>{p.name}</h5>
                                 <Avatar avatarSeed={p.avatar} />
 
                             </article>

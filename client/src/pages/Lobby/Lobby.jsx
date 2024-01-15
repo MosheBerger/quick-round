@@ -21,7 +21,7 @@ function Room() {
 
                 <div style={{ padding: 2, width: "20vw" }} className='unmargin flex col'>
                     <Avatar avatarSeed={user?.avatar} />
-                    <h4 className='unmargin'> {user?.username} </h4>
+                    <h4 className='unmargin'> {user?.name} </h4>
                     <button className='secondary outline'> יציאה </button>{/* //todo */}
                 </div>
             </div>

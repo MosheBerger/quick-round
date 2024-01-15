@@ -4,7 +4,7 @@ function isValid(value = '', type = 'string') {
 
     switch (type) {
 
-        case 'username':
+        case 'name':
             return (
                 value.length >= 4
                 && value.length <= 20
@@ -30,7 +30,7 @@ function isValid(value = '', type = 'string') {
 const validation = {
     isValid,
     type: {
-        username: 'username',
+        name: 'name',
         password: 'password',
         email: 'email',
     }

@@ -7,5 +7,4 @@ const pool = new pg.Pool({
     ssl: true
 })
 
-
 module.exports = pool

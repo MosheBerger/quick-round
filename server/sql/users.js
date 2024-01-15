@@ -12,7 +12,7 @@ async function create(client, name, password, email, avatar) {
                 INSERT INTO users(name, password, email, avatar)
                 VALUES($1,$2,$3,$4)
                 RETURNING *  
-            `,
+            ;`,
             values: [name, password, email, avatar],
         }
 

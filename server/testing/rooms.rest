@@ -14,3 +14,6 @@ Content-Type: application/json
     "manager":2
 }
 
+### Remove 
+DELETE http://localhost:8080/api/rooms/24 HTTP/1.1
+

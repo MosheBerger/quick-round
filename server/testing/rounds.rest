@@ -28,6 +28,6 @@ Content-Type: application/json
 ]
 
 ### GET ALL IN SPECIFIC ROOM
-GET http://localhost:8080/api/rounds/in-room/1
+GET http://localhost:8080/api/rooms/22/rounds/
 
 

@@ -6,7 +6,8 @@ async function createAll() {
     CREATE TABLE rooms_users(
         id BIGSERIAL NOT NULL PRIMARY KEY,
         room_id INTEGER NOT NULL,
-        user_id INTEGER NOT NULL
+        user_id INTEGER NOT NULL,
+        UNIQUE (room_id, user_id)
     );
 
 
@@ -21,7 +22,7 @@ async function createAll() {
 
     CREATE TABLE games(
         id BIGSERIAL NOT NULL PRIMARY KEY,
-        name VARCHAR(20) NOT NULL,
+        name VARCHAR(20) UNIQUE NOT NULL,
         description VARCHAR(255),
         settings JSON,
         imageURL VARCHAR(255),
@@ -35,7 +36,8 @@ async function createAll() {
         room_id BIGINT NOT NULL,
         round_num INTEGER NOT NULL,
         game_id BIGINT NOT NULL,
-        settings JSON
+        settings JSON,
+        UNIQUE (room_id, round_num)
     );
 
 
@@ -58,7 +60,8 @@ async function createAll() {
         id BIGSERIAL NOT NULL PRIMARY KEY,
         room_id BIGINT NOT NULL,
         user_id BIGINT NOT NULL,
-        like BOOLEAN NOT NULL
+        like BOOLEAN NOT NULL,
+        UNIQUE (room_id, user_id)
     );
     
     `))

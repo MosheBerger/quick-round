@@ -1,11 +1,12 @@
+const pool = require("./pool");
 
 
-async function joinRoom(client, roomId, userId) {
+async function markAsPlayedByUser(client, roomId, userId) {
     try {
 
         const query = {
             text: `
-            INSERT INTO players(room_id, user_id)
+            INSERT INTO rooms_users(room_id, user_id)
             VALUES($1,$2)
         `,
             values: [roomId, userId]
@@ -18,33 +19,32 @@ async function joinRoom(client, roomId, userId) {
     }
 }
 
-async function leaveRoom(client, roomId, userId) {
-    try {
+async function removeByRoom(client, roomId) {
         const query = {
             text: `
-            DELETE FROM players
+            DELETE FROM rooms_users
             WHERE room_id = $1
-                AND user_id = $2
         `,
-            values: [roomId, userId]
+            values: [roomId]
         }
         const res = await client.query(query)
-        return (res.rowCount === 1)
-    } catch (error) {
-        console.log(error);
-    }
+        return {
+            operation: res.command,
+            success: (res.rowCount > 0),
+            ...res.rows[0], //:id
+        }
 }
 
-async function showAllInRoom(client, roomId) {
+async function showAllUsersPlayedIt(client, roomId) {
     try {
         const query = {
-            text: `
+            text: `--sql
             SELECT
                 u.id,
-                u.username,
+                u.name,
                 u.avatar
 
-            FROM players p
+            FROM rooms_users p
             
             LEFT JOIN users u
                 ON p.user_id = u.id
@@ -59,15 +59,14 @@ async function showAllInRoom(client, roomId) {
         console.log(error);
     }
 }
-async function countInRoom(client, roomId) {
+async function countUsersPlayedIt(client, roomId) {
     try {
         const query = {
-            text: `
+            text: `--sql
             SELECT
                 COUNT(*)
-            FROM players
+            FROM rooms_users
             WHERE room_id = $1
-            
         `,
             values: [roomId]
         }
@@ -81,19 +80,19 @@ async function countInRoom(client, roomId) {
 
 
 const players = {
-    joinRoom,
-    leaveRoom,
-    showAllInRoom,
-    countInRoom
+    markAsPlayedByUser,
+    showAllUsersPlayedIt,
+    countUsersPlayedIt,
+    removeByRoom,
 }
 
 module.exports = players
 
 
 const test = async () => {
-    // const client = await pool.connect()
-    // console.log( await players.showAllInRoom(2));
+    const client = await pool.connect()
+    console.log( await players.showAllUsersPlayedIt(client,22));
     // console.log( await players.countInRoom(client, 2));
-    // client.release(true)
+    client.release(true)
 }
-// test()
+test()

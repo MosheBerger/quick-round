@@ -1,14 +1,14 @@
 
 const players = require('./players.js')
-// const pool = require('./pool.js')
 const rounds = require('./rounds.js')
 const users = require('./users.js')
+const likes = require('./likes.js')
+const finishTimes = require('./finishTimes.js')
 
 async function create(client, name, numOfRounds, manager) {
     try {
-
         const query = {
-            text: `
+            text: `--sql
             INSERT INTO rooms(name, numOfRounds, manager)
             VALUES($1,$2,$3)
             RETURNING *
@@ -25,15 +25,12 @@ async function create(client, name, numOfRounds, manager) {
 async function showAll(client) {
     try {
         const query = {
-            text: `
-            SELECT
-                rooms.*,
-                m.username manager_name,
-                m.avatar manager_avatar
-            FROM rooms
-            LEFT JOIN users m
-                ON rooms.manager = m.id
-                `,
+            text: `--sql
+            SELECT * FROM rooms
+            ;`,
+            // LEFT JOIN likes l
+            //     ON l.room_id = r.id
+            // LEFT JOIN            
             // LEFT JOIN players p
             //     ON rooms.id = p.room_id
             // LEFT JOIN users u
@@ -55,7 +52,7 @@ async function showOne(client, roomId) {
                 FROM rooms
                 WHERE id = $1
             `,
-            values:[roomId]
+            values: [roomId]
         }
         const res = await client.query(query)
         return res.rows[0]
@@ -64,16 +61,36 @@ async function showOne(client, roomId) {
         console.log(error);
     }
 }
+async function remove(client, roomId) {
+    const query = {
+        text: `
+            DELETE FROM rooms
+            WHERE id = $1
+            RETURNING id
+            ;`,
+        values: [roomId]
+    }
+    const res = await client.query(query)
+    return {
+        operation: res.command,
+        success: (res.rowCount > 0),
+        ...res.rows[0], //:id
+    }
+}
 
-async function showAllDataPerRoom(client, roomId) {
+
+
+async function showAllDataPerRoom(client, roomId, roomObj) {
     try {
-        const room = await showOne(client, roomId)
-        room.manager = await users.showProfile(client, room.manager)
-        room.playersInRoom = await players.countInRoom(client, roomId)
-        room.players = await players.showAllInRoom(client, roomId)
-        room.rounds = await rounds.showByRoom(client, roomId)
+        const room = roomObj || await showOne(client, roomId)
 
-        
+        room.manager = await users.showProfile(client, room.manager)
+        room.rounds = await rounds.showByRoom(client, roomId)
+        room.likes = await likes.countLikes(client, roomId)
+        room.playCount = await players.countUsersPlayedIt(client, roomId)
+        room.players = await players.showAllUsersPlayedIt(client, roomId)
+        room.finishTimes = await finishTimes.showByRoom(client,roomId)
+
         return room
     } catch (error) {
         console.log(error);
@@ -84,6 +101,7 @@ const rooms = {
     create,
     showAll,
     showOne,
+    remove,
     showAllDataPerRoom,
 }
 

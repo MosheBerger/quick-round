@@ -6,19 +6,17 @@ const router = express.Router()
 
 router.use('/*', clientManager.connect)
 
+// users
 const usersRouter = require('./users')
-const roomsRouter = require('./rooms')
-const resultsRouter = require('./results')
-const gamesRouter = require('./games')
-const roundRouter = require('./rounds.js')
-const scoreBoardRouter = require('./scoreBoard.js')
-
 router.use('/users/', usersRouter)
-router.use('/rooms/', roomsRouter)
-router.use('/results/', resultsRouter)
+
+// games
+const gamesRouter = require('./games')
 router.use('/games/', gamesRouter)
-router.use('/rounds/', roundRouter)
-router.use('/score-board/', scoreBoardRouter)
+
+// rooms / likes / players / finish-times / scores / rounds
+const roomsRouter = require('./rooms')
+router.use('/rooms/', roomsRouter)
 
 
 router.use(errorHandler)

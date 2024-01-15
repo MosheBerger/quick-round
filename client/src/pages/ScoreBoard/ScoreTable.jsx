@@ -31,7 +31,7 @@ function ScoreTable({ room, tableKey, title }) {
                                 <th key={p.id} scope='col'>
                                     <div className='flex col'>
                                         <Avatar avatarSeed={p.avatar} />
-                                        {p.username || 'null'}
+                                        {p.name || 'null'}
                                     </div>
                                 </th>
                             ))}
