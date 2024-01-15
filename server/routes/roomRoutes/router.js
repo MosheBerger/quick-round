@@ -15,7 +15,4 @@ const finishTimesRouter = require('./finishTimes')
 router.use('/finish-times/', finishTimesRouter)
 
 
-const scoreBoardRouter = require('./scoreBoard.js')
-router.use('/score-board/', scoreBoardRouter)
-
 module.exports = router

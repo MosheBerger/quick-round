@@ -14,11 +14,12 @@ app.use(cors())
 app.use(express.json())
 
 
-const apiRouter = require('./routes/api')
+const apiRouter = require('./routes/router')
 app.use('/api/', apiRouter)
 
 
 app.use('/assets/', express.static(assetsPath))
+
 app.use(express.static(buildPath))
 app.get("/*", (req, res) => {
   res.sendFile(pathMake.join(buildPath, 'index.html'))

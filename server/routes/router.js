@@ -14,7 +14,7 @@ router.use('/users/', usersRouter)
 const gamesRouter = require('./games')
 router.use('/games/', gamesRouter)
 
-// rooms / likes / players / finish-times / scores / rounds
+// rooms / likes / players / finish-times / rounds
 const roomsRouter = require('./rooms')
 router.use('/rooms/', roomsRouter)
 
