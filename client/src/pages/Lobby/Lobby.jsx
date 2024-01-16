@@ -3,6 +3,7 @@ import RoomList from './RoomList'
 import CreateRoom from './CreateRoom'
 import { Link, useLocation } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
+import PicoButton from '../../components/PicoButton'
 
 function Room() {
     const tab = useLocation().hash.slice(1)
@@ -17,29 +18,31 @@ function Room() {
         <header>
 
             <div className='flex sb'>
-                <h1>לובי</h1>
+                <h1 className='unmargin'>לובי</h1>
 
-                <div style={{ padding: 2, width: "20vw" }} className='unmargin flex col'>
+                <div style={{ padding: 2, width: "20vw" }} className='unmargin flex'>
                     <Avatar avatarSeed={user?.avatar} />
                     <h4 className='unmargin'> {user?.name} </h4>
-                    <button className='secondary outline'> יציאה </button>{/* //todo */}
+                    <PicoButton className='contrast outline'> יציאה </PicoButton>{/* //todo */}
                 </div>
             </div>
-
-            {!(join || create) && <article>
-                <h2 className='unmargin'>
-                    ברוכים הבאים ללובי
-                </h2>
-                <b className='unmargin'>
-                    כאן תוכלו לשחק בחדרי משחק שנבנו באתר, או לבנות אחד בעצמכם!
-                </b>
-                <p className='unmargin'>
-                    כל חדר מכיל תחרות עם כמה סבבים,
-                    כשבכול סבב יהיה משחקון שהוגדר מראש על ידי מנהל החדר.
-                    המטרה היא לעבור את החדר כמה שיותר מהר מבלי לטעות כמובן...
-                    <b> בהצלחה! </b>
-                </p>
-            </article>}
+            <br />
+            {!(join || create) &&
+                <article>
+                    <h2 className='unmargin'>
+                        ברוכים הבאים ללובי
+                    </h2>
+                    <b className='unmargin'>
+                        כאן תוכלו לשחק בחדרי משחק שנבנו באתר, או לבנות אחד בעצמכם!
+                    </b>
+                    <p className='unmargin'>
+                        כל חדר מכיל תחרות עם כמה סבבים,
+                        כשבכול סבב יהיה משחקון שהוגדר מראש על ידי מנהל החדר.
+                        המטרה היא לעבור את החדר כמה שיותר מהר מבלי לטעות כמובן...
+                        <b> בהצלחה! </b>
+                    </p>
+                </article>
+            }
 
             <div className='tabs'>
                 <Link to='#join' role='button' state={{ user }} className={join ? '' : 'outline'}  >
@@ -51,6 +54,7 @@ function Room() {
             </div>
 
         </header>
+
         <RoomList user={user} hidden={!join} />
         <CreateRoom user={user} hidden={!create} />
 

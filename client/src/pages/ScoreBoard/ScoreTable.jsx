@@ -7,14 +7,14 @@ function ScoreTable({ room, tableKey, title }) {
 
     console.table('table', room[tableKey]);
 
-    const a = room[tableKey].reduce((p, v) => {
-        if (!v[0]) return 0
-        if (v[0].success) {
-            return p[0].finish_time + v[0].finish_time
-        } else {
-            return p[0].finish_time + 30000
-        }
-    }) /1000
+    // const a = room[tableKey].reduce((p, v) => {
+    //     if (!v[0]) return 0
+    //     if (v[0].success) {
+    //         return p[0].finish_time + v[0].finish_time
+    //     } else {
+    //         return p[0].finish_time + 30000
+    //     }
+    // }) /1000
     
 
     return (<>

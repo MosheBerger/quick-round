@@ -35,7 +35,6 @@ function GameScreen({ rounds, sendResults }) {
 
 		})
 
-
 		///--🖼️--Assets Loader--🔊-----
 
 		const allAssets = [
@@ -72,15 +71,13 @@ function GameScreen({ rounds, sendResults }) {
 		successScene(k, () => roundManager.nextRound())
 		failureScene(k, () => roundManager.nextRound())
 		roundNumScene(k, () => { console.log('next'); })
-		roundManager.run()
-		// k.go('roundNum',{roundNum:1})
 
 
 		debugToggle(k)
 
 		//TESTING
 		k.onLoad(() => {
-			console.log('hi');
+			roundManager.run()
 		})
 
 		// return (() => {

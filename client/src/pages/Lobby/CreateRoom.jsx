@@ -3,11 +3,16 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import SetRound from './GameSelector/SetRound'
 import BASE_URL from '../../BASE URL'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const INITIAL_STATE = { roomName: '', rounds: 1 }
 
-function CreateRoom({ user, ...rest}) {
+function CreateRoom({ user, ...rest }) {
     const [rounds, setGameInRound] = useState([{}])
+    const [loading, setLoading] = useState(false)
+    
+    const navigate = useNavigate()
+    const {state} = useLocation()
 
     const [inputs, setInput] = useInputs(INITIAL_STATE)
     const { roomName } = inputs
@@ -62,8 +67,9 @@ function CreateRoom({ user, ...rest}) {
             rounds: roundsData
         }
 
-        console.log(room);
+        console.log('send', room);
         try {
+            setLoading(true)
             const res = await fetch(`${BASE_URL}/api/rooms`,
                 {
                     method: 'POST',
@@ -74,17 +80,25 @@ function CreateRoom({ user, ...rest}) {
                 }
             )
             const data = await res.json()
-            console.log(data);
+            console.log('get', data);
+            setGameInRound([{}])
+            alert('החדר נוצר בהצלחה')
+            setTimeout(() => navigate('#join',{state:state}),1500)
+            
+
 
         } catch (error) {
             console.log('error', error);
+
+        } finally {
+            setLoading(false)
         }
     }
 
     const canCreate = (rounds.every(g => g.id) && roomName)
 
     return (
-        <article {...rest}>
+        <article className='unmargin' {...rest}>
             <h4> יצירת חדר </h4>
 
             <section>
@@ -105,7 +119,9 @@ function CreateRoom({ user, ...rest}) {
             })}
 
             <br />
-            <button type='submit' disabled={!canCreate} onClick={handleSubmit}> פתיחת חדר </button>
+            <button type='submit' aria-busy={loading} disabled={!canCreate || loading} onClick={handleSubmit}>
+                {loading ? 'פותח' : 'פתיחת חדר'}
+            </button>
 
         </article>
     )

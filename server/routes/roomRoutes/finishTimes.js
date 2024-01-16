@@ -1,4 +1,5 @@
 const express = require('express')
+const markPlayerAsPlayedRoom = require('../../middlewares/markPlayerAsPlayedRoom')
 const DB = require('../../DB').finishTimes
 
 
@@ -20,7 +21,7 @@ router.post('/', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-})
+}, markPlayerAsPlayedRoom)
 
 
 // DB.showByRoom

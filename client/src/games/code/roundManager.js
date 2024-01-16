@@ -20,7 +20,7 @@ class RoundManager {
 
     playTheGame() {
         this.startTime = Date.now()
-        console.log('start',this.startTime);
+        // console.log('start',this.startTime);
         this.k.go(
             this.currentGame().tag,
             this.currentRound().settings
@@ -38,11 +38,11 @@ class RoundManager {
         this.roundNum++
 
         if (this.roundNum >= this.rounds.length) {
-            console.log('moveToFinish');
-            this.k.quit()
+            // console.log('moveToFinish');
             this.sendResult(this.results)
+            this.k.quit()
             document.getElementsByTagName('canvas')[0].remove()
-            console.log('res', this.results);
+            // console.log('res', this.results);
             return
         }
         this.run()
@@ -57,7 +57,7 @@ class RoundManager {
 
         results.push({ roundId, success, finishTime })
 
-        console.log('תוצאות', results);
+        // console.log('תוצאות', results);
         k.wait(0.2, () => {
 
             if (success) {

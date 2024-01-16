@@ -171,36 +171,11 @@ router.get('/created-by/:userId', async (req, res, next) => {
 })
 
 //JOIN
-router.post('/:roomId/join/:userId', async (req, res, next) => {
-
-    const client = req.client
-    const { userId, roomId } = req.params
-
-    try {
-        await DB.rooms.showOne(client, roomId)
-
-        const playersInRoom = await DB.players.showAllUsersPlayedIt(client, roomId)
-
-        if (playersInRoom.some((p) => p.id == userId)) {
-            // throw { statusCode: 409, message: 'you already here!' }
-            res.json({ result: true })
-            next()
-            return
-        }
-
-        const result = await DB.players.markAsPlayedByUser(client, roomId, userId)
-        console.log('result', result);
-
-        res.json({ result: result })
-        next()
-
-    } catch (error) {
-        next(error)
-    }
-})
+// router.post('/:roomId/join/:userId', markPlayerAsPlayedRoom)
 
 
 const roomRouter = require('./roomRoutes/router')
+const { default: markPlayerAsPlayedRoom } = require('../middlewares/markPlayerAsPlayedRoom')
 router.use('/:roomId/',extractRoomId, roomRouter)
 
 

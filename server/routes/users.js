@@ -49,7 +49,7 @@ router.post('/signup/:email', async (req, res, next) => {
         if (!isValid(password, type.password))
             throw { statusCode: 400, message: 'בטוח שהכנסת סיסמה תקינה?' }
 
-        if (!isValid(name, type.email))
+        if (!isValid(name, type.name))
             throw { statusCode: 400, message: 'בטוח שהכנסת שם משתמש תקין?' }
 
         const isExist = await usersDB.checkIfExist(client, email)

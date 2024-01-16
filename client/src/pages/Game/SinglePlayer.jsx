@@ -1,10 +1,10 @@
 
-import { useEffect, useState } from 'react';
-// import gameList from '../../games'
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASE URL';
 import GameScreen from '../../games/code/GameScreen';
+import calculateTimes from './calculateTime';
 
 
 function SinglePlayer() {
@@ -12,13 +12,13 @@ function SinglePlayer() {
   const { roomId, user } = useLocation().state
   const navigate = useNavigate()
 
-  const url = `${BASE_URL}/api/rounds/in-room/${roomId}`
+  const url = `${BASE_URL}/api/rooms/${roomId}/rounds/`
   const [rounds, loading, setLoading] = fetcher.useStateAndEffect(url, [])
   console.log(rounds);
   console.log(loading);
 
 
-  //! מונע מהמשתמש לעזוב את העמוד 
+  // מונע מהמשתמש לעזוב את העמוד 
   useEffect(() => {
     window.onbeforeunload = confirmExit;
     function confirmExit() {
@@ -32,45 +32,49 @@ function SinglePlayer() {
   // !sendResult
   // useEffect(() => {
   const sendResult = async (results) => {
-    console.log('resultim', results);
+    console.log('תוצאות', results);
+
+    const finishTime = calculateTimes(results)
+
     try {
       setLoading(true)
 
-      const url = `${BASE_URL}/api/results/in-room/${roomId}/user/${user.id}`
+      const url = `${BASE_URL}/api/rooms/${roomId}/finish-times/`
       const res = await fetch(url, {
         method: 'post',
-        body: JSON.stringify({ results }),
+        body: JSON.stringify({
+          userId: user.id,
+          finishTime
+        }),
         headers: {
           "Content-Type": "application/json"
         }
       })
-      const data = await res.json()
-      console.log('🛜', data);
+
+
+      const userFinishTime = await res.json()
+      console.log('🛜', userFinishTime);
 
       navigate(`/room/${roomId}/score-board`, {
-        state: { user }
+        state: { user, results, userFinishTime}
       })
     } catch (error) {
       console.log('❌', error);
 
     } finally {
-
+      setLoading(false)
     }
   }
 
   return (<>
-    <div>
-      {!loading &&
-      // <div>
+    <div >
+
+      {rounds.length === 0 ?
+
+        <h2 aria-busy={loading}> כבר מתחילים... </h2>
+        :
         <GameScreen rounds={rounds} sendResults={sendResult} />
-      // </div>
       }
-
-      {/* <progress value={curRound + 1} max={rounds.length + 1}></progress> */}
-
-
-      {/* <span>success: {result.success ? 'true' : 'false'}</span>
-      <p>time: {result.finishTime}</p> */}
 
     </div >
   </>)

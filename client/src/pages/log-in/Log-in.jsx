@@ -66,7 +66,7 @@ function LogIn() {
         <h1> התחברות </h1>
 
         <div className='inputs'>
-            <Input name={'שם משתמש'} insertTo={'email'} value={email} setInput={setInputs} />
+            <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <Input name={'סיסמה'} insertTo={'password'} value={password} setInput={setInputs} type={'password'} />
             <br />
     

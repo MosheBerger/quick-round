@@ -8,20 +8,18 @@ import useDialog from '../../hooks/useDialog.jsx'
 import ErrorDialog from '../../components/ErrorDialog.jsx'
 import checkError from '../../utils/checkError.js'
 import { useNavigate } from 'react-router-dom'
+import v from '../../utils/validation.js'
 
 const INITIAL_STATE = { name: '', password: '', email: '' }
 
 function SignUp() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
     const [avatar, setAvatar] = useState({ seedName: '', color: '#ffffff' })
-    // const [showAvatarChooser, setShowAvatarChooser] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
     const { name, email, password } = inputs
 
-    // const handleOpenCloseAvatarChooser = () => {
-    //     setShowAvatarChooser(prev => !prev)
-    // }
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -31,7 +29,20 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
         try {
+
+            if (!v.isValid(email, v.type.email)) {
+                throw new Error('אימייל לא תקין')
+            }
+            if (!v.isValid(password, v.type.password)) {
+                throw new Error('הסיסמה לא תקינה')
+            }
+            if (!v.isValid(name, v.type.name)) {
+                throw new Error('שם משתמש לא תקין')
+            }
+
+            setLoading(true)
             const res = await fetch(`${BASE_URL}/api/users/signup/${email}`,
                 {
                     method: 'POST',
@@ -43,8 +54,8 @@ function SignUp() {
             )
             const data = await res.json()
             console.log(data);
+            setLoading(false)
             checkError(data)
-
 
             navigate('/lobby', {
                 state: { user: data }
@@ -83,7 +94,9 @@ function SignUp() {
                 בחר דמות
             </button>
 
-            <button disabled={submitDisable} type="submit" onClick={handleSubmit}>Enter</button>
+            <button disabled={submitDisable || loading} type="submit" aria-busy={loading} onClick={handleSubmit}> 
+                {submitDisable ? 'חסר כמה פרטים' : loading ? 'רושם...' : 'מוכן ליציאה'}
+            </button>
             <ErrorDialog message={errorMessage} setErrorMessage={setErrorMessage} />
         </form >
     </>)

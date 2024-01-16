@@ -1,103 +1,99 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BASE_URL from '../../BASE URL'
-import { useNavigate } from 'react-router-dom'
-import fetcher from '../../hooks/useFetch'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
+import fetchNow from '../../utils/fetchNow'
 
 
 function RoomList({ user, ...rest }) {
-
+    const tab = useLocation().hash
+    
     const [roomList, setRoomsList] = useState([])
-    fetcher.useInEffect(`${BASE_URL}/api/rooms`, setRoomsList)
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
 
 
-    const handleJoin = async (e, roomId) => {
+    const handleEnter = async (e, roomId) => {
         e.preventDefault()
-        // console.log('join');
-        try {
-            const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
-            const operation = await res.json()
+        navigate('/game/single-player', { state: { roomId, user } })
+        // try {
+        //     const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
+        //     const operation = await res.json()
 
 
-            console.log(operation);
-            if (operation.result) {
-                navigate('/game/single-player', { state: { roomId, user } })
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        //     console.log(operation);
+        //     if (operation.result) {
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
-    // const handleLeave = async (e, roomId) => {
-    //     e.preventDefault()
-    //     try {
-    //         const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/leave/${user.id}`)
-    //         const operation = await res.json()
+    // refresh data
+    useEffect(() => {
+        if (tab === '#join')
+        fetchNow(`${BASE_URL}/api/rooms`, setRoomsList, setLoading)
+    }, [tab])
 
-    //         console.log(operation);
+    const Enter = (id) => { return (e) => handleEnter(e, id) }
 
-    //         fetcher.useNow(`${BASE_URL}/api/rooms`, setRoomsList)
+    const printLikes = (likes) => {
+        if (likes < 1) { return '-' }
 
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    const join = (id) => { return (e) => handleJoin(e, id) }
-    // const leave = (id) => { return (e) => handleLeave(e, id) }
+        if (likes < 5) {
+            return new Array(Number(likes)).fill('❤️').join('')
+        }
+        return likes + '❤️'
+    }
 
     const empty = (roomList.length === 0)
 
     return (<>
-        <article {...rest}>
-            <h4 aria-busy={empty}> רשימת חדרים </h4>
+        <article className='unmargin' {...rest}>
+            <h4 aria-busy={empty || loading}> רשימת חדרים </h4>
+            <figure>
+                <table hidden={empty}>
+                    <thead>
+                        <tr>
+                            <th> מנהל </th>
+                            <th> שם </th>
+                            <th> סבבים </th>
+                            <th> שיחקו </th>
+                            <th> אהבו </th>
+                            <th> כניסה </th>
+                        </tr>
+                    </thead>
 
-            <table hidden={empty}>
-                <thead>
-                    <tr>
-                        <th> מנהל </th>
-                        <th> שם </th>
-                        <th> סבבים </th>
-                        <th> שיחקו </th>
-                        {/* <th> מצב </th> */}
-                        <th> כניסה </th>
-                    </tr>
-                </thead>
+                    <tbody >
+                        {roomList.map((room) => {
+                            const { id, name, manager: { name: mName, avatar }, likes, userLiked, playCount, numofrounds } = room;
 
-                <tbody >
-                    {roomList.map((room) => {
-                        const { id, name, manager_name, manager_avatar, /* numofplayers, */ playersInRoom, numofrounds } = room;
+                            return (
+                                <tr key={id}>
+                                    <td>
+                                        <div className='flex col'>
+                                            <Avatar seed={'j'} seedName={avatar.split(':')[0]} color={avatar.split(':')[1]} />
+                                            <span>{mName}</span>
+                                        </div>
+                                    </td>
+                                    <td>{name + (userLiked ? '❤️' : '')}</td>
+                                    <td><b>{numofrounds}</b></td>
+                                    <td><b>{playCount}</b></td>
+                                    <td>{printLikes(likes)}</td>
+                                    <td>
+                                        <a href='#b' role='button' onClick={Enter(id)}>
+                                            כניסה
+                                        </a>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
 
-                        return (
-                            <tr key={id}>
-                                <td>
-                                    <div className='flex col'>
-                                        <Avatar seed={'j'} seedName={manager_avatar.split(':')[0]} color={manager_avatar.split(':')[1]} />
-                                        <span>{manager_name}</span>
-                                    </div>
-                                </td>
-                                <td>{name}</td>
-                                <td><b>{numofrounds}</b></td>
-                                <td><b>{/* '${numofplayers} */ `${playersInRoom}`}</b></td>
-                                {/* <td>{status}</td> */}
-                                <td>
-                                    <a href='#b' role='button' onClick={join(id)}>
-                                        כניסה
-                                    </a>
-                                    {/* <a href='#a' className='outline' role='button' onClick={leave(id)}>
-                                        עזוב
-                                    </a > */}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-
-            </table>
-
+                </table>
+            </figure>
         </article>
     </>)
 }

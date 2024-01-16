@@ -25,7 +25,7 @@ function AvatarSelector({ name, setAvatar, close }) {
 
     return (<div style={{ minWidth: 400, }}>
         <h4 className='unmargin'> דמות </h4>
-        <article className='flex unmargin'>
+        <article className='flex unmargin' style={{overflow:'hidden'}}>
             <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, -1)}> ▶️ </a>
             {seeds.map(s => (
                 <Avatar

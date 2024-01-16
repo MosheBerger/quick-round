@@ -27,15 +27,8 @@ async function showAll(client) {
         const query = {
             text: `--sql
             SELECT * FROM rooms
-            ;`,
-            // LEFT JOIN likes l
-            //     ON l.room_id = r.id
-            // LEFT JOIN            
-            // LEFT JOIN players p
-            //     ON rooms.id = p.room_id
-            // LEFT JOIN users u
-            //     ON p.user_id = u.id 
-            // values: []
+            ORDER BY id DESC
+            ;`
         }
         const res = await client.query(query)
         return res.rows

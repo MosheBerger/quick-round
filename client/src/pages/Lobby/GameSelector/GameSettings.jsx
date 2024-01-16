@@ -99,6 +99,7 @@ function GameSettings({ settings, userSettings, choose }) {
 
           <label key={key}>
             {name+"  " + inputs[key]}
+            {min && !inputs[key] && <small>הזז את הסרגל</small>}
             <input
               name={key}
               value={inputs[key]}

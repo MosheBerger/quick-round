@@ -3,6 +3,7 @@ import GameSelector from './GameSelector'
 import useDialog from '../../../hooks/useDialog'
 import GameCard from '../../../components/GameCard'
 import PicoButton from '../../../components/PicoButton.jsx'
+import stringifyNumber from '../../../utils/numbersToWords.js'
 
 function SetRound({ index, game, choose, add, remove, cantRemove }) {
 
@@ -29,7 +30,7 @@ function SetRound({ index, game, choose, add, remove, cantRemove }) {
 
             {openClose &&
 
-                <Dialog title={'בחירת משחק לסבב ' + index} open={isOpen} close={openClose} >
+                <Dialog title={'בחירת משחק לסבב ה' + stringifyNumber(index + 1)} open={isOpen} close={openClose} >
                     <GameSelector chosenGame={game} choose={choose} index={index} close={openClose} />
                 </Dialog>
             }

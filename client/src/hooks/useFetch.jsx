@@ -31,10 +31,10 @@ function useStateAndEffect(URL, INITIAL_STATE) {
                 const res = await fetch(URL)
                 const data = await res.json()
                 setState(data)
-                
+
             } catch (error) {
                 console.log(error);
-            } finally{
+            } finally {
                 setLoading(false)
             }
         }
@@ -43,26 +43,33 @@ function useStateAndEffect(URL, INITIAL_STATE) {
 
     }, [URL])
 
-    return [state,loading, setLoading, setState]
+    return [state, loading, setLoading, setState]
 }
 
 
-async function useNow(URL, setState) {
-    try {
-        const res = await fetch(URL)
-        const data = await res.json()
-        
-        if(setState){
-            setState(data)
-            return
+function useNow(URL, setState) {
+    const [loading, setLoading] = useState(true)
+
+    async function getData() {
+        try {
+            const res = await fetch(URL)
+            const data = await res.json()
+
+            if (setState) {
+                setState(data)
+                return
+            }
+
+        } catch (error) {
+            console.log('error', error);
+
+        } finally {
+            setLoading(false)
         }
-        
-        return data
-
-    } catch (error) {
-        return error
     }
-
+    getData()
+    
+    return [loading]
 }
 
 const fetcher = {

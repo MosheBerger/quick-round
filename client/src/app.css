@@ -75,15 +75,14 @@ small{
     /* opacity: 0.8; */
 }
 
-/* .roundSetter{
-    
-} */
-/* *{
-    transition: all 0.5s linear !important ;
-} */
+.tabs *{
+    border-bottom: none;
+}
+
 th,
 td {
     text-align: center;
+    padding: 1 !important;
 }
 
 th[scope='col'] {

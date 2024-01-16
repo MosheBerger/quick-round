@@ -13,7 +13,7 @@ function Home() {
     <main>
       <article>
 
-        <section class="intro">
+        <section className="intro">
 
           <p>ברוכים הבאים לאתר Quick Round, אתר מיני משחקים מטורף!</p>
 
@@ -31,7 +31,7 @@ function Home() {
         [תמונה של אדם משחק במשחק מיני באתר Quick Round]
         [תמונה]
 
-        <section class="how-to-play">
+        <section className="how-to-play">
           <h2>איך לשחק</h2>
           <ol>
             <li>פשוט צור חשבון בחינם.</li>
@@ -44,7 +44,7 @@ function Home() {
         </section>
         [תמונה של קבוצת חברים משחקים יחד במשחקי מיני באתר Quick Round]
 
-        <section class="features">
+        <section className="features">
           <h2>תכונות נוספות</h2>
           <ul>
             <li>צור חדרי משחק מותאמים אישית עם המשחקים האהובים עליך.</li>
@@ -53,7 +53,7 @@ function Home() {
           </ul>
         </section>
 
-        <section class="call-to-action">
+        <section className="call-to-action">
           <h2>אז למה אתה מחכה? התחל לשחק עוד היום!</h2>
 
           [תמונה של לוגו Quick Round]

@@ -53,6 +53,7 @@ async function showProfile(client, userId) {
 }
 
 async function logIn(client, email, password) {
+    console.log(client,email, password);
     try {
         const query = {
             text: `
@@ -64,7 +65,7 @@ async function logIn(client, email, password) {
         }
 
         const res = await client.query(query)
-
+        
         return res.rows[0]
 
     } catch (error) {
