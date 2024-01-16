@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import Avatar from '../Avatar'
 import COLORS from './colors'
 import ColorsSelector from './ColorSelector'
-// import useOuterDiv from '../../../hooks/useOuterDiv'
 
 
-const defaultValue = [1, 2, 3, 4, 5]
+const defaultValue = [1, 2, 3]
 
 function AvatarSelector({ name, setAvatar, close }) {
     const [seeds, setSeeds] = useState(defaultValue)
@@ -14,7 +13,7 @@ function AvatarSelector({ name, setAvatar, close }) {
 
     const updateSeeds = (e, num) => {
         e.preventDefault()
-        setSeeds(prev => prev.map(n => n + 5 * num))
+        setSeeds(prev => prev.map(n => n + 3 * num))
     }
 
     const handleSubmit = (e) => {
@@ -23,42 +22,31 @@ function AvatarSelector({ name, setAvatar, close }) {
         close()
     }
 
-    // const OuterDiv = useOuterDiv(close)
 
-    return (<>
-        {/* <OuterDiv > */}
-            {/* <article className='container' > */}
-                <article >
-                    <span> דמות </span>
-
-                    <div className='flex'>
-                        <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, -1)}> ▶️ </a>
-
-                        {seeds.map(s => (
-                            <Avatar
-                                onClick={() => chooseImage(s)}
-                                key={s} seed={s} seedName={name + s}
-                                color={'#ffffff'}
-                                imageSeed={imageSeed}
-                            />
-                        ))}
-
-                        <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, 1)}> ◀️ </a>
-
-                    </div>
-                </article>
+    return (<div style={{ minWidth: 400, }}>
+        <h4 className='unmargin'> דמות </h4>
+        <article className='flex unmargin'>
+            <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, -1)}> ▶️ </a>
+            {seeds.map(s => (
+                <Avatar
+                    onClick={() => chooseImage(s)}
+                    key={s} seed={s} seedName={name + s}
+                    color={'#ffffff'}
+                    imageSeed={imageSeed}
+                />
+            ))}
+            <a href='/#' role='button' className='secondary' onClick={(e) => updateSeeds(e, 1)}> ◀️ </a>
+        </article>
 
 
-                <ColorsSelector setColorIndex={setColorIndex} colorIndex={colorIndex} name={name} imageSeed={imageSeed} />
+        <ColorsSelector setColorIndex={setColorIndex} colorIndex={colorIndex} name={name} imageSeed={imageSeed} />
 
-                <button type="submit" onClick={handleSubmit}>
-                    <Avatar seedName={name + imageSeed} color={COLORS[colorIndex]} />
-                    <br />
-                    שמירה
-                </button>
-            {/* </article> */}
-        {/* </OuterDiv > */}
-    </>)
+        <button type="submit" onClick={handleSubmit}>
+            <Avatar seedName={name + imageSeed} color={COLORS[colorIndex]} />
+            <br />
+            שמירה
+        </button>
+    </div>)
 }
 
 

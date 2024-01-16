@@ -9,7 +9,7 @@ import ErrorDialog from '../../components/ErrorDialog.jsx'
 import checkError from '../../utils/checkError.js'
 import { useNavigate } from 'react-router-dom'
 
-const INITIAL_STATE = { username: '', password: '', email: '' }
+const INITIAL_STATE = { name: '', password: '', email: '' }
 
 function SignUp() {
     const [inputs, setInputs] = useInputs(INITIAL_STATE)
@@ -17,7 +17,7 @@ function SignUp() {
     // const [showAvatarChooser, setShowAvatarChooser] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const { username, email, password } = inputs
+    const { name, email, password } = inputs
 
     // const handleOpenCloseAvatarChooser = () => {
     //     setShowAvatarChooser(prev => !prev)
@@ -25,9 +25,9 @@ function SignUp() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const seedName = username.trim() + 1
+        const seedName = name.trim() + 1
         setAvatar((prev) => ({ ...prev, seedName }))
-    }, [username])
+    }, [name])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -63,21 +63,21 @@ function SignUp() {
     return (<>
         <h1> הרשמה </h1>
 
-        <Dialog title={'בחירת דמות'} open={avatarSelectorIsOpen} close={openClose}>
-            <AvatarSelector name={username.trim()} setAvatar={setAvatar} close={openClose} />
+        <Dialog title={'בחירת דמות וצבע'} open={avatarSelectorIsOpen} close={openClose}>
+            <AvatarSelector name={name.trim()} setAvatar={setAvatar} close={openClose} />
         </Dialog>
         
         <form className='inputs'>
-            <Input name={'שם משתמש'} insertTo={'username'} value={username} setInput={setInputs} />
-            <small> לפחות 4 תווים </small>
+            <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <Input name={'סיסמה'} insertTo={'password'} value={password} setInput={setInputs} />
             <small> לפחות 8 תווים </small>
 
-            <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <br />
+            <Input name={'שם משתמש'} insertTo={'name'} value={name} setInput={setInputs} />
+            <small> לפחות 4 תווים </small>
 
 
-            <button disabled={username === ''} className={'secondary'} onClick={e => { e.preventDefault(); openClose() }} >
+            <button disabled={name === ''} className={'secondary'} onClick={e => { e.preventDefault(); openClose() }} >
                 <Avatar {...avatar}> </Avatar>
                 <br />
                 בחר דמות
