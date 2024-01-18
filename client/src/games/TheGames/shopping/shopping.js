@@ -16,9 +16,9 @@ const Shopping = {
         ['Sound', 'chale', `${BASE_URL}/assets/sfx/chale!.mpeg`],
         ['Sprite', 'fish', `${BASE_URL}/assets/objects/fish.png`],
         ['Sprite', 'challah', `${BASE_URL}/assets/objects/challah.png`],
-        ['Sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (phone).png`],
+        ['Sprite', 'shopping-cart', `${BASE_URL}/assets/objects/shopping-cart (Phone).png`],
         ['Sprite', 'shelf', `${BASE_URL}/assets/objects/shelf (Phone).png`],
-        ['Sprite', 'refrigerator', `${BASE_URL}/assets/objects/refrigerator (phone).png`],
+        ['Sprite', 'refrigerator', `${BASE_URL}/assets/objects/refrigerator (Phone).png`],
     ],
 
     createScene(k = kaboom()) {
