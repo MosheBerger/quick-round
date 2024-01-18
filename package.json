@@ -4,12 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server-up": "node ./server/server.js",
+    "server-install": "cd ./server/ && npm i && cd ..",
     "client-up": "cd ./client/ && npm start",
     "replace-BASEURL":"mv ./client/src/BASEURL.js ./client/src/BASEURL2.js && cp ./BASEURL.js ./client/src/",
     "build-client":"cd ./client/ && npm install && npm run build && cd ..",
     "replace-build":"rm -rf ./server/build && mv ./client/build ./server/",
-    "start": "npm run replace-BASEURL && npm run build-client && npm run replace-build && npm run server-up"
+    "start": "node ./server/server.js",
+    "build": "npm run replace-BASEURL && npm run build-client && npm run replace-build && npm run server-up"
   },
   "keywords": [],
   "author": "",
