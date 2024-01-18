@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import BASE_URL from '../../BASE URL'
+import BASE_URL from '../../BASEURL'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
 import fetchNow from '../../utils/fetchNow'

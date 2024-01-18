@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import SetRound from './GameSelector/SetRound'
-import BASE_URL from '../../BASE URL'
+import BASE_URL from '../../BASEURL'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const INITIAL_STATE = { roomName: '', rounds: 1 }

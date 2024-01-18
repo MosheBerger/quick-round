@@ -5,7 +5,7 @@ import debugToggle from "./middleWares/debug"
 import './game-screen.css'
 import successScene from "../scenes/success"
 import failureScene from "../scenes/failure"
-import BASE_URL from "../../BASE URL";
+import BASE_URL from "../../BASEURL";
 import gameList from ".."
 import RoundManager from "./roundManager"
 import roundNumScene from "../scenes/roundNum"

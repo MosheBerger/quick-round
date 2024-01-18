@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from 'react'
 import fetcher from '../../hooks/useFetch'
-import BASE_URL from '../../BASE URL';
+import BASE_URL from '../../BASEURL';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Avatar from '../../components/avatar/Avatar';
 import ScoreTable from './ScoreTable';

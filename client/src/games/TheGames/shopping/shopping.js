@@ -1,7 +1,7 @@
 import startDragSystem from '../../code/middleWares/playDragSystem';
 import addDraggable from '../../code/addObjectFuncs/addDraggable';
 import kaboom from 'kaboom';
-import BASE_URL from '../../../BASE URL';
+import BASE_URL from '../../../BASEURL';
 import fixHeb from '../../code/utils/fixHebrew';
 import addBorders from '../../code/utils/addBorder';
 

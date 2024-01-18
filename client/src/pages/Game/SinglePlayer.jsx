@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import fetcher from '../../hooks/useFetch';
-import BASE_URL from '../../BASE URL';
+import BASE_URL from '../../BASEURL';
 import GameScreen from '../../games/code/GameScreen';
 import calculateTimes from './calculateTime';
 

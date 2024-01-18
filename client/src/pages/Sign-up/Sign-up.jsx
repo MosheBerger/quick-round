@@ -3,7 +3,7 @@ import AvatarSelector from '../../components/avatar/AvatarSelector/AvatarSelecto
 import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import Avatar from '../../components/avatar/Avatar.jsx'
-import BASE_URL from '../../BASE URL.js'
+import BASE_URL from '../../BASEURL.js'
 import useDialog from '../../hooks/useDialog.jsx'
 import ErrorDialog from '../../components/ErrorDialog.jsx'
 import checkError from '../../utils/checkError.js'

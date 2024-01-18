@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BASE_URL from '../../../BASE URL'
+import BASE_URL from '../../../BASEURL'
 import GameSettings from './GameSettings'
 import useDialog from '../../../hooks/useDialog'
 

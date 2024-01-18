@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import BASE_URL from '../BASE URL'
+import BASE_URL from '../BASEURL'
 import fetcher from '../hooks/useFetch'
 
 export default function GameCard({ name, imageurl, id, ...rest }) {

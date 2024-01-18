@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import GameInfo from './GameInfo'
 import fetcher from '../../../hooks/useFetch'
-import BASE_URL from '../../../BASE URL'
+import BASE_URL from '../../../BASEURL'
 
 
 function GameSelector({ chosenGame,choose, index, close }) {
