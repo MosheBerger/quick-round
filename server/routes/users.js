@@ -1,6 +1,7 @@
 const express = require('express')
 const usersDB = require('../DB').users
 const { isValid, type } = require('../utils/validation')
+const jwt = require('../middlewares/authorizationManager')
 
 const router = express.Router()
 
@@ -26,7 +27,9 @@ router.post('/login/:email', async (req, res, next) => {
         if (!user)
             throw { statusCode: 404, message: 'אחד מהפרטים שהוקשו שגויים' }
 
-        res.json(user)
+        const token = jwt.create(user)
+
+        res.json({ user, token })
         next()
 
     } catch (error) {
@@ -64,7 +67,10 @@ router.post('/signup/:email', async (req, res, next) => {
         if (!user)
             throw { statusCode: 500, message: `קרתה שגיאה` }
 
-        res.json(user)
+        const token = jwt.create(user)
+
+        res.json({ user, token })
+
         next()
 
     } catch (error) {
@@ -122,7 +128,7 @@ router.put('/update/:userId', async (req, res, next) => {
         const { userId } = req.params
 
         const oldData = await usersDB.showProfile(client, userId)
-        
+
         if (oldData === undefined)
             throw { statusCode: 400, message: `an error append` }
 

@@ -44,7 +44,7 @@ async function showProfile(client, userId) {
         }
 
         const res = await client.query(query)
-    
+
         return res.rows[0]
 
     } catch (error) {
@@ -53,11 +53,16 @@ async function showProfile(client, userId) {
 }
 
 async function logIn(client, email, password) {
-    console.log(client,email, password);
+    console.log(client, email, password);
     try {
         const query = {
-            text: `
-            SELECT * FROM users
+            text: `--sql
+            SELECT 
+                id,
+                name,
+                avatar,
+                email
+            FROM users
             WHERE email = $1 
             AND password = $2
             `,
@@ -65,7 +70,7 @@ async function logIn(client, email, password) {
         }
 
         const res = await client.query(query)
-        
+
         return res.rows[0]
 
     } catch (error) {
@@ -93,7 +98,7 @@ async function checkIfExist(client, email) {
     }
 }
 
-async function updateInfo(client,id, name, avatar) {
+async function updateInfo(client, id, name, avatar) {
     try {
         const query = {
             text: `

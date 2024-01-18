@@ -29,8 +29,8 @@ function GameScreen({ rounds, sendResults }) {
 			background: '#000000',
 			global: false,
 			canvas: canvasRef.current,
-			width: 960,
-			height: 540,
+			width: 1920,
+			height: 1080,
 			letterbox: true,
 
 		})
