@@ -32,15 +32,15 @@ const Shopping = {
         k.scene(this.tag, (userSettings) => {
             k.onUpdate(() => { k.setCursor("default") })
 
-            const mulitple = 1.5
+            const mulitple = 3
             startDragSystem(k)
 
             //---- BACKGROUND
             setBackground('#8ee575')
 
             add([
-                rect(width() + 100, 200),
-                pos(0, k.height() - 200),
+                rect(width() + 100, 500),
+                pos(0, k.height() - 400),
                 color('#6eb25a'),
                 rotate(5)
             ])
@@ -56,25 +56,25 @@ const Shopping = {
                 rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
                 color('#f2f2f2'),
                 anchor('topright'),
-                outline(5, '#111111'),
-                pos(width() - 20, 30)
+                outline(5*mulitple, '#111111'),
+                pos(width() - 50, 60)
 
             ])
             giveMe.add([
-                pos(-10, 30),
+                pos(-40, 60),
                 color('#123456'),
                 anchor('right'),
                 k.text(fixHeb("אני צריך לכבוד שבת:"), {
-                    size: 20,
+                    size: 40,
                     font: 'Abraham',
                 }),
             ])
             for (let i = 1; i <= settings.fish; i++) {
                 giveMe.add([
                     'fish' + i,
-                    scale(0.12),
+                    scale(0.24),
                     color('#828282'),
-                    pos((i - 1) * -30 * mulitple, 35.5 * mulitple),
+                    pos((i - 1) * -32 * mulitple, 35.5 * mulitple),
                     sprite('fish', { flipX: true }),
                     anchor('topright'),
                 ])
@@ -83,19 +83,20 @@ const Shopping = {
                 giveMe.add([
                     'challah' + i,
                     area(),
-                    scale(0.12),
+                    scale(0.24),
                     color('#828282'),
-                    pos((i - 1) * -32 * mulitple, 75.5 * mulitple),
+                    pos((i - 1) * -33 * mulitple, 75.5 * mulitple),
                     sprite('challah', { flipX: true }),
                     anchor('topright'),
                 ])
             }
 
+            const shoppingCart = createShoppingCart(k)
 
             add([
                 sprite('refrigerator'),
                 pos(120 * mulitple, 170 * mulitple),
-                scale(0.9),
+                scale(1.8),
                 anchor('center'),
                 area(),
 
@@ -103,12 +104,11 @@ const Shopping = {
             add([
                 sprite('shelf'),
                 pos(340 * mulitple, 170 * mulitple),
-                scale(0.9),
+                scale(1.8),
                 anchor('center'),
                 area(),
 
             ])
-            const shoppingCart = createShoppingCart(k)
 
             // הוספת מוצרים למדפים
             for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
@@ -116,7 +116,7 @@ const Shopping = {
 
                     addDraggable(k, {
                         sprite: 'fish',
-                        scale: 0.12,
+                        scale: 0.24,
                         pos: vec2(x, y),
                         returnOnLeave: true
                     })
@@ -129,7 +129,7 @@ const Shopping = {
 
                     addDraggable(k, {
                         sprite: 'challah',
-                        scale: 0.12,
+                        scale: 0.24,
                         pos: vec2(x, y),
                         returnOnLeave: true
                     })
@@ -160,14 +160,14 @@ const Shopping = {
 
 
 function createShoppingCart(k = kaboom()) {
-    const mulitple = 1.5
+    const mulitple = 3
 
     const { vec2, add, sprite, area, scale, pos, anchor, wait } = k
 
     const shoppingCart = add([
         sprite('shopping-cart'),
         pos(530 * mulitple, 245 * mulitple),
-        scale(0.8),
+        scale(1.6),
         anchor('center'),
         area(),
         {

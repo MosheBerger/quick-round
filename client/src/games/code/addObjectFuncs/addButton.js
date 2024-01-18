@@ -34,7 +34,7 @@ function addButton(
         anchor('center'),
         { originalText: thisText },
         text(thisText, {
-            size: 25,
+            size: 50,
             font: 'Abraham',
         }),
         color('#ffffff')

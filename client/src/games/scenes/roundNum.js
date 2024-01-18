@@ -1,5 +1,6 @@
 import kaboom from "kaboom";
 import fixHeb from "../code/utils/fixHebrew";
+import stringifyNumber from "../../utils/numbersToWords";
 
 function roundNumScene(k = kaboom()) {
 
@@ -7,7 +8,7 @@ function roundNumScene(k = kaboom()) {
         k.setBackground(0, 0, 150)
 
         k.add([
-            k.text(fixHeb('סבב מספר'), {
+            k.text(fixHeb('סבב'), {
                 size: 100,
                 font: 'Abraham',
             }),
@@ -16,11 +17,11 @@ function roundNumScene(k = kaboom()) {
         ])
 
         k.add([
-            k.text(roundNum, {
+            k.text(fixHeb(stringifyNumber(roundNum)), {
                 size: 200,
                 font: 'Abraham',
             }),
-            k.pos(k.width() / 2, k.height() / 1.8),
+            k.pos(k.width() / 2, k.height() / 2.2),
             k.anchor('center'),
         ])
 
@@ -29,7 +30,7 @@ function roundNumScene(k = kaboom()) {
                 size: 50,
                 font: 'Abraham',
             }),
-            k.pos(k.width() / 2, k.height() / 1.2),
+            k.pos(k.width() / 2, k.height() / 1.7),
             k.anchor('center'),
         ])
 

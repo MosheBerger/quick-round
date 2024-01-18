@@ -52,7 +52,7 @@ const Trivia = {
                 'question',
                 anchor('center'),
                 text(fixHeb(questionText), {
-                    size: 20 * 1.7,
+                    size: 40 * 1.7,
                     width: width * 0.8,
                     align: 'center',
                     font: 'Abraham',

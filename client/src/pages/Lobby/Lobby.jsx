@@ -8,7 +8,7 @@ import PicoButton from '../../components/PicoButton'
 function Room() {
     const tab = useLocation().hash.slice(1)
 
-    const user = useLocation().state?.user
+    const user = useLocation().state?.user?.user
     console.log(user);
 
     const join = (tab === 'join')
