@@ -77,7 +77,7 @@ function SignUp() {
         <Dialog title={'בחירת דמות וצבע'} open={avatarSelectorIsOpen} close={openClose}>
             <AvatarSelector name={name.trim()} setAvatar={setAvatar} close={openClose} />
         </Dialog>
-        
+
         <form className='inputs'>
             <Input name={'אימייל'} insertTo={'email'} value={email} setInput={setInputs} />
             <Input name={'סיסמה'} insertTo={'password'} value={password} setInput={setInputs} />
@@ -94,7 +94,7 @@ function SignUp() {
                 בחר דמות
             </button>
 
-            <button disabled={submitDisable || loading} type="submit" aria-busy={loading} onClick={handleSubmit}> 
+            <button disabled={submitDisable || loading} type="submit" aria-busy={loading} onClick={handleSubmit}>
                 {submitDisable ? 'חסר כמה פרטים' : loading ? 'רושם...' : 'מוכן ליציאה'}
             </button>
             <ErrorDialog message={errorMessage} setErrorMessage={setErrorMessage} />
