@@ -10,7 +10,7 @@
     "build-client":"cd ./client/ && npm install && npm run build && cd ..",
     "replace-build":"rm -rf ./server/build && mv ./client/build ./server/",
     "start": "node ./server/server.js",
-    "build": "npm run replace-BASEURL && npm run build-client && npm run replace-build && npm run server-up"
+    "build": "npm run replace-BASEURL && npm run build-client && npm run replace-build && npm run server-install"
   },
   "keywords": [],
   "author": "",
