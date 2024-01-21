@@ -12,19 +12,22 @@ function App() {
   return (<>
     <main className='container' dir='rtl'>
 
-        <Routes>
+      <Routes>
 
-          {/* <Route path='/' element={<SinglePlayer />} /> */}
+        {/* <Route path='/' element={<SinglePlayer />} /> */}
 
-          <Route path='/' element={<Home />} />
-          <Route path='/sign-up/' element={<SignUp />} />
-          <Route path='/log-in/' element={<LogIn />} />
-          {/* <Route path='/unregister/' element={<SetProfile />} /> */}
-          <Route path='/lobby/' element={<Lobby />} />
-          <Route path='/game/single-player/' element={<SinglePlayer />} />
-          <Route path='/room/:roomId/score-board' element={<ScoreBoard />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/sign-up/' element={<SignUp />} />
+        <Route path='/log-in/' element={<LogIn />} />
+        {/* <Route path='/unregister/' element={<SetProfile />} /> */}
+        <Route path='/lobby/' element={<Lobby />} />
+        <Route path='/game/single-player/' element={<SinglePlayer />} />
+        <Route path='room'>
+          <Route path=':roomId/play/' element={<SinglePlayer />} />
+          <Route path=':roomId/score-board/' element={<ScoreBoard />} />
+        </Route>
 
-        </Routes>
+      </Routes>
 
     </main>
   </>);

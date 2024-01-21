@@ -17,7 +17,7 @@ function RoomList({ user, ...rest }) {
 
     const handleEnter = async (e, roomId) => {
         e.preventDefault()
-        navigate('/game/single-player', { state: { roomId, user } })
+        navigate(`/room/${roomId}/play/`, { state: { user } })
         // try {
         //     const res = await fetch(`${BASE_URL}/api/rooms/${roomId}/join/${user.id}`)
         //     const operation = await res.json()

@@ -3,7 +3,7 @@ import useInputs from '../../hooks/useInputs'
 import Input from '../../components/forms/Input'
 import SetRound from './GameSelector/SetRound'
 import BASE_URL from '../../BASEURL'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import checkError from '../../utils/checkError'
 
 const INITIAL_STATE = { roomName: '', rounds: 1 }
@@ -14,7 +14,6 @@ function CreateRoom({ user, ...rest }) {
     console.log('create',user);
     
     const navigate = useNavigate()
-    const {state} = useLocation()
 
     const [inputs, setInput] = useInputs(INITIAL_STATE)
     const { roomName } = inputs
@@ -88,7 +87,7 @@ function CreateRoom({ user, ...rest }) {
             setGameInRound([{}])
             setInput(INITIAL_STATE)
             alert('החדר נוצר בהצלחה')
-            setTimeout(() => navigate('#join',{state:state}),1500)
+            setTimeout(() => navigate('#join'),1500)
             
 
 

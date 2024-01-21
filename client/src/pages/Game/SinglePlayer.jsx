@@ -1,17 +1,20 @@
 
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASEURL';
 import GameScreen from '../../games/code/GameScreen';
 import calculateTimes from './calculateTime';
+import userStorage from '../../hooks/userStrorage';
 
 
 function SinglePlayer() {
 
-  const { roomId, user } = useLocation().state
-  const navigate = useNavigate()
+  const user  = userStorage.useGet()
 
+  const {roomId} = useParams()
+  const navigate = useNavigate()
+console.log(roomId);
   const url = `${BASE_URL}/api/rooms/${roomId}/rounds/`
   const [rounds, loading, setLoading] = fetcher.useStateAndEffect(url, [])
   console.log(rounds);

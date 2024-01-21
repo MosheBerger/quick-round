@@ -29,7 +29,7 @@ router.post('/login/:email', async (req, res, next) => {
 
         const token = jwt.create(user)
 
-        res.json({ user, token })
+        res.json({ ...user, token })
         next()
 
     } catch (error) {

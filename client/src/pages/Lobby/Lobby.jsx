@@ -1,15 +1,23 @@
 import React from 'react'
 import RoomList from './RoomList'
 import CreateRoom from './CreateRoom'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
 import PicoButton from '../../components/PicoButton'
+import userStorage from '../../hooks/userStrorage'
 
 function Room() {
     const tab = useLocation().hash.slice(1)
 
-    const user = useLocation().state?.user?.user
+    const user = userStorage.useGet()
     console.log(user);
+    const navigate = useNavigate()
+
+    const signOut = () => {
+        userStorage.remove()
+        navigate('/')
+
+    }
 
     const join = (tab === 'join')
     const create = (tab === 'create')
@@ -23,7 +31,7 @@ function Room() {
                 <div style={{ padding: 2, width: "20vw" }} className='unmargin flex'>
                     <Avatar avatarSeed={user?.avatar} />
                     <h4 className='unmargin'> {user?.name} </h4>
-                    <PicoButton className='contrast outline'> יציאה </PicoButton>{/* //todo */}
+                    <PicoButton className='contrast outline' onClick={signOut}> יציאה </PicoButton>{/* //todo */}
                 </div>
             </div>
             <br />

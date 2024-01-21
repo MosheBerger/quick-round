@@ -9,6 +9,7 @@ import ErrorDialog from '../../components/ErrorDialog.jsx'
 import checkError from '../../utils/checkError.js'
 import { useNavigate } from 'react-router-dom'
 import v from '../../utils/validation.js'
+import userStorage from '../../hooks/userStrorage.js'
 
 const INITIAL_STATE = { name: '', password: '', email: '' }
 
@@ -56,6 +57,8 @@ function SignUp() {
             console.log(data);
             setLoading(false)
             checkError(data)
+
+            userStorage.set(data)
 
             navigate('/lobby', {
                 state: { user: data }
