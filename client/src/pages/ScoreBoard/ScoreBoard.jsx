@@ -14,7 +14,7 @@ function ScoreBoard() {
     const url = `${BASE_URL}/api/rooms/${roomId}`
     const [room] = fetcher.useStateAndEffect(url)
 
-    console.log(room);
+    console.log('room',room);
 
     // first attempt for each player // TODO make it for each round
 
@@ -59,7 +59,7 @@ function ScoreBoard() {
                     <h4> מנהל: {room.manager.name} </h4>
                 </div>
                 
-                <h4 style={{ marginBottom: 0 }}> שחקנים </h4>
+                {/* <h4 style={{ marginBottom: 0 }}> שחקנים </h4>
                 <figure>
                     <div id='players' className='middle'>
                         {room.players.map((p) =>
@@ -71,11 +71,11 @@ function ScoreBoard() {
                             </article>
                         )}
                     </div>
-                </figure>
+                </figure> */}
 
                 <ScoreTable
                     room={room}
-                    title={'ניקוד על הפעם הראשונה'}
+                    title={'תוצאות'}
                 />
                 <br />
                 {/* <ScoreTable

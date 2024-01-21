@@ -7,11 +7,11 @@ function ScoreTable({ room, title }) {
 
     const { players, finishTimes } = room
 
+    console.log('group',Object.groupBy(finishTimes,ft => ft.user_id));
     const scores = []
     for (const player of players) {
 
-        const time = finishTimes.reduce((prev, time,i) => {
-            if (i===0) return time
+        const time = finishTimes.reduce((prev, time) => {
             if (
                 time.user_id === player.id &&
                 Number(time.finish_time) <= Number(prev.finish_time)
@@ -20,7 +20,7 @@ function ScoreTable({ room, title }) {
             }
             return prev
         },
-            finishTimes.find((t) => t.user_id = player.id)
+            { user_id: player.id, finish_time:Number.MAX_SAFE_INTEGER }
         )
         time.player = player
         scores.push(time)
@@ -28,7 +28,7 @@ function ScoreTable({ room, title }) {
     scores.sort((a, b) => a.finish_time - b.finish_time)
 
 
-    console.log('🚀 -> ScoreTable -> scores:', scores)
+    console.log('scores:', scores)
     return (<>
         <h3 className='unmargin'> {title} </h3>
         <article className='unmargin'>
@@ -43,11 +43,10 @@ function ScoreTable({ room, title }) {
                     </thead>
                     <tbody>
 
-                        {scores.map((score, i) => {
-                            console.log(score);
+                        {scores.map((score) => {
                             const { player: p, id } = score
 
-                            return <tr key={id}>
+                            return <tr key={score.user_id}>
                                 <td>
                                     <Avatar avatarSeed={p.avatar} />
                                 </td>
@@ -56,10 +55,6 @@ function ScoreTable({ room, title }) {
                             </tr>
                         })}
                     </tbody>
-                    <tfoot>
-                        { }
-
-                    </tfoot>
                 </table>
             </figure>
         </article >
