@@ -7,7 +7,6 @@ function ScoreTable({ room, title }) {
 
     const { players, finishTimes } = room
 
-    console.log('group',Object.groupBy(finishTimes,ft => ft.user_id));
     const scores = []
     for (const player of players) {
 
@@ -20,13 +19,14 @@ function ScoreTable({ room, title }) {
             }
             return prev
         },
-            { user_id: player.id, finish_time:Number.MAX_SAFE_INTEGER }
+            { user_id: player.id, finish_time: Number.MAX_SAFE_INTEGER }
         )
         time.player = player
         scores.push(time)
     }
     scores.sort((a, b) => a.finish_time - b.finish_time)
 
+    // const scores2 = Object.groupBy(finishTimes,ft => ft.user_id)
 
     console.log('scores:', scores)
     return (<>
@@ -36,22 +36,28 @@ function ScoreTable({ room, title }) {
                 <table className='unmargin'>
                     <thead>
                         <tr>
+                            <th scope='col'>  </th>
                             <th scope='col'> שחקן </th>
                             <th scope='col'> שם </th>
                             <th scope='col'> זמן סיום חדר  </th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        {scores.map((score) => {
-                            const { player: p, id } = score
+                        {scores.map((score, i) => {
+                            const { player: { name, avatar } } = score
 
                             return <tr key={score.user_id}>
+                                <th scope='row'>{getIconPerPosition(i)}</th>
                                 <td>
-                                    <Avatar avatarSeed={p.avatar} />
+                                    <Avatar avatarSeed={avatar} />
                                 </td>
-                                <td> {p.name || 'null'} </td>
-                                <td>{(score.finish_time / 1000).toFixed(2) + ' שניות'}</td>
+                                <td> {name || 'null'} </td>
+                                <td>{
+                                    score.finish_time === Number.MAX_SAFE_INTEGER ?
+                                        'שגיאה'
+                                        :
+                                        (score.finish_time / 1000).toFixed(2) + ' שניות'
+                                }</td>
                             </tr>
                         })}
                     </tbody>
@@ -63,3 +69,17 @@ function ScoreTable({ room, title }) {
 }
 
 export default ScoreTable
+
+function getIconPerPosition(index) {
+    switch (index) {
+        case 0:
+            return '🥇'
+        case 1:
+            return '🥈'
+        case 2:
+            return '🥉'
+
+        default:
+            return ''
+    }
+} 

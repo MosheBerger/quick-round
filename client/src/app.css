@@ -90,7 +90,8 @@ th[scope='col'] {
 }
 
 th[scope='row'] {
-    text-align: left;
+    width: 20px;
+    font-size: 2em;
 }
 
 @keyframes shadow-drop-2-center-and-scale-up-center {
