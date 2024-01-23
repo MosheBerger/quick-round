@@ -1,7 +1,5 @@
 import React from 'react'
 import Avatar from '../../components/avatar/Avatar'
-import GameCard from '../../components/GameCard'
-import TimingCard from './TimingCard'
 
 function ScoreTable({ room, title }) {
 
