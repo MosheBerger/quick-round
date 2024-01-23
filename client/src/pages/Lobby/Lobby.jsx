@@ -21,6 +21,8 @@ function Room() {
 
     const join = (tab === 'join')
     const create = (tab === 'create')
+    const mine = (tab === 'mine')
+    const liked = (tab === 'liked')
 
     return (<>
         <header>
@@ -35,7 +37,7 @@ function Room() {
                 </div>
             </div>
             <br />
-            {!(join || create) &&
+            {tab === '' &&
                 <article>
                     <h2 className='unmargin'>
                         ברוכים הבאים ללובי
@@ -56,8 +58,17 @@ function Room() {
                 <Link to='#join' role='button' state={{ user }} className={join ? '' : 'outline'}  >
                     רשימת חדרים
                 </Link>
+
                 <Link to='#create' role='button' state={{ user }} className={create ? '' : 'outline'} >
                     צור חדר
+                </Link>
+
+                <Link to='#mine' role='button' state={{ user }} className={mine ? '' : 'outline'} >
+                    החדרים שלי
+                </Link>
+
+                <Link to='#liked' role='button' state={{ user }} className={liked ? '' : 'outline'} >
+                    חדרים שאהבתי
                 </Link>
             </div>
 
