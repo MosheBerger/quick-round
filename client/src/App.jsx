@@ -11,8 +11,8 @@ import AnimatedBackground from './components/animatedBackground/AnimatedBackgrou
 
 function App() {
   return (<>
-    <AnimatedBackground >
-    </AnimatedBackground>
+    <AnimatedBackground />
+
       <main className='container' dir='rtl'>
 
         <Routes>
