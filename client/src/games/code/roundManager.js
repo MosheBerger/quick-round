@@ -1,7 +1,8 @@
+import kaboom from "kaboom"
 import gameList from ".."
 
 class RoundManager {
-    constructor(k, rounds, sendResult) {
+    constructor(k=kaboom(), rounds, sendResult) {
         this.k = k
         this.rounds = rounds
         this.sendResult = sendResult
@@ -56,7 +57,17 @@ class RoundManager {
         const finishTime = Date.now() - startTime
 
         results.push({ roundId, success, finishTime })
-
+        
+        //todo print!!
+        // const shot = k.screenshot()
+        // k.loadSprite('ss',shot)
+        // setTimeout(() => {
+        //     k.add([
+        //         k.pos(0,0),
+        //         k.sprite('ss')
+        //     ])
+        //     console.log('print');
+        // }, 4000)
         // console.log('תוצאות', results);
         k.wait(0.2, () => {
 

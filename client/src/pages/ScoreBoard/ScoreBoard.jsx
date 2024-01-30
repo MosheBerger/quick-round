@@ -49,7 +49,6 @@ function ScoreBoard() {
 
         <h1>לוח ניקוד</h1>
 
-        {/*//todo {BackToLobby} */}
         {!room ?
             <div aria-busy="true">טוען</div>
 
