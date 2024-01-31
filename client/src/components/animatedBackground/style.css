@@ -32,8 +32,8 @@ body{
 } */
 
 .circles{
-    background: #967537; 
-    background: #4ec88f; 
+    /* background: #967537;  */
+    /* background: #4ec88f;  */
     background: #4e54c8; 
 
     background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
@@ -41,7 +41,7 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100lvh;
     overflow: hidden;
     z-index: -1;
 }
