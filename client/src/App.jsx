@@ -6,30 +6,33 @@ import Lobby from './pages/Lobby/Lobby'
 import SinglePlayer from './pages/Game/SinglePlayer';
 import './app.css'
 import ScoreBoard from './pages/ScoreBoard/ScoreBoard';
+import AnimatedBackground from './components/animatedBackground/AnimatedBackground';
 // import SetProfile from './pages/UnregisterUser/SetProfile';
 
 function App() {
   return (<>
-    <main className='container' dir='rtl'>
+    <AnimatedBackground />
 
-      <Routes>
+      <main className='container' dir='rtl'>
 
-        {/* <Route path='/' element={<SinglePlayer />} /> */}
+        <Routes>
 
-        <Route path='/' element={<Home />} />
-        <Route path='/sign-up/' element={<SignUp />} />
-        <Route path='/log-in/' element={<LogIn />} />
-        {/* <Route path='/unregister/' element={<SetProfile />} /> */}
-        <Route path='/lobby/' element={<Lobby />} />
-        <Route path='/game/single-player/' element={<SinglePlayer />} />
-        <Route path='room'>
-          <Route path=':roomId/play/' element={<SinglePlayer />} />
-          <Route path=':roomId/score-board/' element={<ScoreBoard />} />
-        </Route>
+          {/* <Route path='/' element={<SinglePlayer />} /> */}
 
-      </Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/sign-up/' element={<SignUp />} />
+          <Route path='/log-in/' element={<LogIn />} />
+          {/* <Route path='/unregister/' element={<SetProfile />} /> */}
+          <Route path='/lobby/' element={<Lobby />} />
+          <Route path='/game/single-player/' element={<SinglePlayer />} />
+          <Route path='room'>
+            <Route path=':roomId/play/' element={<SinglePlayer />} />
+            <Route path=':roomId/score-board/' element={<ScoreBoard />} />
+          </Route>
 
-    </main>
+        </Routes>
+
+      </main>
   </>);
 }
 
