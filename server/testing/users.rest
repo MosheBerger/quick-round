@@ -2,6 +2,9 @@
 GET http://localhost:8080/api/users/login/
 ###
 
+GET http://localhost:8080/wake-me-up
+###
+
 GET http://localhost:8080/api/users/signup/available/moishy
 # Content-Type: application/json
 ###
