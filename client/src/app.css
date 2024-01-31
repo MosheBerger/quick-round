@@ -58,16 +58,13 @@
 article {
     /* background-image: url(background2.png); */
     background-repeat: repeat;
-    opacity: 0.95;
     backdrop-filter: 7;
+    background-color: rgba(20, 20, 20, 0.75);
     /* filter: blur(5px); */
     /* min-width: 80%; */
     /* min-width: 500px !important; */
     /* animation: shadow-drop-2-center-and-scale-up-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both !important; */
 
-}
-article *{
-    opacity: 1;
 }
 dialog > article{
     opacity: 1;
