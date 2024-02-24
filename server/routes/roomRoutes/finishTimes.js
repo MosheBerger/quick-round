@@ -1,5 +1,6 @@
 const express = require('express')
 const markPlayerAsPlayedRoom = require('../../middlewares/markPlayerAsPlayedRoom')
+ const { verify } = require('../../middlewares/authorizationManager')
 const DB = require('../../DB').finishTimes
 
 
@@ -7,9 +8,9 @@ const router = express.Router()
 
 
 // DB.create
-router.post('/', async (req, res, next) => {
-    const { client, roomId } = req
-    const { userId, finishTime } = req.body
+router.post('/',verify,  async (req, res, next) => {
+    const { client, roomId, userId } = req
+    const { finishTime } = req.body
 
     try {
         const resultObj = await DB.create(client, userId, roomId, finishTime)

@@ -5,16 +5,17 @@ import fetcher from '../../hooks/useFetch';
 import BASE_URL from '../../BASEURL';
 import GameScreen from '../../games/code/GameScreen';
 import calculateTimes from './calculateTime';
-import userStorage from '../../hooks/userStrorage';
+import userStorage from '../../hooks/userStorage';
+import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser';
 
 
 function SinglePlayer() {
 
-  const user  = userStorage.useGet()
+  const user = userStorage.useGet()
 
-  const {roomId} = useParams()
+  const { roomId } = useParams()
   const navigate = useNavigate()
-console.log(roomId);
+  console.log(roomId);
   const url = `${BASE_URL}/api/rooms/${roomId}/rounds/`
   const [rounds, loading, setLoading] = fetcher.useStateAndEffect(url, [])
   console.log(rounds);
@@ -30,7 +31,9 @@ console.log(roomId);
     return () => {
       window.onbeforeunload = null
     }
-  }, [])
+  }, [navigate, user])
+
+  useReturnToHomeIfNoUser()
 
   // !sendResult
   // useEffect(() => {
@@ -50,7 +53,8 @@ console.log(roomId);
           finishTime
         }),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "authorization": userStorage.getToken()
         }
       })
 
@@ -59,7 +63,7 @@ console.log(roomId);
       console.log('🛜', userFinishTime);
 
       navigate(`/room/${roomId}/score-board`, {
-        state: { user, results, userFinishTime}
+        state: { user, results, userFinishTime }
       })
     } catch (error) {
       console.log('❌', error);

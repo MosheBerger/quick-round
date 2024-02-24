@@ -1,28 +1,33 @@
-import React from 'react'
-import RoomList from './RoomList'
-import CreateRoom from './CreateRoom'
+import React, { useEffect } from 'react'
+import AllRooms from './tabs/AllRooms'
+import CreateRoom from './tabs/CreateRoom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
 import PicoButton from '../../components/PicoButton'
-import userStorage from '../../hooks/userStrorage'
+import userStorage from '../../hooks/userStorage'
+import MyRooms from './tabs/MyRooms'
+import LikedRooms from './tabs/LikedRooms'
+import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser'
 
 function Room() {
     const tab = useLocation().hash.slice(1)
+    const navigate = useNavigate()
 
     const user = userStorage.useGet()
-    console.log(user);
-    const navigate = useNavigate()
 
     const signOut = () => {
         userStorage.remove()
         navigate('/')
 
     }
-
+    useReturnToHomeIfNoUser()
+    
     const join = (tab === 'join')
     const create = (tab === 'create')
     const mine = (tab === 'mine')
     const liked = (tab === 'liked')
+
+    if (!user) {return <></>}
 
     return (<>
         <header>
@@ -74,8 +79,11 @@ function Room() {
 
         </header>
 
-        <RoomList user={user} hidden={!join} />
+        <AllRooms user={user} hidden={!join} />
         <CreateRoom user={user} hidden={!create} />
+        <MyRooms user={user} hidden={!mine} />
+        <LikedRooms user={user} hidden={!liked} />
+
 
     </>)
 }

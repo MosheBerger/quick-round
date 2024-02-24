@@ -14,6 +14,9 @@ function set(data) {
 function useGet() {
     return get()
 }
+function getToken() {
+    return "Bearer "+ get()?.token
+}
 
 function remove() {
     localStorage.removeItem(key)
@@ -22,6 +25,7 @@ function remove() {
 
 const userStorage = {
     get,
+    getToken,
     set,
     useGet,
     remove,

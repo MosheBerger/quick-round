@@ -1,13 +1,14 @@
-import React, { Fragment, useMemo } from 'react'
+import React, { Fragment, useEffect, useMemo } from 'react'
 import fetcher from '../../hooks/useFetch'
 import BASE_URL from '../../BASEURL';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import Avatar from '../../components/avatar/Avatar';
+import { Link, useParams } from 'react-router-dom';
 import ScoreTable from './ScoreTable';
-import userStorage from '../../hooks/userStrorage';
+import userStorage from '../../hooks/userStorage';
+import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser';
 
 function ScoreBoard() {
     const user = userStorage.useGet()
+    useReturnToHomeIfNoUser()
 
     const roomId = parseInt(useParams('roomId').roomId)
 

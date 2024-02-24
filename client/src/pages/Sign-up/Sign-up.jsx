@@ -9,7 +9,7 @@ import ErrorDialog from '../../components/ErrorDialog.jsx'
 import checkError from '../../utils/checkError.js'
 import { useNavigate } from 'react-router-dom'
 import v from '../../utils/validation.js'
-import userStorage from '../../hooks/userStrorage.js'
+import userStorage from '../../hooks/userStorage'
 
 const INITIAL_STATE = { name: '', password: '', email: '' }
 
@@ -87,7 +87,7 @@ function SignUp() {
             <small> לפחות 8 תווים </small>
 
             <br />
-            <Input name={'שם משתמש'} insertTo={'name'} value={name} setInput={setInputs} />
+            <Input name={'שם'} insertTo={'name'} value={name} setInput={setInputs} />
             <small> לפחות 4 תווים </small>
 
 
@@ -98,7 +98,7 @@ function SignUp() {
             </button>
 
             <button disabled={submitDisable || loading} type="submit" aria-busy={loading} onClick={handleSubmit}>
-                {submitDisable ? 'חסר כמה פרטים' : loading ? 'רושם...' : 'מוכן ליציאה'}
+                {submitDisable ? 'חסר כמה פרטים' : loading ? 'רושם...' : 'לחצו פה לרישום'}
             </button>
             <ErrorDialog message={errorMessage} setErrorMessage={setErrorMessage} />
         </form >

@@ -1,6 +1,6 @@
 const express = require('express')
 const DB = require('../DB')
-
+const {verify} = require('../middlewares/authorizationManager')
 
 const router = express.Router()
 
@@ -11,10 +11,11 @@ const extractRoomId = ((req, res, next) => {
 })
 
 // CREATE
-router.post('/', async (req, res, next) => {
+router.post('/', verify, async (req, res, next) => {
 
     const client = req.client
-    const { name, numOfRounds, manager, rounds } = req.body
+    const { name, numOfRounds , rounds } = req.body
+    const manager = req.userId;
 
     try {
         await client.query('BEGIN')
@@ -38,12 +39,17 @@ router.post('/', async (req, res, next) => {
 })
 
 // DELETE
-router.delete('/:roomId/', async (req, res, next) => {
+router.delete('/:roomId/',verify,  async (req, res, next) => {
 
     const client = req.client
     const { roomId } = req.params
+    const { userId } = req
 
     try {
+        const room = await DB.rooms.showAllDataPerRoom(client, roomId)
+        if (room.manager.id !== userId )
+            throw {statusCode:401,message:"that room isn't yours!"}
+
         await client.query('BEGIN')
 
         const results = []
@@ -147,10 +153,10 @@ router.get('/created-by/:userId', async (req, res, next) => {
     try {
         const rooms = await DB.rooms.showAll(client)
         const userLiked = await DB.likes.showLikedByUser(client, userId)
-        
+
         const userRooms = rooms.filter((r) => r.manager === userId)
         const userProfile = await DB.users.showProfile(client, userId)
-       
+
         for (const room of userRooms) {
             const roomId = room.id
 
@@ -175,8 +181,8 @@ router.get('/created-by/:userId', async (req, res, next) => {
 
 
 const roomRouter = require('./roomRoutes/router')
-const { default: markPlayerAsPlayedRoom } = require('../middlewares/markPlayerAsPlayedRoom')
-router.use('/:roomId/',extractRoomId, roomRouter)
+// const { default: markPlayerAsPlayedRoom } = require('../middlewares/markPlayerAsPlayedRoom')
+router.use('/:roomId/', extractRoomId, roomRouter)
 
 
 module.exports = router

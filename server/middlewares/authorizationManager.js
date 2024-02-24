@@ -9,6 +9,7 @@ function create(userData) {
 async function verify(req, res, next) {
     try {
         const authorizationData = req.headers.authorization
+        console.log('🚀 -> verify -> authorizationData:', authorizationData)
 
         if (!authorizationData)
             throw { statusCode: 401, message:'משתשמש לא מזוהה במערכת אנא התחבר שוב' }

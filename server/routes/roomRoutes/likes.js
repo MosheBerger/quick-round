@@ -1,16 +1,16 @@
 const express = require('express')
+const { verify } = require('../../middlewares/authorizationManager')
 const likesDB = require('../../DB').likes
-
 
 const router = express.Router()
 
 
 
 // CREATE 
-router.post('/', async (req, res, next) => {
+router.post('/', verify, async (req, res, next) => {
     const client = req.client
-    const { roomId } = req
-    const { userId, likeIt } = req.body
+    const { userId, roomId } = req
+    const { likeIt } = req.body
 
     try {
         const results = await likesDB.create(client, roomId, userId, likeIt)
@@ -25,10 +25,10 @@ router.post('/', async (req, res, next) => {
 })
 
 // UPDATE
-router.put('/', async (req, res, next) => {
+router.put('/', verify, async (req, res, next) => {
     const client = req.client
-    const { roomId } = req
-    const { userId, likeIt } = req.body
+    const { userId, roomId } = req
+    const { likeIt } = req.body
 
     try {
         const results = await likesDB.update(client, roomId, userId, likeIt)

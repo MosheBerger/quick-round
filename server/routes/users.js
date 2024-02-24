@@ -10,7 +10,8 @@ const router = express.Router()
 router.post('/login/:email', async (req, res, next) => {
     const client = req.client
     try {
-        const { email } = req.params
+        let { email } = req.params
+        email = email.toLowerCase()
         const { password } = req.body
         console.log('email', email);
         console.log('password', password);
@@ -41,7 +42,8 @@ router.post('/login/:email', async (req, res, next) => {
 router.post('/signup/:email', async (req, res, next) => {
     const client = req.client
     try {
-        const { email } = req.params
+        let { email } = req.params
+        email = email.toLowerCase()
         const { password, name, avatar } = req.body
         console.log('email', email);
         console.log('password', password);
@@ -69,7 +71,7 @@ router.post('/signup/:email', async (req, res, next) => {
 
         const token = jwt.create(user)
 
-        res.json({ user, token })
+        res.json({ ...user, token })
 
         next()
 
@@ -122,10 +124,10 @@ router.get('/show/:userId', async (req, res, next) => {
 
 
 // UPDATE AVATAR
-router.put('/update/:userId', async (req, res, next) => {
+router.put('/update/:userId', jwt.verify, async (req, res, next) => {
     const client = req.client
     try {
-        const { userId } = req.params
+        const { userId } = req
 
         const oldData = await usersDB.showProfile(client, userId)
 

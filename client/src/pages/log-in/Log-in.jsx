@@ -6,7 +6,7 @@ import BASE_URL from '../../BASEURL'
 import checkError from '../../utils/checkError'
 import ErrorDialog from '../../components/ErrorDialog'
 import v from '../../utils/validation'
-import userStorage from '../../hooks/userStrorage'
+import userStorage from '../../hooks/userStorage'
 
 
 const INITIAL_STATE = { email: '', password: '' }
@@ -50,7 +50,7 @@ function LogIn() {
             checkError(data)
             userStorage.set(data)
 
-            navigate('/lobby', {
+            navigate('/lobby#join', {
                 state: {user: data}
             })
 

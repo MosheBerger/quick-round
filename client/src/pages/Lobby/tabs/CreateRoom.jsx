@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import useInputs from '../../hooks/useInputs'
-import Input from '../../components/forms/Input'
-import SetRound from './GameSelector/SetRound'
-import BASE_URL from '../../BASEURL'
+import useInputs from '../../../hooks/useInputs'
+import Input from '../../../components/forms/Input'
+import SetRound from '../GameSelector/SetRound'
+import BASE_URL from '../../../BASEURL'
 import { useNavigate } from 'react-router-dom'
-import checkError from '../../utils/checkError'
+import checkError from '../../../utils/checkError'
+import userStorage from '../../../hooks/userStorage'
 
 const INITIAL_STATE = { roomName: '', rounds: 1 }
 
@@ -75,7 +76,8 @@ function CreateRoom({ user, ...rest }) {
                 {
                     method: 'POST',
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "authorization":userStorage.getToken()
                     },
                     body: JSON.stringify(room),
                 }
