@@ -29,7 +29,7 @@ function GetListByTab({ user, tab, ...rest }) {
 
     return (<>
         <article className='unmargin' {...rest}>
-            <h4 aria-busy={loading}> רשימת חדרים </h4>
+            {loading && <h4 aria-busy={loading}> טוען... </h4>}
             {!loading && empty && <h2>לא נמצאו חדרים</h2>}
 
             <figure>

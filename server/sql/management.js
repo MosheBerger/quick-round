@@ -2,7 +2,7 @@ const pool = require('./pool.js')
 
 async function createAll() {
 
-    console.log(await pool.query(`
+    console.log(await pool.query(`--sql
     CREATE TABLE rooms_users(
         id BIGSERIAL NOT NULL PRIMARY KEY,
         room_id INTEGER NOT NULL,
