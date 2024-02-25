@@ -42,7 +42,7 @@ async function createAll() {
 
 
     CREATE TABLE users(
-        id BIGSERIAL NOT NULL PRIMARY KEY,,
+        id BIGSERIAL NOT NULL PRIMARY KEY,
         email VARCHAR(75) UNIQUE NOT NULL,
         password VARCHAR(20) NOT NULL,
         name VARCHAR(20) NOT NULL,
@@ -60,7 +60,7 @@ async function createAll() {
         id BIGSERIAL NOT NULL PRIMARY KEY,
         room_id BIGINT NOT NULL,
         user_id BIGINT NOT NULL,
-        like BOOLEAN NOT NULL,
+        like_it BOOLEAN NOT NULL,
         UNIQUE (room_id, user_id)
     );
     
