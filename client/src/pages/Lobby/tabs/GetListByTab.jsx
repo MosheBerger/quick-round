@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
 import BASE_URL from '../../../BASEURL'
-import { useLocation } from 'react-router-dom'
 import fetchNow from '../../../utils/fetchNow'
 import RoomList from '../components/RoomList'
 
 
-function AllRooms({ user, ...rest }) {
-    const tab = useLocation().hash
+function GetListByTab({ user, tab, ...rest }) {
+
     
     const [roomList, setRoomsList] = useState([])
     const [loading, setLoading] = useState(true)
@@ -15,19 +14,29 @@ function AllRooms({ user, ...rest }) {
 
     // refresh data
     useEffect(() => {
-        if (tab === '#join')
+        if (tab === 'join')
         fetchNow(`${BASE_URL}/api/rooms`, setRoomsList, setLoading)
-    }, [tab])
+        
+        else if (tab === 'mine')
+        fetchNow(`${BASE_URL}/api/rooms/created-by/${user.id}`, setRoomsList, setLoading)
+        
+        else if (tab === 'liked')
+        fetchNow(`${BASE_URL}/api/rooms/liked/${user.id}`, setRoomsList, setLoading)
+  
+    }, [tab,user])
 
+    const empty = (roomList.length === 0)
 
     return (<>
         <article className='unmargin' {...rest}>
             <h4 aria-busy={loading}> רשימת חדרים </h4>
+            {!loading && empty && <h2>לא נמצאו חדרים</h2>}
+
             <figure>
-                <RoomList roomList={roomList} hidden={loading} />
+                <RoomList roomList={roomList} hidden={loading || empty} />
             </figure>
         </article>
     </>)
 }
 
-export default AllRooms
+export default GetListByTab

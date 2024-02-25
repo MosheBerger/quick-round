@@ -8,6 +8,7 @@ import userStorage from '../../hooks/userStorage'
 import MyRooms from './tabs/MyRooms'
 import LikedRooms from './tabs/LikedRooms'
 import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser'
+import GetListByTab from './tabs/GetListByTab'
 
 function Room() {
     const tab = useLocation().hash.slice(1)
@@ -26,6 +27,7 @@ function Room() {
     const create = (tab === 'create')
     const mine = (tab === 'mine')
     const liked = (tab === 'liked')
+    console.log(tab);
 
     if (!user) {return <></>}
 
@@ -79,10 +81,10 @@ function Room() {
 
         </header>
 
-        <AllRooms user={user} hidden={!join} />
+        <GetListByTab user={user} tab={tab} hidden={create} />
         <CreateRoom user={user} hidden={!create} />
-        <MyRooms user={user} hidden={!mine} />
-        <LikedRooms user={user} hidden={!liked} />
+        {/* <MyRooms user={user} hidden={!mine} /> */}
+        {/* <LikedRooms user={user} hidden={!liked} /> */}
 
 
     </>)
