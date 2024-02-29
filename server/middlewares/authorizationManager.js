@@ -18,7 +18,7 @@ async function verify(req, res, next) {
         const result = jsonwebtoken.verify(token, secret)
 
         req.userId = result.id
-
+        console.log('✔️ verified');
         next()
 
     } catch (error) {

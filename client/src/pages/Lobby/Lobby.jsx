@@ -1,8 +1,6 @@
 import React from 'react'
 import CreateRoom from './tabs/CreateRoom'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import Avatar from '../../components/avatar/Avatar'
-import PicoButton from '../../components/PicoButton'
+import { Link, useLocation} from 'react-router-dom'
 import userStorage from '../../hooks/userStorage'
 import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser'
 import GetListByTab from './tabs/GetListByTab'
@@ -28,7 +26,7 @@ function Room() {
         <header>
 
             <div className='flex sb'>
-                
+
                 <h1 className='unmargin'>לובי</h1>
 
                 <UserComponent user={user} />

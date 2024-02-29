@@ -12,6 +12,7 @@ router.post('/', verify, async (req, res, next) => {
     const { userId, roomId } = req
     const { likeIt } = req.body
 
+    console.log('userId, roomId, likeIt', userId, roomId, likeIt);
     try {
         const results = await likesDB.create(client, roomId, userId, likeIt)
 

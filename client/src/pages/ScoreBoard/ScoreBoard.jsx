@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect, useMemo } from 'react'
+import React, { useState } from 'react'
 import fetcher from '../../hooks/useFetch'
 import BASE_URL from '../../BASEURL';
 import { Link, useParams } from 'react-router-dom';
 import ScoreTable from './ScoreTable';
 import userStorage from '../../hooks/userStorage';
 import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser';
+import Like from './Like';
+import RoomList from '../Lobby/components/RoomList';
 
 function ScoreBoard() {
     const user = userStorage.useGet()
@@ -13,35 +15,23 @@ function ScoreBoard() {
     const roomId = parseInt(useParams('roomId').roomId)
 
     const url = `${BASE_URL}/api/rooms/${roomId}`
-    const [room] = fetcher.useStateAndEffect(url)
+    const [room, loading, setLoading, setRoom] = fetcher.useStateAndEffect(url)
 
-    console.log('room',room);
+    async function refresh() {
+        try {
+            setLoading(true)
 
-    // first attempt for each player // TODO make it for each round
+            const res = await fetch(url)
+            const data = await res.json()
 
-    // useMemo(() => {
+            setRoom(data)
+            setLoading(false)
 
-    //     if (room) {
-    //         room.firstResultsTable = []
-    //         room.lastResultsTable = []
-    //         const { rounds, players } = room
-    //         rounds.forEach((round) => {
-    //             const resultsByUser = Object.groupBy(round.results, ({ user_id }) => user_id)
-    //             const firstRoundArr = []
-    //             const lastRoundArr = []
-    //             players.forEach((user) => {
-    //                 firstRoundArr.push(resultsByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v))
-    //                 lastRoundArr.push(resultsByUser[user.id]?.reduce((p, v) => p.id > v.id ? p : v))
-    //             })
-    //             room.firstResultsTable.push(firstRoundArr)
-    //             room.lastResultsTable.push(lastRoundArr)
-    //         })
-    //         console.log('first', room.firstResultsTable);
-    //         console.log('last', room.lastResultsTable);
-    //     }
-    // }, [room])
-    // const resultByUser = room && Object.groupBy(room.rounds[0].results, ({ user_id }) => user_id)
-    // if (room) room.players.forEach((user) => console.log('user', user.id, resultByUser[user.id]?.reduce((p, v) => p.id < v.id ? p : v)))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     const BackToLobby = <Link to={'/lobby#join'} state={user} ><button> בחזרה ללובי </button></Link>
 
@@ -53,38 +43,28 @@ function ScoreBoard() {
         {!room ?
             <div aria-busy="true">טוען</div>
 
+
             : <>
+
                 <div className='flex'>
                     <h2>{room.name}</h2>
                     <h4> מנהל: {room.manager.name} </h4>
                 </div>
-                
-                {/* <h4 style={{ marginBottom: 0 }}> שחקנים </h4>
-                <figure>
-                    <div id='players' className='middle'>
-                        {room.players.map((p) =>
-                            <article className='unmargin' key={p.id} >
 
-                                <h5>{p.name}</h5>
-                                <Avatar avatarSeed={p.avatar} />
-
-                            </article>
-                        )}
-                    </div>
-                </figure> */}
+                {BackToLobby}
 
                 <ScoreTable
                     room={room}
                     title={'תוצאות'}
                 />
+
                 <br />
-                {/* <ScoreTable
-                    room={room}
-                    tableKey={'lastResultsTable'}
-                    title={'ניקוד בפעם האחרונה ששחקת'}
-                /> */}
-                <br />
-                <br />
+                <Like
+                    likes={room.likes} refresh={refresh}
+                    loading={loading} setLoading={setLoading}
+                    roomId={roomId}
+                />
+                {/* <RoomList roomList={[room]} /> */}
                 {BackToLobby}
             </>
         }

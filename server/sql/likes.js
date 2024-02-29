@@ -1,25 +1,13 @@
 
-async function create(client, roomId, userId, like) {
-    const query = {
-        text: `
-            INSERT INTO likes(room_id, user_id, like_it)
-            VALUES($1,$2,$3)
-            RETURNING *
-            ;`,
-        values: [roomId, userId, like]
-    }
-    const res = await client.query(query)
-    return res.rows[0]
-}
 
 async function update(client, roomId, userId, like) {
     const query = {
-        text: `
-            UPDATE likes
-            SET like_it = $3
-            WHERE room_id = $1
-              AND user_id = $2
-            RETURNING *
+        text: `--sql
+        INSERT INTO likes(room_id, user_id, like_it)
+        VALUES($1,$2,$3)
+        ON CONFLICT (room_id, user_id) 
+        DO UPDATE SET like_it = $3
+        RETURNING *
             ;`,
         values: [roomId, userId, like]
     }
@@ -82,6 +70,23 @@ async function showLikedByUser(client, userId) {
 
 }
 
+async function isThisRoomLikedByUser(client,roomId, userId) {
+
+    const query = {
+        text: `
+            SELECT * FROM likes
+            WHERE user_id = $1
+              AND like_it = true
+              AND room_id = $2
+            ;`,
+        values: [userId, roomId]
+    }
+    const res = await client.query(query)
+
+    return res.rows
+
+}
+
 async function countLikes(client, roomId) {
     try {
 
@@ -105,12 +110,12 @@ async function countLikes(client, roomId) {
 
 
 const likes = {
-    create,
     update,
     countLikes,
     removeByRoom,
     showByRoom,
     showLikedByUser,
+    isThisRoomLikedByUser,
 }
 
 module.exports = likes

@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'abraham';
+    src: local('abraham'), url(./Abraham-Regular.ttf) format('ttf');
+    /* font-weight: bold; */
+}
+
+* {
+    font-family: 'abraham' !important;
+    letter-spacing: 0.06rem;
+
+}
+
+
 .middle {
     display: flex;
     align-items: center;
@@ -66,18 +79,21 @@ article {
     /* animation: shadow-drop-2-center-and-scale-up-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both !important; */
 
 }
-dialog > article{
+
+dialog>article {
     opacity: 1;
 }
-small{
+
+small {
     color: aliceblue;
 }
+
 .outline[role] {
     background-color: rgb(26, 26, 26) !important;
     /* opacity: 0.8; */
 }
 
-.tabs *{
+.tabs * {
     border-bottom: none;
 }
 
@@ -112,9 +128,7 @@ th[scope='row'] {
 }
 
 @keyframes scale-up-center {
-    0% {
-    }
+    0% {}
 
-    100% {
-    }
+    100% {}
 }

@@ -1,18 +1,14 @@
 import React from 'react'
 import Avatar from '../../../components/avatar/Avatar';
 import useEnterToRoom from '../hooks/enterToRoom';
+import FootprintIcon from '../../../components/Icons/Footprint';
+import HeartIcon from '../../../components/Icons/Heart';
+import ControllerIcon from '../../../components/Icons/Controller';
 
 function RoomList({ roomList, hidden }) {
 
     const enter = useEnterToRoom()
-    const printLikes = (likes) => {
-        if (likes < 1) { return '-' }
 
-        if (likes < 5) {
-            return new Array(Number(likes)).fill('❤️').join('')
-        }
-        return likes + '❤️'
-    }
     
     return (
         <figure>
@@ -41,9 +37,9 @@ function RoomList({ roomList, hidden }) {
                                     </div>
                                 </td>
                                 <td>{name + (userLiked ? '❤️' : '')}</td>
-                                <td><b>{numofrounds}</b></td>
-                                <td><b>{playCount}</b></td>
-                                <td>{printLikes(likes)}</td>
+                                <td><b><ControllerIcon amount={numofrounds} /></b></td>
+                                <td><b><FootprintIcon amount={playCount}/></b></td>
+                                <td><HeartIcon amount={likes} /></td>
                                 <td>
                                     <a href='#b' role='button' onClick={enter(id)}>
                                         כניסה
