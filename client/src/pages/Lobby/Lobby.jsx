@@ -1,48 +1,39 @@
-import React, { useEffect } from 'react'
-import AllRooms from './tabs/AllRooms'
+import React from 'react'
 import CreateRoom from './tabs/CreateRoom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '../../components/avatar/Avatar'
 import PicoButton from '../../components/PicoButton'
 import userStorage from '../../hooks/userStorage'
-import MyRooms from './tabs/MyRooms'
-import LikedRooms from './tabs/LikedRooms'
 import useReturnToHomeIfNoUser from '../../hooks/useReturnToHomeIfNoUser'
 import GetListByTab from './tabs/GetListByTab'
+import UserComponent from '../../components/UserComponent'
 
 function Room() {
     const tab = useLocation().hash.slice(1)
-    const navigate = useNavigate()
 
     const user = userStorage.useGet()
 
-    const signOut = () => {
-        userStorage.remove()
-        navigate('/')
 
-    }
     useReturnToHomeIfNoUser()
-    
+
     const join = (tab === 'join')
     const create = (tab === 'create')
     const mine = (tab === 'mine')
     const liked = (tab === 'liked')
     console.log(tab);
 
-    if (!user) {return <></>}
+    if (!user) { return <></> }
 
     return (<>
         <header>
 
             <div className='flex sb'>
+                
                 <h1 className='unmargin'>לובי</h1>
 
-                <div style={{ padding: 2, width: "20vw" }} className='unmargin flex'>
-                    <Avatar avatarSeed={user?.avatar} />
-                    <h4 className='unmargin'> {user?.name} </h4>
-                    <PicoButton className='contrast outline' onClick={signOut}> יציאה </PicoButton>{/* //todo */}
-                </div>
+                <UserComponent user={user} />
             </div>
+
             <br />
             {tab === '' &&
                 <article>
@@ -83,8 +74,6 @@ function Room() {
 
         <GetListByTab user={user} tab={tab} hidden={create} />
         <CreateRoom user={user} hidden={!create} />
-        {/* <MyRooms user={user} hidden={!mine} /> */}
-        {/* <LikedRooms user={user} hidden={!liked} /> */}
 
 
     </>)

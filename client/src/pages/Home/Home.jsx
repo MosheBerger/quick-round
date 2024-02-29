@@ -1,14 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import UserComponent from '../../components/UserComponent'
+import userStorage from '../../hooks/userStorage'
+import { useState } from 'react'
+import Dialog from '../../components/Dialog'
 
 function Home() {
+  
+  const [user, setUser] = useState(userStorage.useGet())
+  const [isOpen, setOpen] = useState(false)
+  const [wasUser] = useState(user)
+
+  useEffect(() => {
+    if (wasUser &&!user) setOpen(true)
+  },[user,wasUser])
+  
   return (<>
+
     <header>
-      <h1>Quick Round</h1>
+      <div className='flex sb'>
+        <h1>Quick Round</h1>
+        <UserComponent user={user} setUser={setUser} />
+      </div>
+
       <h2>סבבים של מיני משחקים מהירים וקופצניים</h2>
     </header>
-    <Link role='button' className='outline' to='/log-in ' > התחבר </Link>
-    <Link role='button' className='outline secondary' to='sign-up'> הרשם </Link>
+    {user ?
+      <Link role='button' className='outline' to='lobby#join'> הכנס ללובי </Link>
+      : <>
+        <Link role='button' className='outline' to='/log-in ' > התחבר </Link>
+        <Link role='button' className='outline secondary' to='sign-up'> הרשם </Link>
+      </>
+    }
+
+    <Dialog open={isOpen} close={() => setOpen(false)}>
+      <h2> יצאת בהצלחה! </h2>
+    </Dialog>
 
     <main>
       <article>
@@ -59,10 +86,13 @@ function Home() {
           [תמונה של לוגו Quick Round]
 
           <div >
-            <Link className='outline' to='/log-in ' ><b>התחברות </b></Link>
-            <br />
-            <Link className='outline contrast' to='sign-up'><b> הרשמה </b></Link>
-            {/* <Link role='button' to='unregister' > הצטרף בלי חשבון משתמש</Link> */}
+            {user ?
+              <Link role='button' className='outline' to='lobby#join'> הכנס ללובי </Link>
+              : <>
+                <Link role='button' className='outline' to='/log-in ' > התחבר </Link>
+                <Link role='button' className='outline secondary' to='sign-up'> הרשם </Link>
+              </>
+            }
           </div>
         </section>
 
