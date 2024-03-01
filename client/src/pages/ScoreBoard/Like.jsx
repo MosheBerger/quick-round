@@ -36,7 +36,7 @@ function Like({ likes, refresh, loading,setLoading, roomId }) {
     }
 
     return (
-        <article style={{ maxWidth: '150px' }}>
+        <article className='unmargin' style={{ maxWidth: '150px' }}>
             <span>שים לייק</span>
             <br />
             <HeartIcon amount={likes} color={isLiked} onClick={handleClick} />

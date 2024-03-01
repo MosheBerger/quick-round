@@ -1,15 +1,17 @@
 @font-face {
-    font-family: 'abraham';
-    src: local('abraham'), url(./Abraham-Regular.ttf) format('ttf');
+    font-family: 'Abraham-Regular';
+    src: local('Abraham-Regular'), url(./Abraham-Regular.ttf) format('ttf');
     /* font-weight: bold; */
 }
 
 * {
-    font-family: 'abraham' !important;
+    font-family: 'Abraham-Regular' !important;
     letter-spacing: 0.06rem;
 
 }
-
+h1{
+    text-align: center;
+}
 
 .middle {
     display: flex;

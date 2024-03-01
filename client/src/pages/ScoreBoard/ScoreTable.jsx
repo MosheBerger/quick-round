@@ -27,7 +27,7 @@ function ScoreTable({ room, title }) {
     // const scores2 = Object.groupBy(finishTimes,ft => ft.user_id)
 
     console.log('scores:', scores)
-    return (<>
+    return (<div>
         <h3 className='unmargin'> {title} </h3>
         <article className='unmargin'>
             <figure className='unmargin'>
@@ -63,7 +63,7 @@ function ScoreTable({ room, title }) {
             </figure>
         </article >
 
-    </>)
+    </div>)
 }
 
 export default ScoreTable

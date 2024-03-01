@@ -100,7 +100,7 @@ function Home() {
     </main>
 
     <footer>
-      <p>&copy; 2024 Quick Round</p>
+      <p style={{textAlign:'left'}}>&copy; Meby 2024</p>
     </footer>
 
 

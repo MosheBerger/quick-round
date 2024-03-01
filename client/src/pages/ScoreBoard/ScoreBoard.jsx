@@ -33,7 +33,7 @@ function ScoreBoard() {
     }
 
 
-    const BackToLobby = <Link to={'/lobby#join'} state={user} ><button> בחזרה ללובי </button></Link>
+    const BackToLobby = <Link to={'/lobby#join'} state={user} ><button className='secondary'> בחזרה ללובי </button></Link>
 
 
     return (<div >
@@ -53,17 +53,19 @@ function ScoreBoard() {
 
                 {BackToLobby}
 
-                <ScoreTable
-                    room={room}
-                    title={'תוצאות'}
-                />
+                <div className='flex' style={{marginBottom:'30px'}}>
+                    <ScoreTable
+                        room={room}
+                        title={'תוצאות'}
+                    />
 
-                <br />
-                <Like
-                    likes={room.likes} refresh={refresh}
-                    loading={loading} setLoading={setLoading}
-                    roomId={roomId}
-                />
+                    <Like
+                        likes={room.likes} refresh={refresh}
+                        loading={loading} setLoading={setLoading}
+                        roomId={roomId}
+                    />
+                </div>
+
                 {/* <RoomList roomList={[room]} /> */}
                 {BackToLobby}
             </>

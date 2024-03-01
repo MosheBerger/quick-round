@@ -7,6 +7,7 @@ import SinglePlayer from './pages/Game/SinglePlayer';
 import './app.css'
 import ScoreBoard from './pages/ScoreBoard/ScoreBoard';
 import AnimatedBackground from './components/animatedBackground/AnimatedBackground';
+import './Abraham-Regular.ttf'
 // import SetProfile from './pages/UnregisterUser/SetProfile';
 
 function App() {
