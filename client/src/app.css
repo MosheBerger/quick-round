@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Abraham-Regular';
-    src: local('Abraham-Regular'), url(./Abraham-Regular.ttf) format('ttf');
+    src: local('Abraham-Regular'), url("./Abraham-Regular.ttf") format('truetype');
     /* font-weight: bold; */
 }
 

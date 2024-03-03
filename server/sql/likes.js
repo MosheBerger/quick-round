@@ -83,7 +83,7 @@ async function isThisRoomLikedByUser(client,roomId, userId) {
     }
     const res = await client.query(query)
 
-    return res.rows
+    return (res.rowCount > 0)
 
 }
 
