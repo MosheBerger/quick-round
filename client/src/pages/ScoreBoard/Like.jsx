@@ -65,7 +65,7 @@ function Like({ likes, refresh, loading, setLoading, roomId }) {
     }
 
     return (<>
-        <article className='unmargin' style={{ maxWidth: '150px' }}>
+        <article className='unmargin' style={{ maxWidth: '160px' }}>
             <span>{!fetched ? 'טוען' : isLiked? 'אהבת!' : 'שים לייק'}</span>
             <br />
             {fetched ?
