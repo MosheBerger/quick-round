@@ -33,7 +33,7 @@ const Shopping = {
             k.onUpdate(() => { k.setCursor("default") })
 
             const mulitple = 3
-            startDragSystem(k)
+            // startDragSystem(k)
 
             //---- BACKGROUND
             setBackground('#8ee575')

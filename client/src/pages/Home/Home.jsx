@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Dialog from '../../components/Dialog'
 
 function Home() {
-  
+    
   const [user, setUser] = useState(userStorage.useGet())
   const [isOpen, setOpen] = useState(false)
   const [wasUser] = useState(user)

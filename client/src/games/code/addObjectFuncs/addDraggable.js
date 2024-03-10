@@ -7,13 +7,11 @@ function addDraggable(k = kaboom(),
         pos: undefined,
         scale: undefined,
         returnOnLeave: false
-    }
-) {
+    }) {
 
     const {
         add, pos, sprite, area, anchor, scale,
-        BLACK, rand, vec2, width, height,
-        color, opacity, readd, onUpdate
+        rand, vec2, width, height
     } = k;
 
     // todo spriteTag disable
@@ -26,51 +24,13 @@ function addDraggable(k = kaboom(),
         props.sprite,
         sprite(props.sprite),
         pos(props.pos),
-        { startPosition: props.pos },
+        // { startPosition: props.pos },
         area({ cursor: "grab" }),
         anchor("center"),
-        drag(k),
+        drag(k, { returnOnLeave: true}),
         scale(props.scale),
     ])
     gameObject.spriteTag = props.sprite
-
-
-    gameObject.onDrag(() => {
-        gameObject.scale = vec2(props.scale * 1.1)
-        const shadow = add([
-            'shadow',
-            // rect(gameObject.height, gameObject.width),
-            color(BLACK),
-            opacity(0.3),
-            pos(gameObject.pos.x + 100, gameObject.pos.y + 100),
-            anchor('center'),
-            sprite(gameObject.spriteTag),
-            scale(props.scale * 1.1)
-        ])
-        gameObject.shadow = shadow
-        readd(gameObject)
-        // Remove the object and re-add it, so it'll be drawn on top
-    })
-
-    gameObject.onDragUpdate(() => {
-        gameObject.shadow.pos = vec2(gameObject.pos.x + 20, gameObject.pos.y + 20)
-
-
-    })
-    onUpdate(() => {
-        if (!gameObject.exists()) {
-            gameObject.shadow?.destroy()
-        }
-    })
-
-    gameObject.onDragEnd(() => {
-        gameObject.scale = vec2(props.scale)
-        gameObject.shadow.destroy()
-        
-        if (props.returnOnLeave){
-            gameObject.pos = gameObject.startPosition
-        }
-    })
 
     return gameObject
 }
