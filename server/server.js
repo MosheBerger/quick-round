@@ -13,7 +13,7 @@ const port = process.env.PORT || 8080
 app.use(cors())
 app.use(express.json())
 
-app.get('/wake-me-up',(req,res) => res.send("i'm awake"))
+app.get('/wake-me-up',(req,res) => {res.send("i'm awake"); console.log('cron wake me')})
 
 const apiRouter = require('./routes/router')
 app.use('/api/', apiRouter)
