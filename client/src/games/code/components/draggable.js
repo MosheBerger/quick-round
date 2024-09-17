@@ -6,7 +6,7 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
     initialDragSystem(k);
     // The displacement between object pos and mouse pos
     let offset = k.vec2(0)
-    
+
     return {
         // Name of the component
         id: "drag",
@@ -56,9 +56,10 @@ function initialDragSystem(k = kaboom()) {
 
         // Check if someone is picked
         k.onMousePress(() => {
-            if (k.curDragging) {
-                return
-            }
+            if (k.curDragging) { return }
+
+            if (!k.curDragging.exists()) { k.curDragging = null }
+
             // Loop all "drag" in reverse, so we pick the topmost one
             for (const obj of k.get("drag").reverse()) {
                 // If mouse is pressed and mouse position is inside, we pick
@@ -83,7 +84,7 @@ function runShadowSystem(k = kaboom(), obj = k.add([k.scale()]), returnOnLeave =
     if (obj.runOnce) { return; }
     k.onUpdate(() => { k.setCursor("default") })
 
-    
+
     let spriteTag = obj.c('sprite').inspect();
     spriteTag = spriteTag.replaceAll('"', '');
 
