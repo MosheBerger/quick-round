@@ -116,6 +116,7 @@ function runShadowSystem(k = kaboom(), obj = k.add([k.scale()]), returnOnLeave =
     k.onUpdate(() => {
         if (!obj.exists()) {
             obj.shadow?.destroy()
+            k.curDragging = null
         }
     })
 
