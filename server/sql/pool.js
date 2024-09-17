@@ -5,7 +5,7 @@ const fs = require('fs')
 
 const caPath = process.env.RENDER ? '/etc/secrets/ca.pem' : './ca.pem';
 const ca = fs.readFileSync(caPath).toString('utf8');
-console.log(ca);
+// console.log(ca);
 
 const poolConfig = {
     // connectionString: process.env.DATABASE_URL,

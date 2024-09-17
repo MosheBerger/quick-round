@@ -58,7 +58,7 @@ function SinglePlayer() {
         }
       })
 
-
+      console.log('🛜', res);
       const userFinishTime = await res.json()
       console.log('🛜', userFinishTime);
 

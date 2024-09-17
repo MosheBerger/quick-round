@@ -62,8 +62,6 @@ function GameScreen({ rounds, sendResults }) {
 		})
 		///-----------------
 
-		k.onUpdate(() => { k.setCursor("default") })
-
 		const roundManager = new RoundManager(k, rounds, sendResults)
 
 		k.finish = roundManager.finishFunc

@@ -3,7 +3,7 @@
 async function create(client, userId, roomId, finishTime) {
     try {
         const query = {
-            text: `
+            text: `--sql
             INSERT INTO finish_times(user_id, room_id, finish_time)
             VALUES($1,$2,$3)
             RETURNING *

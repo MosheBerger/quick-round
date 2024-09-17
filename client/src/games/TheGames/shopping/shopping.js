@@ -32,7 +32,7 @@ const Shopping = {
         k.scene(this.tag, (userSettings) => {
             k.onUpdate(() => { k.setCursor("default") })
 
-            const mulitple = 3
+            const multiple = 3
             // startDragSystem(k)
 
             //---- BACKGROUND
@@ -53,10 +53,10 @@ const Shopping = {
 
             // message for what you need to take
             const giveMe = add([
-                rect(170 * mulitple, 130 * mulitple, { radius: 20 * mulitple }),
+                rect(170 * multiple, 130 * multiple, { radius: 20 * multiple }),
                 color('#f2f2f2'),
                 anchor('topright'),
-                outline(5*mulitple, '#111111'),
+                outline(5*multiple, '#111111'),
                 pos(width() - 50, 60)
 
             ])
@@ -74,7 +74,7 @@ const Shopping = {
                     'fish' + i,
                     scale(0.24),
                     color('#828282'),
-                    pos((i - 1) * -32 * mulitple, 35.5 * mulitple),
+                    pos((i - 1) * -32 * multiple, 35.5 * multiple),
                     sprite('fish', { flipX: true }),
                     anchor('topright'),
                 ])
@@ -85,7 +85,7 @@ const Shopping = {
                     area(),
                     scale(0.24),
                     color('#828282'),
-                    pos((i - 1) * -33 * mulitple, 75.5 * mulitple),
+                    pos((i - 1) * -33 * multiple, 75.5 * multiple),
                     sprite('challah', { flipX: true }),
                     anchor('topright'),
                 ])
@@ -95,7 +95,7 @@ const Shopping = {
 
             add([
                 sprite('refrigerator'),
-                pos(120 * mulitple, 170 * mulitple),
+                pos(120 * multiple, 170 * multiple),
                 scale(1.8),
                 anchor('center'),
                 area(),
@@ -103,7 +103,7 @@ const Shopping = {
             ])
             add([
                 sprite('shelf'),
-                pos(340 * mulitple, 170 * mulitple),
+                pos(340 * multiple, 170 * multiple),
                 scale(1.8),
                 anchor('center'),
                 area(),
@@ -111,8 +111,8 @@ const Shopping = {
             ])
 
             // הוספת מוצרים למדפים
-            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 50 * mulitple) {
-                for (let j = 0, x = 50 * mulitple; j < 4; j++, x += 45 * mulitple) {
+            for (let i = 0, y = 90 * multiple; i < 4; i++, y += 50 * multiple) {
+                for (let j = 0, x = 50 * multiple; j < 4; j++, x += 45 * multiple) {
 
                     addDraggable(k, {
                         sprite: 'fish',
@@ -124,8 +124,8 @@ const Shopping = {
                 }
             }
 
-            for (let i = 0, y = 90 * mulitple; i < 4; i++, y += 55 * mulitple) {
-                for (let j = 0, x = 280 * mulitple; j < 4; j++, x += 40 * mulitple) {
+            for (let i = 0, y = 90 * multiple; i < 4; i++, y += 55 * multiple) {
+                for (let j = 0, x = 280 * multiple; j < 4; j++, x += 40 * multiple) {
 
                     addDraggable(k, {
                         sprite: 'challah',

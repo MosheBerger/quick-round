@@ -6,7 +6,7 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
     initialDragSystem(k);
     // The displacement between object pos and mouse pos
     let offset = k.vec2(0)
-
+    
     return {
         // Name of the component
         id: "drag",
@@ -15,7 +15,6 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
 
         pick() {
             runShadowSystem(k, this, options.returnOnLeave);
-            k.debug.inspect = true
             // Set the current global dragged object to this
             k.curDragging = this
             offset = k.mousePos().sub(this.pos)
@@ -82,6 +81,7 @@ function initialDragSystem(k = kaboom()) {
 
 function runShadowSystem(k = kaboom(), obj = k.add([k.scale()]), returnOnLeave = false) {
     if (obj.runOnce) { return; }
+    k.onUpdate(() => { k.setCursor("default") })
 
     
     let spriteTag = obj.c('sprite').inspect();
