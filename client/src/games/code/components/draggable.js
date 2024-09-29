@@ -11,8 +11,7 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
         // Name of the component
         id: "drag",
         // This component requires the "pos" and "area" component to work
-        require: ["pos", "area", 'scale'],
-
+        require: ["pos", "area", "scale"],
         pick() {
             runShadowSystem(k, this, options.returnOnLeave);
             // Set the current global dragged object to this
@@ -29,9 +28,11 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
                 this.trigger("dragUpdate")
 
             } else {
+
                 if (this.isHovering()) {
                     k.setCursor('grab')
                 }
+
             }
         },
         onDrag(action) {
@@ -50,47 +51,44 @@ function drag(k = kaboom(), options = { returnOnLeave: false }) {
 export default drag
 
 function initialDragSystem(k = kaboom()) {
-    if (!('curDragging' in k)) {
-        k.curDragging = null
+    if ('curDragging' in k) { return }
 
+    k.curDragging = null
 
-        // Check if someone is picked
-        k.onMousePress(() => {
+    k.onHoverEnd('area', () => {
+        k.setCursor('default')
+    })
 
-            if (k.curDragging) {
+    // Check if someone is picked
+    k.onMousePress(() => {
+        if (k.curDragging) { return }
 
-                if (k.curDragging.exists()) {
-                    return
-
-                } else {
-                    k.curDragging = null
-                }
-
+        // Loop all "drag" in reverse, so we pick the topmost one
+        for (const obj of k.get("drag").reverse()) {
+            // If mouse is pressed and mouse position is inside, we pick
+            if (obj.isHovering()) {
+                obj.pick()
+                break
             }
+        }
+    })
 
-            // Loop all "drag" in reverse, so we pick the topmost one
-            for (const obj of k.get("drag").reverse()) {
-                // If mouse is pressed and mouse position is inside, we pick
-                if (obj.isHovering()) {
-                    obj.pick()
-                    break
-                }
-            }
-        })
+    // Drop whatever is dragged on mouse release
+    k.onMouseRelease(() => {
+        if (k.curDragging) {
+            k.curDragging.trigger("dragEnd")
+            k.curDragging = null
+        }
+    })
 
-        // Drop whatever is dragged on mouse release
-        k.onMouseRelease(() => {
-            if (k.curDragging) {
-                k.curDragging.trigger("dragEnd")
-                k.curDragging = null
-            }
-        })
-    }
+    k.onSceneLeave(() => {
+        delete k.curDragging
+    })
 }
 
-function runShadowSystem(k = kaboom(), obj = k.add([k.scale()]), returnOnLeave = false) {
+
+function runShadowSystem(k = kaboom(), obj = k.add([k.scale(), drag()]), returnOnLeave = false) {
     if (obj.runOnce) { return; }
-    k.onUpdate(() => { k.setCursor("default") })
 
 
     let spriteTag = obj.c('sprite').inspect();
@@ -125,7 +123,6 @@ function runShadowSystem(k = kaboom(), obj = k.add([k.scale()]), returnOnLeave =
     k.onUpdate(() => {
         if (!obj.exists()) {
             obj.shadow?.destroy()
-            k.curDragging = null
         }
     })
 
