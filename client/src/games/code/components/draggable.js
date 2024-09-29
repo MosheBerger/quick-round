@@ -56,9 +56,17 @@ function initialDragSystem(k = kaboom()) {
 
         // Check if someone is picked
         k.onMousePress(() => {
-            if (k.curDragging) { return }
 
-            if (!k.curDragging.exists()) { k.curDragging = null }
+            if (k.curDragging) {
+
+                if (k.curDragging.exists()) {
+                    return
+
+                } else {
+                    k.curDragging = null
+                }
+
+            }
 
             // Loop all "drag" in reverse, so we pick the topmost one
             for (const obj of k.get("drag").reverse()) {
