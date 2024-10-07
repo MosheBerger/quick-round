@@ -82,7 +82,7 @@ async function showAllDataPerRoom(client, roomId, roomObj) {
         room.likes = await likes.countLikes(client, roomId)
         room.playCount = await players.countUsersPlayedIt(client, roomId)
         room.players = await players.showAllUsersPlayedIt(client, roomId)
-        room.finishTimes = await finishTimes.showByRoom(client,roomId)
+        room.finishTimes = await finishTimes.showByGame(client,roomId)
 
         return room
     } catch (error) {

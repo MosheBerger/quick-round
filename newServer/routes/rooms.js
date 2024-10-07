@@ -54,10 +54,10 @@ router.delete('/:roomId/',verify,  async (req, res, next) => {
 
         const results = []
         results.push(await DB.rooms.remove(client, roomId))
-        results.push(await DB.likes.removeByRoom(client, roomId))
+        results.push(await DB.likes.removeByGame(client, roomId))
         results.push(await DB.players.removeByRoom(client, roomId))
         results.push(await DB.rounds.removeByRoom(client, roomId))
-        results.push(await DB.finishTimes.removeByRoom(client, roomId))
+        results.push(await DB.finishTimes.removeByGame(client, roomId))
 
         console.log(results);
 

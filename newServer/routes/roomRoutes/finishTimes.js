@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
     const { roomId } = req.params
 
     try {
-        const results = await DB.showByRoom(client, roomId)
+        const results = await DB.showByGame(client, roomId)
 
         console.log(results);
         res.json(results)

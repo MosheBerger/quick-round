@@ -1,29 +1,37 @@
 
+const updateLikeData = {
+    client,
+    gameId: 0,
+    userId: 0,
+    like: false
+}
 
-async function update(client, roomId, userId, like) {
+async function update(data = updateLikeData) {
+    const { client, gameId, userId, like } = data
+
     const query = {
         text: `--sql
-        INSERT INTO likes(room_id, user_id, like_it)
-        VALUES($1,$2,$3)
-        ON CONFLICT (room_id, user_id) 
-        DO UPDATE SET like_it = $3
-        RETURNING *
-            ;`,
-        values: [roomId, userId, like]
+            INSERT INTO likes(game_id, user_id, like_it)
+            VALUES($1,$2,$3)
+            ON CONFLICT (game_id, user_id) 
+            DO UPDATE SET like_it = $3
+            RETURNING *
+        ;`,
+        values: [gameId, userId, like]
     }
     const res = await client.query(query)
     return res.rows[0]
 }
 
 
-async function removeByRoom(client, roomId) {
+async function removeByGame({client, gameId}) {
     const query = {
-        text: `
+        text: `--sql
             DELETE FROM likes
-            WHERE room_id = $1
+            WHERE game_id = $1
             RETURNING id
             ;`,
-        values: [roomId]
+        values: [gameId]
     }
     const res = await client.query(query)
     return {
@@ -34,16 +42,16 @@ async function removeByRoom(client, roomId) {
 }
 
 
-async function showByRoom(client, roomId) {
+async function showByGame({client, gameId}) {
     try {
 
         const query = {
-            text: `
+            text: `--sql
             SELECT * FROM likes
-            WHERE room_id = $1
+            WHERE game_id = $1
               AND like_it = true
             ;`,
-            values: [roomId]
+            values: [gameId]
         }
         const res = await client.query(query)
 
@@ -54,10 +62,10 @@ async function showByRoom(client, roomId) {
     }
 }
 
-async function showLikedByUser(client, userId) {
+async function showLikedByUser({client, userId}) {
 
     const query = {
-        text: `
+        text: `--sql
             SELECT * FROM likes
             WHERE user_id = $1
               AND like_it = true
@@ -70,16 +78,16 @@ async function showLikedByUser(client, userId) {
 
 }
 
-async function isThisRoomLikedByUser(client,roomId, userId) {
+async function isThisGameLikedByUser({client, gameId, userId}) {
 
     const query = {
-        text: `
+        text: `--sql
             SELECT * FROM likes
             WHERE user_id = $1
               AND like_it = true
-              AND room_id = $2
+              AND game_id = $2
             ;`,
-        values: [userId, roomId]
+        values: [userId, gameId]
     }
     const res = await client.query(query)
 
@@ -87,16 +95,16 @@ async function isThisRoomLikedByUser(client,roomId, userId) {
 
 }
 
-async function countLikes(client, roomId) {
+async function countLikes({client, gameId}) {
     try {
 
         const query = {
-            text: `
+            text: `--sql
             SELECT COUNT(*) FROM likes
-            WHERE room_id = $1
+            WHERE game_id = $1
               AND like_it = true
             ;`,
-            values: [roomId]
+            values: [gameId]
         }
         const res = await client.query(query)
 
@@ -112,10 +120,10 @@ async function countLikes(client, roomId) {
 const likes = {
     update,
     countLikes,
-    removeByRoom,
-    showByRoom,
+    removeByGame,
+    showByGame,
     showLikedByUser,
-    isThisRoomLikedByUser,
+    isThisGameLikedByUser,
 }
 
 module.exports = likes
@@ -135,11 +143,11 @@ const test = async () => {
     client.release()
     // console.log(await rounds.create(1, 1, 2));
     // console.log(await rounds.createMany([
-    //     { roomId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
-    //     { roomId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
-    //     { roomId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
-    //     { roomId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
-    //     { roomId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
+    //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
+    //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
+    //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
+    //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
+    //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
     // ]));
     // console.log(await rounds.show(2));
     // console.log(await rounds.remove(4));

@@ -1,13 +1,25 @@
 
-async function createGame(client, name, description, settings, imageURL, genre) {
+const createGameData = {
+    client,
+    creatorId: 0,
+    name: '',
+    description: '',
+    gameData: '',
+    cover: 0,
+    date: new Date(),
+}
+
+async function createGame(data = createGameData) {
+    const { client, creatorId, name, description, gameData, cover, date } = data
+
     try {
         const query = {
-            text: `
-            INSERT INTO games(name, description, settings, imageURL, genre)
+            text: `--sql
+            INSERT INTO games(name, description, game_data, cover, date, creator_id)
             VALUES($1,$2,$3,$4,$5)
             RETURNING *
         ;`,
-            values: [name, description, settings, imageURL, genre]
+            values: [name, description, gameData, cover, date, creatorId]
         }
 
         const res = await client.query(query)
@@ -18,13 +30,13 @@ async function createGame(client, name, description, settings, imageURL, genre) 
             errorCode: error.code,
             detail: error.detail
         }
-    } 
+    }
 }
 
-async function showGame(client, gameId) {
+async function showGame({ client, gameId }) {
     try {
         const query = {
-            text: `
+            text: `--sql
             SELECT * FROM games
             WHERE id = $1
         ;`,
@@ -42,9 +54,9 @@ async function showGame(client, gameId) {
 
 async function showAll(client) {
     try {
-        const query = `
-    SELECT * FROM games
-    ;`
+        const query = `--sql
+            SELECT * FROM games
+        ;`
 
         const res = await client.query(query)
 
@@ -55,7 +67,31 @@ async function showAll(client) {
     }
 }
 
-async function test( ) {
+async function removeGame({ client, gameId }) {
+    try {
+        const query = {
+            text: `--sql
+            DELETE FROM games
+            WHERE id = $1
+            RETURNING id
+        ;`,
+            values: [gameId]
+        }
+
+        const res = await client.query(query)
+
+        return {
+            operation: res.command,
+            success: (res.rowCount > 0),
+            ...res.rows[0], //:id
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function test() {
     // const res = await createGame('טריוויה','שאלת טריוויה מהירה בהתאמה אישית',`{
     //     "question": "שאלה",
     //     "answerA": "תשובה 1",
@@ -79,6 +115,7 @@ async function test( ) {
 
 const games = {
     createGame,
+    removeGame,
     showGame,
     showAll
 }

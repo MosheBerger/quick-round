@@ -1,14 +1,22 @@
 
+const createData = {
+    userId: 0,
+    gameId: 0,
+    finishTime: 0,
+    date: new Date()
+}
 
-async function create(client, userId, roomId, finishTime) {
+async function create(data = createData) {
+    const { client, userId, gameId, finishTime, date } = data
+
     try {
         const query = {
             text: `--sql
-            INSERT INTO finish_times(user_id, room_id, finish_time)
-            VALUES($1,$2,$3)
+            INSERT INTO finish_times(user_id, game_id, finish_time, date)
+            VALUES($1,$2,$3,$4)
             RETURNING *
             ;`,
-            values: [ userId, roomId, finishTime]
+            values: [userId, gameId, finishTime, date]
         }
         const res = await client.query(query)
         return res.rows[0]
@@ -19,16 +27,16 @@ async function create(client, userId, roomId, finishTime) {
 }
 
 
-async function showByRoom(client, roomId) {
+async function showByGame({ client, gameId }) {
     try {
 
         const query = {
-            text: `
+            text: `--sql
             SELECT * FROM finish_times
-            WHERE room_id = $1
+            WHERE game_id = $1
             ORDER BY finish_time
             ;`,
-            values: [roomId]
+            values: [gameId]
         }
         const res = await client.query(query)
 
@@ -38,15 +46,15 @@ async function showByRoom(client, roomId) {
         console.log(error);
     }
 }
-async function removeByRoom(client, roomId) {
+async function removeByGame({client, gameId}) {
 
     const query = {
         text: `--sql
             DELETE FROM finish_times
-            WHERE room_id = $1
+            WHERE game_id = $1
             RETURNING id
             ;`,
-        values: [roomId]
+        values: [gameId]
     }
     const res = await client.query(query)
     return {
@@ -61,8 +69,8 @@ async function removeByRoom(client, roomId) {
 
 const finishTimes = {
     create,
-    showByRoom,
-    removeByRoom,
+    showByGame,
+    removeByGame,
 }
 
 module.exports = finishTimes

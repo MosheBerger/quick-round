@@ -49,7 +49,7 @@ router.get('/', verify, async (req, res, next) => {
 
     
     try {
-        const results = await likesDB.isThisRoomLikedByUser(client, roomId, userId)
+        const results = await likesDB.isThisGameLikedByUser(client, roomId, userId)
 
         console.log(results);
         res.json({isLiked:results})
