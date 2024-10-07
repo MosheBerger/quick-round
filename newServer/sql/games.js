@@ -1,6 +1,6 @@
 
 const createGameData = {
-    client,
+    client: null,
     creatorId: 0,
     name: '',
     description: '',

@@ -1,15 +1,22 @@
-const pool = require("./pool");
+// const pool = require("./pool");
 
+const PlayedByUserData = {
+    client: null,
+    gameId: 0,
+    userId: 0,
+    date: new Date()
+}
 
-async function markAsPlayedByUser(client, roomId, userId) {
+async function markAsPlayedByUser(data = PlayedByUserData) {
+    const { client, gameId, userId, date } = data
+
     try {
-
         const query = {
-            text: `
-            INSERT INTO rooms_users(room_id, user_id)
-            VALUES($1,$2)
+            text: `--sql
+            INSERT INTO games_played_by_users(game_id, user_id, date)
+            VALUES($1,$2, $3)
         `,
-            values: [roomId, userId]
+            values: [gameId, userId, date]
         }
         const res = await client.query(query)
 
@@ -19,13 +26,14 @@ async function markAsPlayedByUser(client, roomId, userId) {
     }
 }
 
-async function removeByRoom(client, roomId) {
+async function removeByGame({client, gameId}) {
         const query = {
-            text: `
-            DELETE FROM rooms_users
-            WHERE room_id = $1
+            text: `--sql
+            DELETE FROM games_played_by_users
+            WHERE game_id = $1
+            RETURNING id
         `,
-            values: [roomId]
+            values: [gameId]
         }
         const res = await client.query(query)
         return {
@@ -35,7 +43,8 @@ async function removeByRoom(client, roomId) {
         }
 }
 
-async function showAllUsersPlayedIt(client, roomId) {
+async function showAllUsersPlayedIt({client, gameId}) {
+    // todo: fix: get just one per user
     try {
         const query = {
             text: `--sql
@@ -44,14 +53,14 @@ async function showAllUsersPlayedIt(client, roomId) {
                 u.name,
                 u.avatar
 
-            FROM rooms_users p
+            FROM games_played_by_users p
             
             LEFT JOIN users u
                 ON p.user_id = u.id
 
-            WHERE p.room_id = $1
+            WHERE p.game_id = $1
         `,
-            values: [roomId]
+            values: [gameId]
         }
         const res = await client.query(query)
         return res.rows
@@ -59,16 +68,36 @@ async function showAllUsersPlayedIt(client, roomId) {
         console.log(error);
     }
 }
-async function countUsersPlayedIt(client, roomId) {
+async function countPlayedIt({client, gameId}) {
     try {
         const query = {
             text: `--sql
             SELECT
                 COUNT(*)
-            FROM rooms_users
-            WHERE room_id = $1
+            FROM games_played_by_users
+            WHERE game_id = $1
         `,
-            values: [roomId]
+            values: [gameId]
+        }
+        const res = await client.query(query)
+        return res.rows[0].count
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function countUsersPlayedIt({client, gameId}) {
+    // todo: fix: get just one per user
+    try {
+        const query = {
+            text: `--sql
+            SELECT
+                COUNT(*)
+            FROM games_played_by_users
+            WHERE game_id = $1
+        `,
+            values: [gameId]
         }
         const res = await client.query(query)
         return res.rows[0].count
@@ -83,16 +112,17 @@ const players = {
     markAsPlayedByUser,
     showAllUsersPlayedIt,
     countUsersPlayedIt,
-    removeByRoom,
+    countPlayedIt,
+    removeByGame,
 }
 
 module.exports = players
 
 
 const test = async () => {
-    const client = await pool.connect()
-    console.log( await players.showAllUsersPlayedIt(client,22));
-    // console.log( await players.countInRoom(client, 2));
-    client.release(true)
+    // const client = await pool.connect()
+    // console.log( await players.showAllUsersPlayedIt(client,22));
+    // // console.log( await players.countInRoom(client, 2));
+    // client.release(true)
 }
 // test()

@@ -1,5 +1,6 @@
 
 const createData = {
+    client: null,
     userId: 0,
     gameId: 0,
     finishTime: 0,

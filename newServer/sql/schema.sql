@@ -9,33 +9,34 @@ CREATE TABLE "assets"(
     "id" BIGSERIAL NOT NULL PRIMARY KEY,
     "name" VARCHAR(50) NOT NULL,
     "type" VARCHAR(20) NOT NULL,
-    "data" bytea NOT NULL
+    "data" bytea NOT NULL,
+    "user_id" BIGINT NOT NULL
 );
 
-CREATE TABLE "games_played_by_users"(
-    "id" BIGSERIAL NOT NULL PRIMARY KEY,
-    "user_id" BIGINT NOT NULL,
-    "game_id" BIGINT NOT NULL,
-    "date" DATE NOT NULL
-);
+-- CREATE TABLE "games_played_by_users"(
+--     "id" BIGSERIAL NOT NULL PRIMARY KEY,
+--     "user_id" BIGINT NOT NULL,
+--     "game_id" BIGINT NOT NULL,
+--     "date" DATE NOT NULL
+-- );
 
-CREATE TABLE "likes"(
-    "id" BIGSERIAL NOT NULL PRIMARY KEY,
-    "user_id" BIGINT NOT NULL,
-    "game_id" BIGINT NOT NULL,
-    "like" BOOLEAN NOT NULL,
-    UNIQUE ("game_id", "user_id")
-);
+-- CREATE TABLE "likes"(
+--     "id" BIGSERIAL NOT NULL PRIMARY KEY,
+--     "user_id" BIGINT NOT NULL,
+--     "game_id" BIGINT NOT NULL,
+--     "like" BOOLEAN NOT NULL,
+--     UNIQUE ("game_id", "user_id")
+-- );
 
-CREATE TABLE "games"(
-    "id" BIGSERIAL NOT NULL PRIMARY KEY,
-    "creator_id" BIGINT NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "description" VARCHAR(255) NOT NULL,
-    "game_data" JSON NOT NULL,
-    "cover" BIGINT NOT NULL,
-    "date" DATE NOT NULL
-);
+-- CREATE TABLE "games"(
+--     "id" BIGSERIAL NOT NULL PRIMARY KEY,
+--     "creator_id" BIGINT NOT NULL,
+--     "name" VARCHAR(255) NOT NULL,
+--     "description" VARCHAR(255) NOT NULL,
+--     "game_data" JSON NOT NULL,
+--     "cover" BIGINT NOT NULL,
+--     "date" DATE NOT NULL
+-- );
 
 CREATE TABLE "assets_approved_by_the_manager"(
     "id" BIGSERIAL NOT NULL PRIMARY KEY,
@@ -49,22 +50,22 @@ CREATE TABLE "games_approved_by_the_manager"(
     "date" DATE NOT NULL
 );
 
-CREATE TABLE "finish_times"(
-    "id" BIGSERIAL NOT NULL PRIMARY KEY,
-    "user_id" BIGINT NOT NULL,
-    "game_id" BIGINT NOT NULL,
-    "finish_time" BIGINT NOT NULL,
-    "date" DATE NOT NULL
-);
+-- CREATE TABLE "finish_times"(
+--     "id" BIGSERIAL NOT NULL PRIMARY KEY,
+--     "user_id" BIGINT NOT NULL,
+--     "game_id" BIGINT NOT NULL,
+--     "finish_time" BIGINT NOT NULL,
+--     "date" DATE NOT NULL
+-- );
 
-CREATE TABLE "users"(
-    "id" BIGSERIAL NOT NULL PRIMARY KEY,
-    "email" VARCHAR(255) NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
-    "avatar" VARCHAR(255) NOT NULL,
-    UNIQUE("email")
-);
+-- CREATE TABLE "users"(
+--     "id" BIGSERIAL NOT NULL PRIMARY KEY,
+--     "email" VARCHAR(255) NOT NULL,
+--     "password" VARCHAR(255) NOT NULL,
+--     "name" VARCHAR(20) NOT NULL,
+--     "avatar" VARCHAR(255) NOT NULL,
+--     UNIQUE("email")
+-- );
 
 CREATE TABLE "reported_games"(
     "id" BIGSERIAL NOT NULL PRIMARY KEY,

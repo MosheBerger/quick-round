@@ -1,11 +1,23 @@
 
 async function showAll(client) {
-    const result = await client.query('SELECT id, name, avatar FROM users')
+    const result = await client.query(`--sql
+        SELECT id, name, avatar FROM users
+        `)
     return result.rows;
 
 }
 
-async function create(client, name, password, email, avatar) {
+const createUserData = {
+    client: null,
+    name: '',
+    password: '',
+    email: '',
+    avatar: ''
+}
+
+async function create(data = createUserData) {
+    const { client, name, password, email, avatar } = data
+
     try {
         const query = {
             text: `--sql
@@ -29,14 +41,14 @@ async function create(client, name, password, email, avatar) {
     }
 }
 
-async function showProfile(client, userId) {
+async function showProfile({ client, userId }) {
     try {
         const query = {
-            text: `
+            text: `--sql
             SELECT 
-            id,
-            name,
-            avatar
+                id,
+                name,
+                avatar
             FROM users
             WHERE id = $1 
             `,
@@ -52,7 +64,7 @@ async function showProfile(client, userId) {
     }
 }
 
-async function logIn(client, email, password) {
+async function logIn({ client, email, password }) {
     console.log(client, email, password);
     try {
         const query = {
@@ -60,8 +72,7 @@ async function logIn(client, email, password) {
             SELECT 
                 id,
                 name,
-                avatar,
-                email
+                avatar
             FROM users
             WHERE email = $1 
             AND password = $2
@@ -81,7 +92,7 @@ async function logIn(client, email, password) {
 async function checkIfExist(client, email) {
     try {
         const query = {
-            text: `
+            text: `--sql
             SELECT email FROM users
             WHERE email = $1 
         ;`,
@@ -98,14 +109,15 @@ async function checkIfExist(client, email) {
     }
 }
 
-async function updateInfo(client, id, name, avatar) {
+async function updateInfo({ client, id, name, avatar }) {
     try {
         const query = {
-            text: `
+            text: `--sql
             UPDATE users
-            SET avatar = $3, name = $2
+                SET avatar = $3,
+                name = $2
             WHERE id = $1
-            RETURNING *
+            RETURNING id.name, avatar
             `,
             values: [id, name, avatar]
         }

@@ -1,6 +1,6 @@
 
 const updateLikeData = {
-    client,
+    client: null,
     gameId: 0,
     userId: 0,
     like: false
