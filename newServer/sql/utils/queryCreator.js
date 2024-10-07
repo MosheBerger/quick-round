@@ -6,14 +6,14 @@ const queryCreator = {
         const query = {
             text: `--sql
             INSERT INTO ${tableName}(${columns.map(convertString.camelToSnake)})
-            
+            `
         }
     },
     select: (tableName, columnsData, ) => {},
     update: () => {},
     delete: () => {},
 }
-
+//
 queryCreator.select()
 
 
