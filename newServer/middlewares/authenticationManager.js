@@ -8,13 +8,13 @@ function create(userData) {
 
 async function verify(req, res, next) {
     try {
-        const authorizationData = req.headers.authorization
-        console.log('🚀 -> verify -> authorizationData:', authorizationData)
+        const authentication = req.headers.authentication
+        console.log('🚀 -> verify -> authentication:', authentication)
 
-        if (!authorizationData)
-            throw { statusCode: 401, message:'משתשמש לא מזוהה במערכת אנא התחבר שוב' }
-        
-        const token = authorizationData.split(' ')[1]
+        if (!authentication)
+            throw { statusCode: 401, message: 'משתשמש לא מזוהה במערכת אנא התחבר שוב' }
+
+        const token = authentication.split(' ')[1]
         const result = jsonwebtoken.verify(token, secret)
 
         req.userId = result.id

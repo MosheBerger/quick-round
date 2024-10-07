@@ -77,7 +77,7 @@ function CreateRoom({ user, ...rest }) {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
-                        "authorization":userStorage.getToken()
+                        "authentication":userStorage.getToken()
                     },
                     body: JSON.stringify(room),
                 }

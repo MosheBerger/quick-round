@@ -1,0 +1,19 @@
+## GET ALL
+GET http://localhost:8080/api/rooms
+
+
+
+### CREATE
+POST http://localhost:8080/api/rooms/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"cheder",
+    "numOfPlayers":5,
+    "numOfRounds":7,
+    "manager":2
+}
+
+### Remove 
+DELETE http://localhost:8080/api/rooms/24 HTTP/1.1
+

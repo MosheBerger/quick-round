@@ -17,7 +17,7 @@ function Like({ likes, refresh, loading, setLoading, roomId }) {
                     method: 'GET',
                     headers: {
                         // "Content-Type": "application/json",
-                        "authorization": userStorage.getToken()
+                        "authentication": userStorage.getToken()
                     },
                 })
 
@@ -48,7 +48,7 @@ function Like({ likes, refresh, loading, setLoading, roomId }) {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": userStorage.getToken()
+                    "authentication": userStorage.getToken()
                 },
                 body: JSON.stringify({ likeIt: !isLiked })
 

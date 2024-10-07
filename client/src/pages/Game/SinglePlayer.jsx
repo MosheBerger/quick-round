@@ -54,7 +54,7 @@ function SinglePlayer() {
         }),
         headers: {
           "Content-Type": "application/json",
-          "authorization": userStorage.getToken()
+          "authentication": userStorage.getToken()
         }
       })
 
