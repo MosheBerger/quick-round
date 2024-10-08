@@ -11,23 +11,17 @@ const createAssetData = {
 async function create(data = createAssetData) {
     const { client, userId, name, type, data, date } = data
 
-    try {
-        const query = {
-            text: `--sql
+    const query = {
+        text: `--sql
                 INSERT INTO assets(name, type, data, user_id, date)
                 VALUES($1,$2,$3,$4)
                 RETURNING *
             ;`,
-            values: [name, type, data, userId, date]
-        }
-        const res = await client.query(query)
-        return res.rows[0]
-    } catch (error) {
-        return {
-            errorCode: error.code,
-            detail: error.detail
-        }
+        values: [name, type, data, userId, date]
     }
+    const res = await client.query(query)
+    return res.rows[0]
+
 }
 
 async function remove({ client, assetId }) {
@@ -92,7 +86,7 @@ async function disconnectFromGame({ client, assetId, gameId }) {
 }
 
 async function showAllAssetsByGameId({ client, gameId }) {
-    
+
     const query = {
         text: `--sql
             SELECT 
@@ -124,7 +118,7 @@ async function showAllAssetsByUserId({ client, userId }) {
 }
 
 async function showAllGamesByAssetId({ client, assetId }) {
-    
+
     const query = {
         text: `--sql
             SELECT 

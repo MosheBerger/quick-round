@@ -24,7 +24,7 @@ async function update(data = updateLikeData) {
 }
 
 
-async function removeByGame({client, gameId}) {
+async function removeByGame({ client, gameId }) {
     const query = {
         text: `--sql
             DELETE FROM likes
@@ -42,33 +42,29 @@ async function removeByGame({client, gameId}) {
 }
 
 
-async function showByGame({client, gameId}) {
-    try {
-
-        const query = {
-            text: `--sql
-            SELECT * FROM likes
-            WHERE game_id = $1
-              AND like_it = true
-            ;`,
-            values: [gameId]
-        }
-        const res = await client.query(query)
-
-        return res.rows
-
-    } catch (error) {
-        return (error);
-    }
-}
-
-async function showLikedByUser({client, userId}) {
+async function showByGame({ client, gameId }) {
 
     const query = {
         text: `--sql
             SELECT * FROM likes
+            WHERE game_id = $1
+                AND like_it = true
+            ;`,
+        values: [gameId]
+    }
+    const res = await client.query(query)
+
+    return res.rows
+
+}
+
+async function showLikedByUser({ client, userId }) {
+
+    const query = {
+        text: `--sql
+            SELzECT * FROM likes
             WHERE user_id = $1
-              AND like_it = true
+                AND like_it = true
             ;`,
         values: [userId]
     }
@@ -78,14 +74,14 @@ async function showLikedByUser({client, userId}) {
 
 }
 
-async function isThisGameLikedByUser({client, gameId, userId}) {
+async function isThisGameLikedByUser({ client, gameId, userId }) {
 
     const query = {
         text: `--sql
             SELECT * FROM likes
             WHERE user_id = $1
-              AND like_it = true
-              AND game_id = $2
+                AND like_it = true
+                AND game_id = $2
             ;`,
         values: [userId, gameId]
     }
@@ -95,24 +91,19 @@ async function isThisGameLikedByUser({client, gameId, userId}) {
 
 }
 
-async function countLikes({client, gameId}) {
-    try {
+async function countLikes({ client, gameId }) {
 
-        const query = {
-            text: `--sql
+    const query = {
+        text: `--sql
             SELECT COUNT(*) FROM likes
             WHERE game_id = $1
-              AND like_it = true
+                AND like_it = true
             ;`,
-            values: [gameId]
-        }
-        const res = await client.query(query)
-
-        return res.rows[0].count
-
-    } catch (error) {
-        return (error);
+        values: [gameId]
     }
+    const res = await client.query(query)
+
+    return res.rows[0].count
 }
 
 
@@ -129,18 +120,18 @@ const likes = {
 module.exports = likes
 
 
-const test = async () => {
-    const client = await pool.connect()
+// const test = async () => {
+//     const client = await pool.connect()
 
     // const res = await create(client, 2, 2, true)
     // const res = await update(client, 1, 1, false)
     // const res = await countLikes(client, 1)
 
-    const res = await likes.showLikedByUser(client, 3)
-    console.log('🚀 -> test -> res:', res)
+    // const res = await likes.showLikedByUser(client, 3)
+    // console.log('🚀 -> test -> res:', res)
 
 
-    client.release()
+    // client.release()
     // console.log(await rounds.create(1, 1, 2));
     // console.log(await rounds.createMany([
     //     { gameId: 1, roundNum: 1, gameId: 2, settings: { a: "b" } },
@@ -152,5 +143,5 @@ const test = async () => {
     // console.log(await rounds.show(2));
     // console.log(await rounds.remove(4));
     // console.log(await rounds.showByRoom(1));
-}
+// }
 // test()

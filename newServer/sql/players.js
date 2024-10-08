@@ -10,7 +10,6 @@ const PlayedByUserData = {
 async function markAsPlayedByUser(data = PlayedByUserData) {
     const { client, gameId, userId, date } = data
 
-    try {
         const query = {
             text: `--sql
             INSERT INTO games_played_by_users(game_id, user_id, date)
@@ -21,9 +20,6 @@ async function markAsPlayedByUser(data = PlayedByUserData) {
         const res = await client.query(query)
 
         return (res.rowCount === 1)
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 async function removeByGame({client, gameId}) {
@@ -45,7 +41,6 @@ async function removeByGame({client, gameId}) {
 
 async function showAllUsersPlayedIt({client, gameId}) {
     // todo: fix: get just one per user
-    try {
         const query = {
             text: `--sql
             SELECT
@@ -64,12 +59,8 @@ async function showAllUsersPlayedIt({client, gameId}) {
         }
         const res = await client.query(query)
         return res.rows
-    } catch (error) {
-        console.log(error);
-    }
 }
 async function countPlayedIt({client, gameId}) {
-    try {
         const query = {
             text: `--sql
             SELECT
@@ -82,14 +73,10 @@ async function countPlayedIt({client, gameId}) {
         const res = await client.query(query)
         return res.rows[0].count
         
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 async function countUsersPlayedIt({client, gameId}) {
     // todo: fix: get just one per user
-    try {
         const query = {
             text: `--sql
             SELECT
@@ -102,9 +89,6 @@ async function countUsersPlayedIt({client, gameId}) {
         const res = await client.query(query)
         return res.rows[0].count
         
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 
@@ -119,10 +103,10 @@ const players = {
 module.exports = players
 
 
-const test = async () => {
+// const test = async () => {
     // const client = await pool.connect()
     // console.log( await players.showAllUsersPlayedIt(client,22));
     // // console.log( await players.countInRoom(client, 2));
     // client.release(true)
-}
+// }
 // test()
