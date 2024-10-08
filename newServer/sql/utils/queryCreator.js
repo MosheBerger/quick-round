@@ -1,20 +1,27 @@
 const convertString = require("./camelToSnake")
 
+// todo REMOVE if not needed
 const queryCreator = {
-    insert: (tableName, columns=[''], data=[]) => {
+    insert: (tableName, columns = ['']) => {
+
+        // const columns = Object.keys(data)
+        // const values = Object.values(data)
         const columnsNames = columns.map(convertString.camelToSnake).join(', ')
-        const query = {
-            text: `--sql
-            INSERT INTO ${tableName}(${columns.map(convertString.camelToSnake)})
+
+        const textQuery = `
+            INSERT INTO ${tableName}(${columnsNames})
+            VALUES(${columns.map((col, i) => '$' + (i + 1)).join(',')})
+            RETURNING *
             `
-        }
+
+        return query
     },
-    select: (tableName, columnsData, ) => {},
-    update: () => {},
-    delete: () => {},
+
+    select: (tableName, columnsData,) => { },
+    update: () => { },
+    delete: () => { },
 }
 //
-queryCreator.select()
 
 
 // const query = {
