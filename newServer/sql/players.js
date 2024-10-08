@@ -1,13 +1,18 @@
 // const pool = require("./pool");
 
-const PlayedByUserData = {
-    client: null,
-    gameId: 0,
-    userId: 0,
-    date: new Date()
-}
+/**
+ * @typedef {{
+ *  client: object,
+ *  gameId: number,
+ *  userId: number,
+ *  date: Date
+ * }} PlayedByUserData
+ */
 
-async function markAsPlayedByUser(data = PlayedByUserData) {
+/**
+ * @param {PlayedByUserData} data 
+ */
+async function markAsPlayedByUser(data) {
     const { client, gameId, userId, date } = data
 
         const query = {

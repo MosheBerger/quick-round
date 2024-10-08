@@ -1,16 +1,22 @@
 const pool = require("./pool")
 
-const createGameData = {
-    client: null,
-    creatorId: 0,
-    name: '',
-    description: '',
-    gameData: '',
-    cover: 0,
-    date: new Date(),
-}
 
-async function createGame(data = createGameData) {
+/**
+ * @typedef {{
+ *  client: object,
+ *  creatorId: number,
+ *  name: string,
+ *  description: string,
+ *  gameData: JSON,
+ *  cover: number,
+ *  date: Date
+ * }} CreateGameData
+ */
+
+/**
+ * @param {CreateGameData} data 
+ */
+async function createGame(data) {
     const { client, creatorId, name, description, gameData, cover, date } = data
 
     const query = {

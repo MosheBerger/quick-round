@@ -8,7 +8,20 @@ const createAssetData = {
     date: new Date()
 }
 
-async function create(data = createAssetData) {
+/**
+ * @typedef {{
+ *  client: object,
+ *  userId: number,
+ *  name: string,
+ *  type: string,
+ *  data: string, // base64
+ *  date: Date
+ * }} CreateAssetData
+}}
+ */
+
+/** @param {CreateAssetData} data */
+async function create(data) {
     const { client, userId, name, type, data, date } = data
 
     const query = {

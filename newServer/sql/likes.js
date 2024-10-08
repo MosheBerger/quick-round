@@ -1,12 +1,16 @@
 
-const updateLikeData = {
-    client: null,
-    gameId: 0,
-    userId: 0,
-    like: false
-}
+/**
+ * @typedef {{
+ *  client: object,
+ *  gameId: number,
+ *  userId: number,
+ *  like: boolean
+ * }} UpdateLikeData
+ */
 
-async function update(data = updateLikeData) {
+
+/**@param {UpdateLikeData} data */
+async function update(data) {
     const { client, gameId, userId, like } = data
 
     const query = {

@@ -7,6 +7,17 @@ const createData = {
     date: new Date()
 }
 
+/**
+ * @typedef {{
+ *  client: object,
+ *  userId: number,
+ *  gameId: number,
+ *  finishTime: number,
+ *  date: Date
+ * }} CreateFinishTimeData
+ */
+
+/** @param {CreateFinishTimeData} data  */
 async function create(data = createData) {
     const { client, userId, gameId, finishTime, date } = data
 

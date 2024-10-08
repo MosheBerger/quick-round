@@ -7,15 +7,19 @@ async function showAll(client) {
 
 }
 
-const createUserData = {
-    client: null,
-    name: '',
-    password: '',
-    email: '',
-    avatar: ''
-}
 
-async function create(data = createUserData) {
+/**
+ * @typedef {{
+*  client: object,
+*  name: string,
+*  password: string,
+*  email: string,
+*  avatar: string
+ * }} userData
+ */
+
+/** @param {userData} data */
+async function create(data) {
     const { client, name, password, email, avatar } = data
 
     const query = {
@@ -121,13 +125,13 @@ module.exports = users
 
 
 // async function tests() {
-    // console.log('---TEST---');
-    // // const result = await addUser('moishy6', '12345678', 'mebyberger@gmail.com', 'moishy1')
-    // const result = await checkIfExist('moishy3')
-    // // const result = await getUser('moishy3','12345678')
+// console.log('---TEST---');
+// // const result = await addUser('moishy6', '12345678', 'mebyberger@gmail.com', 'moishy1')
+// const result = await checkIfExist('moishy3')
+// // const result = await getUser('moishy3','12345678')
 
-    // // const result = await showAll()
+// // const result = await showAll()
 
-    // console.table(result);
+// console.table(result);
 // }
 // tests()
