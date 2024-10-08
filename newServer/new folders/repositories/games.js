@@ -1,4 +1,4 @@
-const pool = require("./pool")
+const pool = require("../../sql/pool")
 
 
 /**
@@ -99,11 +99,11 @@ async function removeGame({ client, gameId }) {
 // }
 // test()
 
-const games = {
+const gamesRepo = {
     createGame,
     removeGame,
     showGame,
     showAll
 }
 
-module.exports = games
+module.exports = gamesRepo

@@ -71,13 +71,13 @@ async function removeByGame({ client, gameId }) {
 
 
 
-const finishTimes = {
+const finishTimesRepo = {
     create,
     showByGame,
     removeByGame,
 }
 
-module.exports = finishTimes
+module.exports = finishTimesRepo
 
 
 

@@ -18,7 +18,7 @@ async function showAll(client) {
  * }} userData
  */
 
-/** @param {userData} data */
+/** @param {userData} data, @returns {Promise<Omit<userData, 'password'| 'email'>>} */
 async function create(data) {
     const { client, name, password, email, avatar } = data
 
@@ -26,7 +26,7 @@ async function create(data) {
         text: `--sql
                 INSERT INTO users(name, password, email, avatar)
                 VALUES($1,$2,$3,$4)
-                RETURNING *  
+                RETURNING id, name, avatar
             ;`,
         values: [name, password, email, avatar],
     }
@@ -56,6 +56,9 @@ async function showProfile({ client, userId }) {
 
 }
 
+/**
+ *  @returns {Promise<Omit<userData, 'password'| 'email'>>}
+ */
 async function logIn({ client, email, password }) {
     console.log(client, email, password);
     const query = {
@@ -111,7 +114,7 @@ async function updateInfo({ client, id, name, avatar }) {
 }
 
 
-const users = {
+const usersRepo = {
     create,
     logIn,
     showProfile,
@@ -120,7 +123,7 @@ const users = {
     updateInfo,
 }
 
-module.exports = users
+module.exports = usersRepo
 
 
 

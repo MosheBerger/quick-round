@@ -112,7 +112,7 @@ async function countLikes({ client, gameId }) {
 
 
 
-const likes = {
+const likesRepo = {
     update,
     countLikes,
     removeByGame,
@@ -121,7 +121,7 @@ const likes = {
     isThisGameLikedByUser,
 }
 
-module.exports = likes
+module.exports = likesRepo
 
 
 // const test = async () => {

@@ -97,7 +97,7 @@ async function countUsersPlayedIt({client, gameId}) {
 }
 
 
-const players = {
+const playersRepo = {
     markAsPlayedByUser,
     showAllUsersPlayedIt,
     countUsersPlayedIt,
@@ -105,7 +105,7 @@ const players = {
     removeByGame,
 }
 
-module.exports = players
+module.exports = playersRepo
 
 
 // const test = async () => {

@@ -150,7 +150,7 @@ async function showAllGamesByAssetId({ client, assetId }) {
 
 }
 
-const gamesAssets = {
+const gamesAssetsRepo = {
     create,
     remove,
     connectToGame,
@@ -161,4 +161,4 @@ const gamesAssets = {
     showAllGamesByAssetId,
 }
 
-module.exports = gamesAssets
+module.exports = gamesAssetsRepo

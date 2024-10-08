@@ -42,7 +42,7 @@ async function approveAsset({ client, assetId}) {
     return res.rows[0]
 }
 
-const report = {
+const reportRepo = {
     createGameReport,
     approveGame,
     approveAsset,
@@ -51,4 +51,4 @@ const report = {
     // todo ?☝️ 
 }
 
-module.exports = report
+module.exports = reportRepo
